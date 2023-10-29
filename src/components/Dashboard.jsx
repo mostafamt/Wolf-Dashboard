@@ -13,7 +13,7 @@ import Banner from "./Banner";
 export const ShowPageContext = createContext();
 
 function Dashboard() {
-  const [page, setpage] = useState("home");
+  const [page, setpage] = useState("prolist");
   return (
     <section className="dashboard d-flex">
       <ShowPageContext.Provider value={{ page, setpage }}>
