@@ -1,24 +1,16 @@
-import React from "react";
-import styles from "./layout.module.scss";
 import Sidebar from "../Sidebar/Sidebar";
 import { Outlet } from "react-router-dom";
-import profile from "../../assets/man_1.png";
+import Header from "../Header/Header";
+
+import styles from "./layout.module.scss";
 
 const Layout = () => {
   return (
-    <div className="d-flex">
+    <div className={styles.layout}>
       <Sidebar />
-      <div className="dashboard">
-        <div className="header">
-          <div className="flex-grow-1">
-            <img src={profile} alt="profile" />
-            <span className="active"></span>
-            <div className="d-flex flex-column">
-              <h1>Ahmed Taha</h1>
-              <span>Manager</span>
-            </div>
-          </div>
-
+      <div className={styles["main-wrapper"]}>
+        <Header />
+        <div>
           <Outlet />
         </div>
       </div>

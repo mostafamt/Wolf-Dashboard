@@ -177,13 +177,13 @@ aside > div > div div {
   border: 1px solid #858d9d;
 }
 
-.dashboard .product-list .inps {
+.product-list .inps {
   margin: 10px 20px;
 }
 
 .sub-category .search,
 .main-category .search,
-.dashboard .product-list .search {
+.product-list .search {
   border-radius: 8px;
   border: 1px solid #e0e2e7;
   background: #fff;
@@ -202,14 +202,14 @@ aside > div > div div {
 
 .sub-category .search input,
 .main-category .search input,
-.dashboard .product-list .search input {
+.product-list .search input {
   border: none;
   outline: none;
   margin-left: 8px;
 }
 
-.dashboard .product-list .filter,
-.dashboard .product-list .calender {
+.product-list .filter,
+.product-list .calender {
   display: flex;
   padding: 10px 14px;
   justify-content: center;
@@ -226,8 +226,8 @@ aside > div > div div {
   margin-left: 10px;
 }
 
-.dashboard .product-list .filter span,
-.dashboard .product-list .calender span {
+.product-list .filter span,
+.product-list .calender span {
   margin-left: 8px;
 }
 
