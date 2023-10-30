@@ -1,9 +1,11 @@
 import ProductListTable from "../../components/productlist/ProducListTable";
+import PRO from "../../components/ProductList";
 
 const Products = () => {
   return (
     <div>
-      <ProductListTable />
+      {/* <ProductListTable /> */}
+      <PRO />
     </div>
   );
 };

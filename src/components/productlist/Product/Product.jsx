@@ -5,9 +5,9 @@ const Product = (props) => {
   const { product, handleCheckOut } = props;
 
   const getCategory = () => {
-    const { category_id, subCategory } = product;
-    let category = `${category_id?.name} (${subCategory?.name})`;
-    return category;
+    const { category, subCategory } = product;
+    let category_name = `${category?.name} (${subCategory?.name})`;
+    return category_name;
   };
 
   const getQuantity = () => {

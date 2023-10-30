@@ -23,7 +23,8 @@ function ProductListTable() {
 
   const fetchData = async () => {
     const res = await axios.get("/product");
-    setProducts(res.data.slice(0, 1));
+    setProducts(res.data);
+    console.log("products= ", products);
   };
 
   React.useEffect(() => {

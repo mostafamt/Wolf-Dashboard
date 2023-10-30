@@ -1,4 +1,4 @@
-.dashboard {
+ {
   background: #f9f9fc;
 }
 
@@ -85,20 +85,20 @@ aside > div > div div {
   margin-bottom: 10px;
 }
 
-.dashboard .header {
+.header {
   padding: 16px 24px;
   background-color: #fff;
   position: relative;
 }
 
-.dashboard .header img {
+.header img {
   width: 38px;
   height: 38px;
   border-radius: 50%;
   margin-right: 12px;
 }
 
-.dashboard .header .active {
+.header .active {
   position: absolute;
   bottom: 15px;
   left: 54px;
@@ -109,7 +109,7 @@ aside > div > div div {
   border: 2px solid #fff;
 }
 
-.dashboard .header h1 {
+.header h1 {
   color: #1a1c21;
   font-family: Inter;
   font-size: 14px;
@@ -120,7 +120,7 @@ aside > div > div div {
   padding: 0;
 }
 
-.dashboard .header span {
+.header span {
   color: #667085;
   font-family: Inter;
   font-size: 12px;
@@ -129,11 +129,11 @@ aside > div > div div {
   letter-spacing: 0.06px;
 }
 
-.dashboard .title {
+.title {
   margin: 25px 24px 25px 20px;
 }
 
-.dashboard .title h2 {
+.title h2 {
   color: #333843;
   font-size: 24px;
   font-weight: 600;
@@ -143,7 +143,7 @@ aside > div > div div {
   margin-bottom: px;
 }
 
-.dashboard .title .path span {
+.title .path span {
   color: #5c59e8;
   font-family: Inter;
   font-size: 14px;
@@ -153,11 +153,11 @@ aside > div > div div {
   margin-right: 8px;
 }
 
-.dashboard .title .path span:last-child {
+.title .path span:last-child {
   color: #667085;
 }
 
-.dashboard .title button {
+.title button {
   border-radius: 8px;
   background: #5c59e8;
   border: none;
@@ -171,7 +171,7 @@ aside > div > div div {
   letter-spacing: 0.07px;
 }
 
-.dashboard .title .cel {
+.title .cel {
   background: transparent;
   color: #858d9d;
   border: 1px solid #858d9d;
@@ -231,11 +231,11 @@ aside > div > div div {
   margin-left: 8px;
 }
 
-.dashboard .table {
+.table {
   overflow: auto;
 }
 
-.dashboard table {
+table {
   margin: 22px 31px 0;
   width: 80vw;
   border-radius: 8px 8px 0 0;
@@ -245,17 +245,17 @@ aside > div > div div {
   height: fit-content;
 }
 
-.dashboard table thead tr {
+table thead tr {
   background: #f9f9f9;
   margin: 0;
   padding: 0;
 }
 
-.dashboard table tr td:nth-child(1) {
+table tr td:nth-child(1) {
   padding-left: 15px;
 }
 
-.dashboard table tr td:not(:nth-child(1)) {
+table tr td:not(:nth-child(1)) {
   padding: 11px 29px;
   color: #333843;
   font-size: 14px;
@@ -264,7 +264,7 @@ aside > div > div div {
   letter-spacing: 0.07px;
 }
 
-.dashboard table thead tr td:not(:nth-child(1)) {
+table thead tr td:not(:nth-child(1)) {
   padding: 18px 29px;
   position: relative;
   text-align: center;
@@ -272,7 +272,7 @@ aside > div > div div {
   cursor: pointer;
 }
 
-.dashboard table ul {
+table ul {
   position: absolute;
   top: 61px;
   left: 0px;
@@ -282,20 +282,20 @@ aside > div > div div {
   padding: 0;
 }
 
-.dashboard .table ul li {
+.table ul li {
   padding: 5px 22px;
   border-top: 1px solid #a8a8a8;
   list-style: none;
 }
 
-.dashboard .product-desc img {
+.product-desc img {
   width: 44px;
   height: 44px;
   border-radius: 8px;
   margin-right: 8px;
 }
 
-.dashboard .product-desc p {
+.product-desc p {
   padding: 0;
   margin: 0;
   color: #333843;
@@ -305,25 +305,25 @@ aside > div > div div {
   letter-spacing: 0.07px;
 }
 
-.dashboard .product-desc .cat {
+.product-desc .cat {
   color: #333843;
   font-weight: 500;
   line-height: 20px;
   letter-spacing: 0.07px;
 }
 
-.dashboard .table .main td:first-child {
+.table .main td:first-child {
   text-align: left;
 }
 
-.dashboard .table .main td {
+.table .main td {
   text-align: center;
   padding-top: 10px;
 
   padding-bottom: 10px;
 }
 
-.dashboard .product-desc span {
+.product-desc span {
   color: #667085;
   font-size: 12px;
   font-weight: 400;
@@ -331,7 +331,7 @@ aside > div > div div {
   letter-spacing: 0.06px;
 }
 
-.dashboard table tbody .sku {
+table tbody .sku {
   color: #5c59e8;
   font-size: 14px;
   font-weight: 600;
@@ -340,7 +340,7 @@ aside > div > div div {
   letter-spacing: 0.07px;
 }
 
-.dashboard table tbody .category {
+table tbody .category {
   text-align: center;
   color: #667085;
   font-size: 14px;
@@ -349,9 +349,9 @@ aside > div > div div {
   letter-spacing: 0.07px;
 }
 
-.dashboard table tbody .stock,
-.dashboard table tbody .added,
-.dashboard table tbody .price {
+table tbody .stock,
+table tbody .added,
+table tbody .price {
   color: #667085;
   font-size: 14px;
   font-weight: 500;
@@ -360,7 +360,7 @@ aside > div > div div {
 }
 
 .add-product .add-right .status .stat span,
-.dashboard table tbody .status p {
+table tbody .status p {
   display: flex;
   justify-content: center;
   padding: 4px 12px;
@@ -376,28 +376,28 @@ aside > div > div div {
 }
 
 .add-product .add-right .status .stat .low,
-.dashboard table tbody .status .low {
+table tbody .status .low {
   background: #fdf1e8 !important;
   color: #e46a11;
 }
 
 .add-product .add-right .status .stat .draft,
-.dashboard table tbody .status .draft {
+table tbody .status .draft {
   background: #f0f1f3 !important;
   color: #667085;
 }
 
 .add-product .add-right .status .stat .out,
-.dashboard table tbody .status .out {
+table tbody .status .out {
   background: #feedec !important;
   color: #f04438;
 }
 
-.dashboard table tbody .actions {
+table tbody .actions {
   text-align: center;
 }
 
-.dashboard table tbody .actions button {
+table tbody .actions button {
   background: #fff;
   border: none;
   margin: 0 5px;
@@ -405,7 +405,7 @@ aside > div > div div {
 }
 
 .footer,
-.dashboard .table .tfooter {
+.table .tfooter {
   background-color: #fff;
   padding: 13px 28px;
   display: flex;
@@ -421,7 +421,7 @@ aside > div > div div {
 }
 
 .footer .showing,
-.dashboard .table .tfooter .showing {
+.table .tfooter .showing {
   color: #667085;
   font-size: 14px;
   font-weight: 500;
@@ -430,14 +430,14 @@ aside > div > div div {
 }
 
 .footer ul,
-.dashboard .table .tfooter ul {
+.table .tfooter ul {
   display: flex;
   gap: 8px;
   margin: 0;
 }
 
 .footer ul li,
-.dashboard .table .tfooter ul li {
+.table .tfooter ul li {
   border: none;
   cursor: pointer;
   padding: 0;
@@ -458,12 +458,12 @@ aside > div > div div {
 }
 
 .footer ul .active,
-.dashboard .table .tfooter ul .active {
+.table .tfooter ul .active {
   color: #fff;
   background: #5c59e8;
 }
 
-.dashboard table td .check {
+table td .check {
   width: 22px;
   cursor: pointer;
   height: 20px;
@@ -478,14 +478,14 @@ aside > div > div div {
   overflow: hidden;
 }
 
-.dashboard table td .check-all {
+table td .check-all {
   font-size: 35px;
   padding-bottom: 5px;
   font-weight: 300;
 }
 
-.dashboard table td .check-all,
-.dashboard table td .check-active {
+table td .check-all,
+table td .check-active {
   color: #fff;
   background: #5c59e8;
 }
