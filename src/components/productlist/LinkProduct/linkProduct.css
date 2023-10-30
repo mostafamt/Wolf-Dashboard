@@ -1,0 +1,51 @@
+.pro-link .btns {
+  margin-top: 25px;
+}
+.pro-link input {
+  padding: 8px 12px;
+  outline: none;
+  margin-top: 5px;
+  border-radius: 8px;
+  border: 1px solid #e0e2e7;
+  background: #f9f9fc;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 0.07px;
+}
+
+.pro-link .link {
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  letter-spacing: 0.07px;
+  border: none;
+  margin-right: 16px;
+}
+
+.link {
+  background: #5c59e8;
+  color: #fff;
+}
+.pro-link .search {
+  position: relative;
+}
+.pro-link .search ul {
+  position: absolute;
+  bottom: 22px;
+  left: 0;
+  border-radius: 8px 8px 0 0;
+  width: 100%;
+  list-style-type: none;
+  padding: 0;
+  background: #ffffff;
+  z-index: 10;
+  box-shadow: 2px 0 2px 2px #f9f9fc;
+}
+
+.pro-link .search ul li {
+  padding: 3px 20px;
+  border-bottom: 1px solid #e0e2e7;
+}

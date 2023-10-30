@@ -1,5 +1,10 @@
 import Image from "../../assets/image.png";
 import { useState } from "react";
+import Pricing from "./Pricing/Pricing";
+import Inventory from "./Inventory/Inventory";
+import Sizing from "./Sizing/Sizing";
+import Color from "./Color/Color";
+import LinkProduct from "./LinkProduct/LinkProduct";
 
 function LeftBox() {
   const [productName, setProductName] = useState();
@@ -54,6 +59,11 @@ function LeftBox() {
           </div>
         </div>
       </div>
+      <Pricing />
+      <Inventory />
+      <Sizing />
+      <Color />
+      <LinkProduct />
     </div>
   );
 }
