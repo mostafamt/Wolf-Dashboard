@@ -1,0 +1,11 @@
+.sidebarItem {
+  & > div {
+    font-family: "Inter", sans-serif;
+    text-transform: capitalize;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.5rem;
+  }
+}

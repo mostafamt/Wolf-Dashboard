@@ -1,4 +1,4 @@
-import Sidebar from "./Sidebar";
+import Sidebar from "./Sidebar/Sidebar";
 import "./dashboard.css";
 import Man from "../assets/man_1.png";
 import ProductList from "./ProductList";
@@ -19,8 +19,8 @@ function Dashboard() {
       <ShowPageContext.Provider value={{ page, setpage }}>
         <Sidebar />
       </ShowPageContext.Provider>
-      <div className="flex-grow-1">
-        <div className="header d-flex">
+      <div className="header ">
+        <div className="flex-grow-1">
           <img src={Man} />
           <span className="active"></span>
           <div className="d-flex flex-column">

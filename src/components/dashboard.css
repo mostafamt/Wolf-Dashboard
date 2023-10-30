@@ -1,8 +1,8 @@
 .dashboard {
-  background: #F9F9FC;
+  background: #f9f9fc;
 }
 
-aside {
+/* aside {
   height: 100vh;
   width: 268px;
   background: #fff;
@@ -15,13 +15,13 @@ aside .logo {
   margin-bottom: 25px;
 }
 
-aside>div {
+aside > div {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
-aside>div>div {
+aside > div > div {
   display: flex;
   gap: 8px;
   align-items: start;
@@ -35,33 +35,33 @@ aside>div>div {
   padding: 8px 12px;
 }
 
-aside>div .active {
+aside > div .active {
   border-radius: 8px;
-  background: #5C59E8;
-  color: #FFF;
+  background: #5c59e8;
+  color: #fff;
 }
 
 aside .sub-active {
   border-radius: 8px;
-  background: #EFEFFD;
-  color: #5C59E8;
+  background: #efeffd;
+  color: #5c59e8;
 }
 
-aside>div>div span {
+aside > div > div span {
   font-size: 20px;
   padding-bottom: 5px;
 }
 
-aside>div>div p {
+aside > div > div p {
   margin: 0;
   padding: 0;
   margin-top: 2px;
 }
 
-aside>div>div div {
+aside > div > div div {
   display: flex;
   gap: 8px;
-}
+} */
 
 .product-side {
   display: flex;
@@ -70,7 +70,7 @@ aside>div>div div {
   padding: 0;
 }
 
-.product-side>div:first-child {
+.product-side > div:first-child {
   padding: 8px 12px;
 }
 
@@ -79,7 +79,7 @@ aside>div>div div {
   margin-bottom: 0;
 }
 
-.product-side>ul li {
+.product-side > ul li {
   padding: 10px 40px;
   list-style: none;
   margin-bottom: 10px;
@@ -102,7 +102,7 @@ aside>div>div div {
   position: absolute;
   bottom: 15px;
   left: 54px;
-  background-color: #3DA172;
+  background-color: #3da172;
   width: 14px;
   height: 14px;
   border-radius: 50%;
@@ -110,7 +110,7 @@ aside>div>div div {
 }
 
 .dashboard .header h1 {
-  color: #1A1C21;
+  color: #1a1c21;
   font-family: Inter;
   font-size: 14px;
   font-weight: 500;
@@ -144,7 +144,7 @@ aside>div>div div {
 }
 
 .dashboard .title .path span {
-  color: #5C59E8;
+  color: #5c59e8;
   font-family: Inter;
   font-size: 14px;
   font-weight: 500;
@@ -159,11 +159,11 @@ aside>div>div div {
 
 .dashboard .title button {
   border-radius: 8px;
-  background: #5C59E8;
+  background: #5c59e8;
   border: none;
   padding: 10px 14px;
   height: fit-content;
-  color: #FFF;
+  color: #fff;
   font-family: Inter;
   font-size: 14px;
   font-weight: 600;
@@ -173,8 +173,8 @@ aside>div>div div {
 
 .dashboard .title .cel {
   background: transparent;
-  color: #858D9D;
-  border: 1px solid #858D9D;
+  color: #858d9d;
+  border: 1px solid #858d9d;
 }
 
 .dashboard .product-list .inps {
@@ -185,14 +185,14 @@ aside>div>div div {
 .main-category .search,
 .dashboard .product-list .search {
   border-radius: 8px;
-  border: 1px solid #E0E2E7;
-  background: #FFF;
+  border: 1px solid #e0e2e7;
+  background: #fff;
   outline: none;
   padding: 8px 12px;
   width: 320px;
   display: flex;
   align-items: center;
-  color: #858D9D;
+  color: #858d9d;
   font-size: 14px;
   font-weight: 400;
   line-height: 20px;
@@ -216,8 +216,8 @@ aside>div>div div {
   align-items: center;
   gap: 8px;
   border-radius: 8px;
-  border: 1px solid #E0E2E7;
-  background: #FFF;
+  border: 1px solid #e0e2e7;
+  background: #fff;
   color: #667085;
   font-size: 14px;
   font-weight: 500;
@@ -240,8 +240,8 @@ aside>div>div div {
   width: 80vw;
   border-radius: 8px 8px 0 0;
   overflow: hidden;
-  border: 1px solid #E0E2E7;
-  box-shadow: 0px -1px 2px 0px rgba(16, 24, 40, 0.10);
+  border: 1px solid #e0e2e7;
+  box-shadow: 0px -1px 2px 0px rgba(16, 24, 40, 0.1);
   height: fit-content;
 }
 
@@ -268,7 +268,7 @@ aside>div>div div {
   padding: 18px 29px;
   position: relative;
   text-align: center;
-  border-bottom: 1px solid #F0F1F3;
+  border-bottom: 1px solid #f0f1f3;
   cursor: pointer;
 }
 
@@ -276,7 +276,7 @@ aside>div>div div {
   position: absolute;
   top: 61px;
   left: 0px;
-  background: #F9F9FC;
+  background: #f9f9fc;
   width: 100%;
   border-radius: 0 0 5px 5px;
   padding: 0;
@@ -332,7 +332,7 @@ aside>div>div div {
 }
 
 .dashboard table tbody .sku {
-  color: #5C59E8;
+  color: #5c59e8;
   font-size: 14px;
   font-weight: 600;
   text-align: center;
@@ -371,28 +371,27 @@ aside>div>div div {
   font-weight: 600;
   line-height: 20px;
   letter-spacing: 0.07px;
-  color: #0D894F;
-  background: #E7F4EE;
+  color: #0d894f;
+  background: #e7f4ee;
 }
 
 .add-product .add-right .status .stat .low,
 .dashboard table tbody .status .low {
-  background: #FDF1E8 !important;
-  color: #E46A11;
+  background: #fdf1e8 !important;
+  color: #e46a11;
 }
 
 .add-product .add-right .status .stat .draft,
 .dashboard table tbody .status .draft {
-  background: #F0F1F3 !important;
+  background: #f0f1f3 !important;
   color: #667085;
 }
 
 .add-product .add-right .status .stat .out,
 .dashboard table tbody .status .out {
-  background: #FEEDEC !important;
-  color: #F04438;
+  background: #feedec !important;
+  color: #f04438;
 }
-
 
 .dashboard table tbody .actions {
   text-align: center;
@@ -413,7 +412,7 @@ aside>div>div div {
   justify-content: space-between;
   width: 80vw;
   margin: 0px 31px;
-  border-top: 1px solid #E0E2E7;
+  border-top: 1px solid #e0e2e7;
   border-radius: 0 0 8px 8px;
 }
 
@@ -449,8 +448,8 @@ aside>div>div div {
   justify-content: center;
   align-items: center;
   border-radius: 8px;
-  background: #DEDEFA;
-  color: #5C59E8;
+  background: #dedefa;
+  color: #5c59e8;
   text-align: center;
   font-size: 14px;
   font-weight: 600;
@@ -460,8 +459,8 @@ aside>div>div div {
 
 .footer ul .active,
 .dashboard .table .tfooter ul .active {
-  color: #FFF;
-  background: #5C59E8;
+  color: #fff;
+  background: #5c59e8;
 }
 
 .dashboard table td .check {
@@ -488,7 +487,7 @@ aside>div>div div {
 .dashboard table td .check-all,
 .dashboard table td .check-active {
   color: #fff;
-  background: #5C59E8;
+  background: #5c59e8;
 }
 
 .add-product {
@@ -497,7 +496,7 @@ aside>div>div div {
 
 .add-product .add-left h2,
 .add-product .add-right h2 {
-  color: #1A1C21;
+  color: #1a1c21;
   font-size: 18px;
   font-weight: 500;
   line-height: 28px;
@@ -518,7 +517,7 @@ aside>div>div div {
   margin-top: 15px;
 }
 
-.add-product .add-right .category>div {
+.add-product .add-right .category > div {
   margin-top: 14px;
 }
 
@@ -526,8 +525,8 @@ aside>div>div div {
   margin: 0;
 }
 
-.add-product .add-right>div p {
-  color: #4D5464;
+.add-product .add-right > div p {
+  color: #4d5464;
   font-size: 14px;
   font-weight: 500;
   line-height: 20px;
@@ -537,10 +536,10 @@ aside>div>div div {
 .add-product .add-right .drop {
   padding: 10px 12px;
   cursor: pointer;
-  color: #858D9D;
+  color: #858d9d;
   border-radius: 8px;
-  border: 1px solid #E0E2E7;
-  background: #F9F9FC;
+  border: 1px solid #e0e2e7;
+  background: #f9f9fc;
   font-size: 14px;
   font-weight: 400;
   line-height: 20px;
@@ -573,7 +572,7 @@ aside>div>div div {
   margin-right: 18px;
 }
 
-.add-product .add-left>div {
+.add-product .add-left > div {
   padding: 24px;
   background: #fff;
   border-radius: 12px;
@@ -596,8 +595,8 @@ aside>div>div div {
   width: 100%;
   margin-top: 5px;
   border-radius: 8px;
-  border: 1px solid #E0E2E7;
-  background: #F9F9FC;
+  border: 1px solid #e0e2e7;
+  background: #f9f9fc;
   font-size: 14px;
   font-weight: 400;
   line-height: 20px;
@@ -608,7 +607,7 @@ aside>div>div div {
 .add-product .add-left .general div textarea::placeholder {
   direction: ltr;
   float: left;
-  color: #858D9D;
+  color: #858d9d;
 }
 
 .add-product .add-left .media {
@@ -620,7 +619,7 @@ aside>div>div div {
 }
 
 .add-product .add-left .media div p {
-  color: #4D5464;
+  color: #4d5464;
   font-size: 14px;
   font-weight: 500;
   line-height: 20px;
@@ -630,7 +629,7 @@ aside>div>div div {
 .add-product .add-left .input-images {
   border-radius: 8px;
   border: 1px dashed#E0E2E7;
-  background: #F9F9FC;
+  background: #f9f9fc;
   padding: 24px;
   display: flex;
   flex-direction: column;
@@ -641,8 +640,8 @@ aside>div>div div {
 .add-product .add-left .input-images .img {
   padding: 8px;
   border-radius: 100px;
-  border: 4px solid #EFEFFD;
-  background: #DEDEFA;
+  border: 4px solid #efeffd;
+  background: #dedefa;
 }
 
 .add-product .add-left .input-images .img img {
@@ -651,7 +650,7 @@ aside>div>div div {
 }
 
 .add-product .add-left .input-images p {
-  color: #858D9D;
+  color: #858d9d;
   font-size: 14px;
   font-weight: 400;
   line-height: 20px;
@@ -663,8 +662,8 @@ aside>div>div div {
   border: none;
   padding: 10px 14px;
   border-radius: 8px;
-  background: #DEDEFA;
-  color: #5C59E8;
+  background: #dedefa;
+  color: #5c59e8;
   font-size: 14px;
   font-style: normal;
   font-weight: 600;
@@ -683,45 +682,44 @@ aside>div>div div {
   margin: 32px 26px;
   padding: 24px;
   border-radius: 8px;
-  border: 1px solid #E0E2E7;
-  box-shadow: 0px 1.5px 2px 0px rgba(16, 24, 40, 0.10);
+  border: 1px solid #e0e2e7;
+  box-shadow: 0px 1.5px 2px 0px rgba(16, 24, 40, 0.1);
 }
 
 .main-category .edit-category h2 {
-  color: #1A1C21;
+  color: #1a1c21;
   font-size: 18px;
   font-weight: 500;
   line-height: 28px;
   letter-spacing: 0.09px;
 }
 
-.main-category .edit-category>div {
+.main-category .edit-category > div {
   margin-top: 14px;
 }
 
-.main-category .edit-category>div p {
+.main-category .edit-category > div p {
   margin: 0 0 5px;
-  color: #4D5464;
+  color: #4d5464;
   font-size: 14px;
   font-weight: 500;
   line-height: 20px;
   letter-spacing: 0.07px;
 }
 
-.main-category .edit-category>div textarea,
-.main-category .edit-category>div input {
+.main-category .edit-category > div textarea,
+.main-category .edit-category > div input {
   width: 100%;
   padding: 8px 12px;
   outline: none;
   border-radius: 8px;
-  border: 1px solid #E0E2E7;
-  background: #F9F9FC;
+  border: 1px solid #e0e2e7;
+  background: #f9f9fc;
 }
 
-.main-category .edit-category>div input {
+.main-category .edit-category > div input {
   text-align: right;
 }
-
 
 .sub-category .sub-category-desc img {
   width: 44px;
@@ -753,42 +751,42 @@ aside>div>div div {
   margin: 32px 26px;
   padding: 24px;
   border-radius: 8px;
-  border: 1px solid #E0E2E7;
-  box-shadow: 0px 1.5px 2px 0px rgba(16, 24, 40, 0.10);
+  border: 1px solid #e0e2e7;
+  box-shadow: 0px 1.5px 2px 0px rgba(16, 24, 40, 0.1);
 }
 
 .add-cat h2 {
-  color: #1A1C21;
+  color: #1a1c21;
   font-size: 18px;
   font-weight: 500;
   line-height: 28px;
   letter-spacing: 0.09px;
 }
 
-.add-cat>div {
+.add-cat > div {
   margin-top: 14px;
 }
 
-.add-cat>div p {
+.add-cat > div p {
   margin: 0 0 5px;
-  color: #4D5464;
+  color: #4d5464;
   font-size: 14px;
   font-weight: 500;
   line-height: 20px;
   letter-spacing: 0.07px;
 }
 
-.add-cat>div textarea,
-.add-cat>div input {
+.add-cat > div textarea,
+.add-cat > div input {
   width: 100%;
   padding: 8px 12px;
   outline: none;
   border-radius: 8px;
-  border: 1px solid #E0E2E7;
-  background: #F9F9FC;
+  border: 1px solid #e0e2e7;
+  background: #f9f9fc;
 }
 
-.add-cat>div input {
+.add-cat > div input {
   text-align: right;
 }
 
@@ -796,16 +794,16 @@ aside>div>div div {
   width: 20%;
   padding: 24px;
   border-radius: 8px;
-  border: 1px solid #E0E2E7;
-  background: #FFF;
-  box-shadow: 0px 1.5px 2px 0px rgba(16, 24, 40, 0.10);
+  border: 1px solid #e0e2e7;
+  background: #fff;
+  box-shadow: 0px 1.5px 2px 0px rgba(16, 24, 40, 0.1);
   margin-left: 28px;
   margin-top: 32px;
   height: fit-content;
 }
 
 .add-sub .media h2 {
-  color: #1A1C21;
+  color: #1a1c21;
   font-size: 18px;
   font-weight: 500;
   line-height: 28px;
@@ -813,25 +811,25 @@ aside>div>div div {
 }
 
 .add-sub .media p {
-  color: #4D5464;
+  color: #4d5464;
   font-size: 14px;
   font-weight: 500;
   line-height: 20px;
   letter-spacing: 0.07px;
 }
 
-.add-sub .media>div {
+.add-sub .media > div {
   padding: 20px 24px;
   border-radius: 8px;
-  border: 1px dashed #E0E2E7;
-  background: #F9F9FC;
+  border: 1px dashed #e0e2e7;
+  background: #f9f9fc;
 }
 
 .add-sub .media div .img {
   padding: 8px;
   border-radius: 100px;
-  border: 4px solid #EFEFFD;
-  background: #DEDEFA;
+  border: 4px solid #efeffd;
+  background: #dedefa;
 }
 
 .add-sub .media div .img img {
@@ -845,7 +843,7 @@ aside>div>div div {
 
 .add-sub .media div .image span {
   position: absolute;
-  color: #0D894F;
+  color: #0d894f;
   position: absolute;
   right: 4px;
   top: 4px;
@@ -854,7 +852,7 @@ aside>div>div div {
   align-items: center;
   padding: 4px;
   border-radius: 100px;
-  background: #CFE7DC;
+  background: #cfe7dc;
 }
 
 .add-sub .media div .image img {
@@ -864,7 +862,7 @@ aside>div>div div {
 }
 
 .add-sub .media div p {
-  color: #858D9D;
+  color: #858d9d;
   text-align: center;
   font-size: 14px;
   font-weight: 400;
@@ -876,9 +874,9 @@ aside>div>div div {
 .add-sub .media div button {
   border-radius: 8px;
   border: none;
-  background: #DEDEFA;
+  background: #dedefa;
   padding: 10px 14px;
-  color: #5C59E8;
+  color: #5c59e8;
   font-size: 14px;
   font-weight: 600;
   line-height: 20px;
@@ -921,8 +919,8 @@ aside>div>div div {
 .select-list ul .active,
 .orders .select-time ul .active {
   border-radius: 6px;
-  background: #DEDEFA;
-  color: #4543AE;
+  background: #dedefa;
+  color: #4543ae;
   font-size: 14px;
   font-weight: 600;
   line-height: 20px;
@@ -934,12 +932,12 @@ aside>div>div div {
   background: #fff;
   border-radius: 8px;
   margin-right: 25px;
-  border: 1px solid #E0E2E7;
-  box-shadow: 0px 1.5px 2px 0px rgba(16, 24, 40, 0.10);
+  border: 1px solid #e0e2e7;
+  box-shadow: 0px 1.5px 2px 0px rgba(16, 24, 40, 0.1);
 }
 
 .orders .details h2 {
-  color: #1A1C21;
+  color: #1a1c21;
   font-size: 18px;
   font-style: normal;
   font-weight: 500;
@@ -949,7 +947,7 @@ aside>div>div div {
 }
 
 .orders .details h2 span {
-  color: #E46A11;
+  color: #e46a11;
   font-size: 14px;
   font-weight: 600;
   line-height: 20px;
@@ -957,11 +955,11 @@ aside>div>div div {
   padding: 4px 12px;
   margin-left: 10px;
   border-radius: 50px;
-  background: #FDF1E8;
+  background: #fdf1e8;
 }
 
 .orders .details .item {
-  color: #1A1C21;
+  color: #1a1c21;
   font-size: 14px;
   font-weight: 500;
   line-height: 20px;
@@ -978,7 +976,7 @@ aside>div>div div {
   justify-content: center;
   align-items: center;
   border-radius: 50%;
-  background: var(--neutral-gray-gray-100, #E0E2E7);
+  background: var(--neutral-gray-gray-100, #e0e2e7);
 }
 
 .orders .details .item p {
@@ -1005,7 +1003,7 @@ aside>div>div div {
 }
 
 .orders .order-list h2 .pro-num {
-  color: #0D894F;
+  color: #0d894f;
   text-align: center;
   font-size: 14px;
   font-weight: 600;
@@ -1013,7 +1011,7 @@ aside>div>div div {
   letter-spacing: 0.07px;
   padding: 4px 12px;
   border-radius: 50px;
-  background: #E7F4EE;
+  background: #e7f4ee;
   margin-left: 15px;
 }
 
@@ -1023,12 +1021,12 @@ aside>div>div div {
 }
 
 .orders .order-list table thead tr {
-  background: #F0F1F3;
+  background: #f0f1f3;
 }
 
 .orders .order-list table tbody tr {
   background: #fff;
-  border-bottom: 1px solid #F0F1F3;
+  border-bottom: 1px solid #f0f1f3;
 }
 
 .orders .order-list table tr td {
@@ -1052,7 +1050,7 @@ aside>div>div div {
 
 .user-details .back {
   height: 164px;
-  background: #5C59E8;
+  background: #5c59e8;
 }
 
 .user-details .info {
@@ -1084,10 +1082,10 @@ aside>div>div div {
 
 .user-details .detail {
   margin: 114px 24px 24px;
-  border-top: 2px solid #F0F1F3;
+  border-top: 2px solid #f0f1f3;
 }
 
-.user-details .detail>div {
+.user-details .detail > div {
   margin: 18px 0 0;
 }
 
@@ -1099,7 +1097,7 @@ aside>div>div div {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: var(--neutral-gray-gray-100, #E0E2E7);
+  background: var(--neutral-gray-gray-100, #e0e2e7);
 }
 
 .user-details .detail .icon span {
@@ -1109,7 +1107,7 @@ aside>div>div div {
 
 .user-details .detail .icon-info p {
   margin: 0;
-  color: var(--neutral-black-black-600, #4D5464);
+  color: var(--neutral-black-black-600, #4d5464);
   font-size: 14px;
   font-style: normal;
   font-weight: 500;
@@ -1118,7 +1116,7 @@ aside>div>div div {
 }
 
 .user-details .detail .icon-info span {
-  color: var(--neutral-black-black-800, #1A1C21);
+  color: var(--neutral-black-black-800, #1a1c21);
   font-size: 14px;
   font-style: normal;
   font-weight: 500;
@@ -1131,13 +1129,13 @@ aside>div>div div {
   margin-bottom: 20px;
 }
 
-.user-orders .static>div {
+.user-orders .static > div {
   background: #fff;
   padding: 20px;
   border-radius: 12px;
 }
 
-.user-orders .static>div h2 {
+.user-orders .static > div h2 {
   color: var(--neutral-black-black-300, #777980);
   font-size: 16px;
   font-weight: 500;
@@ -1145,8 +1143,8 @@ aside>div>div div {
   letter-spacing: 0.08px;
 }
 
-.user-orders .static>div p {
-  color: var(--neutral-black-black-500, #1D1F2C);
+.user-orders .static > div p {
+  color: var(--neutral-black-black-500, #1d1f2c);
   font-size: 24px;
   font-weight: 600;
   line-height: 32px;
@@ -1154,16 +1152,16 @@ aside>div>div div {
   margin-bottom: 10px;
 }
 
-.user-orders .static>div .rate span:first-child {
-  color: var(--secondary-green-green-600, #1A9882);
+.user-orders .static > div .rate span:first-child {
+  color: var(--secondary-green-green-600, #1a9882);
   font-size: 14px;
   font-weight: 700;
   line-height: 140%;
   letter-spacing: 0.07px;
 }
 
-.user-orders .static>div .rate span:last-child {
-  color: var(--neutral-gray-gray-400, #858D9D);
+.user-orders .static > div .rate span:last-child {
+  color: var(--neutral-gray-gray-400, #858d9d);
   font-size: 14px;
   font-weight: 500;
   line-height: 20px;
@@ -1182,20 +1180,19 @@ aside>div>div div {
 }
 
 .user-orders .static .icon-one {
-  color: #F86624;
-  background: #FFF0EA;
+  color: #f86624;
+  background: #fff0ea;
 }
 
 .user-orders .static .icon-two {
-  color: #883DCF;
-  background: #F4ECFB;
+  color: #883dcf;
+  background: #f4ecfb;
 }
 
 .user-orders .static .icon-three {
-  color: #22CAAD;
-  background: #E9FAF7;
+  color: #22caad;
+  background: #e9faf7;
 }
-
 
 .user-orders table {
   width: 100% !important;
@@ -1219,13 +1216,13 @@ aside>div>div div {
 }
 
 .customer table .status .ship {
-  color: #13B2E4;
-  background: #E8F8FD;
+  color: #13b2e4;
+  background: #e8f8fd;
 }
 
 .customer table .status .process {
-  color: #E46A11;
-  background: #FDF1E8;
+  color: #e46a11;
+  background: #fdf1e8;
 }
 
 .ad {
@@ -1250,7 +1247,7 @@ aside>div>div div {
 }
 
 .edit-banner h2 {
-  color: #1A1C21;
+  color: #1a1c21;
   font-size: 18px;
   font-weight: 500;
   line-height: 28px;
@@ -1258,7 +1255,7 @@ aside>div>div div {
 }
 
 .edit-banner p {
-  color: #4D5464;
+  color: #4d5464;
   font-size: 14px;
   font-weight: 500;
   line-height: 20px;
@@ -1280,8 +1277,8 @@ aside>div>div div {
   margin-top: 16px;
   padding: 10px 14px;
   border-radius: 8px;
-  background: #DEDEFA;
-  color: #5C59E8;
+  background: #dedefa;
+  color: #5c59e8;
   font-size: 14px;
   font-weight: 600;
   border: none;
@@ -1294,7 +1291,7 @@ aside>div>div div {
   justify-content: space-between;
 }
 
-.side-orders>span {
+.side-orders > span {
   color: white;
   background-color: red;
   padding: 3px 8px;
