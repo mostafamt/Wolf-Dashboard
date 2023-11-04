@@ -1,43 +1,10 @@
 import { createContext, useState } from "react";
 import { BsSearch } from "react-icons/bs";
-import TitleOne from "./maincategory/TitileOne";
-import MainTable from "./maincategory/MainTable";
-import EditPage from "./maincategory/EditPage";
+import TitleOne from "@components/maincategory/TitileOne";
+import MainTable from "@components/maincategory/MainTable";
+import EditPage from "@components/maincategory/EditPage";
 
 export const MainCategoryContext = createContext();
-function MainCategory() {
-  const [searchCategory, setSearchCategory] = useState();
-  const [id, setId] = useState(true);
-  const [editPage, setEditPage] = useState(false);
-
-  return (
-    <MainCategoryContext.Provider value={{ id, setId, editPage, setEditPage }}>
-      <div className="main-category">
-        {editPage ? (
-          <>
-            <EditPage list={listProduct} />
-          </>
-        ) : (
-          <>
-            <TitleOne />
-            <div className="search">
-              <BsSearch />
-              <input
-                type="text"
-                value={searchCategory}
-                onChange={(e) => setSearchCategory(e.target.value)}
-                placeholder="Search by product name. . ."
-                className="flex-grow-1"
-              />
-            </div>
-            <MainTable list={listProduct} />
-          </>
-        )}
-      </div>
-    </MainCategoryContext.Provider>
-  );
-}
-export default MainCategory;
 
 const listProduct = [
   {
@@ -81,3 +48,38 @@ const listProduct = [
     Added: "21 Oct 2022",
   },
 ];
+
+const Categories = () => {
+  const [searchCategory, setSearchCategory] = useState();
+  const [id, setId] = useState(true);
+  const [editPage, setEditPage] = useState(false);
+
+  return (
+    <MainCategoryContext.Provider value={{ id, setId, editPage, setEditPage }}>
+      <div className="main-category">
+        {editPage ? (
+          <>
+            <EditPage list={listProduct} />
+          </>
+        ) : (
+          <>
+            <TitleOne />
+            <div className="search">
+              <BsSearch />
+              <input
+                type="text"
+                value={searchCategory}
+                onChange={(e) => setSearchCategory(e.target.value)}
+                placeholder="Search by product name. . ."
+                className="flex-grow-1"
+              />
+            </div>
+            <MainTable list={listProduct} />
+          </>
+        )}
+      </div>
+    </MainCategoryContext.Provider>
+  );
+};
+
+export default Categories;

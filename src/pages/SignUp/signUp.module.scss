@@ -1,0 +1,16 @@
+.sign-up {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  .row {
+    display: flex;
+    width: 100%;
+    gap: 4%;
+    overflow: hidden;
+
+    & > * {
+      flex: 0 1 48%;
+    }
+  }
+}

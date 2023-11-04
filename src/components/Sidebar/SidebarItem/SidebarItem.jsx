@@ -21,8 +21,8 @@ const SidebarItem = (props) => {
     return classNames.join(" ");
   };
 
-  return (
-    <Link className={getClassName()} to={item?.to}>
+  const ItemBody = (
+    <>
       <div>
         <span>{item?.icon} </span>
         <span>{item?.label}</span>
@@ -30,8 +30,22 @@ const SidebarItem = (props) => {
       {item.notifications && (
         <div className={styles.notifications}>{item.notifications}</div>
       )}
+    </>
+  );
+
+  const ButtonItem = (
+    <button className={getClassName()} onClick={item?.onClick}>
+      {ItemBody}
+    </button>
+  );
+
+  const LinkItem = (
+    <Link className={getClassName()} to={item?.to}>
+      {ItemBody}
     </Link>
   );
+
+  return item.to ? LinkItem : ButtonItem;
 };
 
 export default SidebarItem;

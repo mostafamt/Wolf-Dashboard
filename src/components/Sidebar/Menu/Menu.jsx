@@ -3,9 +3,10 @@ import SidebarItem from "../SidebarItem/SidebarItem";
 import styles from "./menu.module.scss";
 
 import SidebarItemList from "../SidebarItemList/SidebarItemList";
-import { SIDEBAR_ITEMS } from "../../../config";
+import { useConfig } from "@config";
 
 const Menu = () => {
+  const [SIDEBAR_ITEMS] = useConfig();
   return (
     <div className={styles.menu}>
       <ul>
