@@ -678,7 +678,7 @@ table td .check-active {
 
 .main-category .edit-category {
   background: #fff;
-  width: 75%;
+  /* width: 75%; */
   margin: 32px 26px;
   padding: 24px;
   border-radius: 8px;

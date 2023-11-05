@@ -20,6 +20,7 @@ import AuthLayout from "@components/Layout/AuthLayout/AuthLayout";
 import Test from "@pages/Test/Test";
 import Categories from "@pages/Categories/Categories";
 import Category from "@pages/Category/Category";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (

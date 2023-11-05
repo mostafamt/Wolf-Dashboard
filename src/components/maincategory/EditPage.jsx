@@ -1,5 +1,4 @@
 import { BsChevronRight } from "react-icons/bs";
-import { MainCategoryContext } from "@pages/Categories/Categories";
 import { useContext, useState } from "react";
 import { BiSave } from "react-icons/bi";
 

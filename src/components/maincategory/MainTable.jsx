@@ -6,9 +6,9 @@ import { useNavigate } from "react-router-dom";
 function MainTable(props) {
   const [startItem, setStartItem] = useState(0);
   const [endItem, setEndItem] = useState(8);
-  const [listProduct, setListProduct] = useState(props.list);
+  const [listProduct, setListProduct] = useState(props.categories);
   const num = 8;
-  const paginations = _.range(0, Math.ceil(listProduct.length / 8));
+  const paginations = _.range(0, Math.ceil(props.categories.length / 8));
   const navigate = useNavigate();
 
   const editCulc = (value) => {
@@ -16,8 +16,10 @@ function MainTable(props) {
     setEndItem(value * 8);
   };
   const handleEdit = (category) => {
-    navigate(`/category/${category.Id}`, { state: { category } });
+    navigate(`/category/${category._id}`, { state: { category } });
   };
+
+  const { categories } = props;
 
   return (
     <div className="table">
@@ -32,23 +34,23 @@ function MainTable(props) {
           </tr>
         </thead>
         <tbody>
-          {listProduct.map((item, index) => {
+          {categories.map((category, index) => {
             if (index >= startItem && index < endItem) {
               return (
-                <tr key={item.Id}>
+                <tr key={category._id}>
                   <td>
                     <div className="d-flex product-desc">
                       <div>
-                        <p className="cat">{item.Category}</p>
-                        <span>{item.Describtion}</span>
+                        <p className="cat">{category.name}</p>
+                        <span>{category.description}</span>
                       </div>
                     </div>
                   </td>
-                  <td>{item.Suppliers}</td>
-                  <td>{item.Stock}</td>
-                  <td>{item.Added}</td>
+                  <td>{Math.ceil(Math.random() * 1000)}</td>
+                  <td>{Math.ceil(Math.random() * 1000)}</td>
+                  <td>{new Date(category.updatedAt).toDateString()}</td>
                   <td className="actions">
-                    <button onClick={() => handleEdit(item)}>
+                    <button onClick={() => handleEdit(category)}>
                       <BsPencil />
                     </button>
                   </td>
@@ -60,16 +62,16 @@ function MainTable(props) {
       </table>
       <div className="tfooter">
         <div className="showing">
-          {endItem < listProduct.length ? (
+          {endItem < categories.length ? (
             <span>
               {" "}
-              Showing {startItem + 1}-{endItem} from {listProduct.length}{" "}
+              Showing {startItem + 1}-{endItem} from {categories.length}{" "}
             </span>
           ) : (
             <span>
               {" "}
-              Showing {startItem + 1}-{listProduct.length} from{" "}
-              {listProduct.length}{" "}
+              Showing {startItem + 1}-{categories.length} from{" "}
+              {categories.length}{" "}
             </span>
           )}
         </div>
@@ -85,7 +87,7 @@ function MainTable(props) {
             <BsChevronLeft />
           </li>
           {paginations.map((value) => {
-            if (listProduct.length / 8 > value) {
+            if (categories.length / 8 > value) {
               return (
                 <li
                   className={`${startItem == value * num && "active"}`}
@@ -98,7 +100,7 @@ function MainTable(props) {
           })}
           <li
             onClick={() => {
-              if (startItem <= 8 * (Math.ceil(listProduct.length / 8) - 2)) {
+              if (startItem <= 8 * (Math.ceil(categories.length / 8) - 2)) {
                 setStartItem(startItem + 8);
                 setEndItem(endItem + 8);
               }
