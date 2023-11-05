@@ -1,3 +1,4 @@
+import React from "react";
 import { useState } from "react";
 import {
   BsChevronDown,
@@ -10,12 +11,25 @@ import {
 } from "react-icons/bs";
 import ImageProduct from "../../assets/Img.png";
 import _ from "lodash";
+import axios from "../../axios";
+import { useNavigate } from "react-router-dom";
 
 function SubCategoryTable() {
   const [headDrop, setheadDrop] = useState("");
   const [startItem, setStartItem] = useState(0);
   const [endItem, setEndItem] = useState(8);
   const [check, setCheck] = useState(false);
+  const [subCategories, setSubCategories] = React.useState([]);
+  const navigate = useNavigate();
+
+  const fetchSubCategories = async () => {
+    const res = await axios.get("/subcategory/main_subcategory");
+    setSubCategories(res.data);
+  };
+
+  React.useEffect(() => {
+    fetchSubCategories();
+  }, []);
 
   const editCulc = (value) => {
     setStartItem((value - 1) * 8);
@@ -28,7 +42,13 @@ function SubCategoryTable() {
   };
 
   const num = 8;
-  const paginations = _.range(0, Math.ceil(listProduct.length / 8));
+  const paginations = _.range(0, Math.ceil(subCategories.length / 8));
+
+  const onEditSubCategory = (subCategory) => {
+    navigate(`/sub-categories/edit/${subCategory._id}`, {
+      state: { subCategory },
+    });
+  };
 
   return (
     <div className="table">
@@ -111,14 +131,14 @@ function SubCategoryTable() {
           </tr>
         </thead>
         <tbody>
-          {listProduct.map((item, index) => {
+          {subCategories.map((subCategory, index) => {
             if (index >= startItem && index < endItem) {
               return (
-                <tr key={item.Id}>
+                <tr key={subCategory._id}>
                   <td>
                     <div
                       className="check"
-                      onClick={(e) => handleCheckOut(e.target, item.Id)}
+                      onClick={(e) => handleCheckOut(e.target, subCategory._id)}
                     >
                       <span>
                         <BsCheckLg />
@@ -127,21 +147,25 @@ function SubCategoryTable() {
                   </td>
                   <td>
                     <div className="d-flex sub-category-desc">
-                      <img src={item.Image} />
+                      <img src={subCategory.Image} />
                       <div>
-                        <p>{item.SubCategory}</p>
-                        <span>{item.SubCategoryDescriptin}</span>
+                        <p>{subCategory.name}</p>
+                        <span>{subCategory.description}</span>
                       </div>
                     </div>
                   </td>
-                  <td className="suplliers">{item.Suppliers}</td>
-                  <td className="Stock">{item.Stock} </td>
-                  <td className="added">{item.Added}</td>
+                  <td className="suplliers">
+                    {Math.ceil(Math.random() * 1000)}
+                  </td>
+                  <td className="Stock">{Math.ceil(Math.random() * 1000)}</td>
+                  <td className="added">
+                    {new Date(subCategory.updatedAt).toDateString()}
+                  </td>
                   <td className="actions">
                     <button>
                       <BsEye />
                     </button>
-                    <button>
+                    <button onClick={() => onEditSubCategory(subCategory)}>
                       <BsPencil />
                     </button>
                     <button>
@@ -156,16 +180,16 @@ function SubCategoryTable() {
       </table>
       <div className="tfooter">
         <div className="showing">
-          {endItem < listProduct.length ? (
+          {endItem < subCategories.length ? (
             <span>
               {" "}
-              Showing {startItem + 1}-{endItem} from {listProduct.length}{" "}
+              Showing {startItem + 1}-{endItem} from {subCategories.length}{" "}
             </span>
           ) : (
             <span>
               {" "}
-              Showing {startItem + 1}-{listProduct.length} from{" "}
-              {listProduct.length}{" "}
+              Showing {startItem + 1}-{subCategories.length} from{" "}
+              {subCategories.length}{" "}
             </span>
           )}
         </div>
@@ -181,7 +205,7 @@ function SubCategoryTable() {
             <BsChevronLeft />
           </li>
           {paginations.map((value) => {
-            if (listProduct.length / 8 > value) {
+            if (subCategories.length / 8 > value) {
               return (
                 <li
                   className={`${startItem == value * num && "active"}`}
@@ -194,7 +218,7 @@ function SubCategoryTable() {
           })}
           <li
             onClick={() => {
-              if (startItem <= 8 * (Math.ceil(listProduct.length / 8) - 2)) {
+              if (startItem <= 8 * (Math.ceil(subCategories.length / 8) - 2)) {
                 setStartItem(startItem + 8);
                 setEndItem(endItem + 8);
               }
@@ -208,140 +232,3 @@ function SubCategoryTable() {
   );
 }
 export default SubCategoryTable;
-export const listProduct = [
-  {
-    Id: 1,
-    Image: ImageProduct,
-    SubCategory: "أزياء رجال",
-    SubCategoryDescriptin: "Great fashion, great selections, great prices.",
-    Suppliers: "1231",
-    Stock: "132",
-    Added: "29 Dec 2022",
-  },
-  {
-    Id: 2,
-    Image: ImageProduct,
-    SubCategory: "أزياء رجال",
-    SubCategoryDescriptin: "Great fashion, great selections, great prices.",
-    Suppliers: "1231",
-    Stock: "132",
-    Added: "29 Dec 2022",
-  },
-  {
-    Id: 3,
-    Image: ImageProduct,
-    SubCategory: "أزياء رجال",
-    SubCategoryDescriptin: "Great fashion, great selections, great prices.",
-    Suppliers: "1231",
-    Stock: "132",
-    Added: "29 Dec 2022",
-  },
-  {
-    Id: 4,
-    Image: ImageProduct,
-    SubCategory: "أزياء رجال",
-    SubCategoryDescriptin: "Great fashion, great selections, great prices.",
-    Suppliers: "1231",
-    Stock: "132",
-    Added: "29 Dec 2022",
-  },
-  {
-    Id: 5,
-    Image: ImageProduct,
-    SubCategory: "أزياء رجال",
-    SubCategoryDescriptin: "Great fashion, great selections, great prices.",
-    Suppliers: "1231",
-    Stock: "132",
-    Added: "29 Dec 2022",
-  },
-  {
-    Id: 6,
-    Image: ImageProduct,
-    SubCategory: "أزياء رجال",
-    SubCategoryDescriptin: "Great fashion, great selections, great prices.",
-    Suppliers: "1231",
-    Stock: "132",
-    Added: "29 Dec 2022",
-  },
-  {
-    Id: 7,
-    Image: ImageProduct,
-    SubCategory: "أزياء رجال",
-    SubCategoryDescriptin: "Great fashion, great selections, great prices.",
-    Suppliers: "1231",
-    Stock: "132",
-    Added: "29 Dec 2022",
-  },
-  {
-    Id: 8,
-    Image: ImageProduct,
-    SubCategory: "أزياء رجال",
-    SubCategoryDescriptin: "Great fashion, great selections, great prices.",
-    Suppliers: "1231",
-    Stock: "132",
-    Added: "29 Dec 2022",
-  },
-  {
-    Id: 9,
-    Image: ImageProduct,
-    SubCategory: "أزياء رجال",
-    SubCategoryDescriptin: "Great fashion, great selections, great prices.",
-    Suppliers: "1231",
-    Stock: "132",
-    Added: "29 Dec 2022",
-  },
-  {
-    Id: 10,
-    Image: ImageProduct,
-    SubCategory: "أزياء رجال",
-    SubCategoryDescriptin: "Great fashion, great selections, great prices.",
-    Suppliers: "1231",
-    Stock: "132",
-    Added: "29 Dec 2022",
-  },
-  {
-    Id: 11,
-    Image: ImageProduct,
-    SubCategory: "أزياء رجال",
-    SubCategoryDescriptin: "Great fashion, great selections, great prices.",
-    Suppliers: "1231",
-    Stock: "132",
-    Added: "29 Dec 2022",
-  },
-  {
-    Id: 12,
-    Image: ImageProduct,
-    SubCategory: "أزياء رجال",
-    SubCategoryDescriptin: "Great fashion, great selections, great prices.",
-    Suppliers: "1231",
-    Stock: "132",
-    Added: "29 Dec 2022",
-  },
-  {
-    Id: 13,
-    Image: ImageProduct,
-    SubCategory: "أزياء رجال",
-    SubCategoryDescriptin: "Great fashion, great selections, great prices.",
-    Suppliers: "1231",
-    Stock: "132",
-    Added: "29 Dec 2022",
-  },
-  {
-    Id: 14,
-    Image: ImageProduct,
-    SubCategory: "أزياء رجال",
-    SubCategoryDescriptin: "Great fashion, great selections, great prices.",
-    Suppliers: "1231",
-    Stock: "132",
-    Added: "29 Dec 2022",
-  },
-  {
-    Id: 15,
-    Image: ImageProduct,
-    SubCategory: "أزياء رجال",
-    SubCategoryDescriptin: "Great fashion, great selections, great prices.",
-    Suppliers: "1231",
-    Stock: "132",
-    Added: "29 Dec 2022",
-  },
-];

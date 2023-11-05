@@ -1,0 +1,30 @@
+.add-sub-category {
+  & .img-box {
+    height: 16rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    & > img {
+      width: 100%;
+      object-fit: contain;
+      border-radius: 1rem;
+    }
+  }
+
+  & .input-file-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+  }
+
+  & select {
+    width: 100%;
+    height: 2.6rem;
+    outline: none;
+    border-color: #e0e2e7;
+    background-color: #f9f9fc;
+    border-radius: 0.5rem;
+  }
+}

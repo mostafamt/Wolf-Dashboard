@@ -21,6 +21,8 @@ import Test from "@pages/Test/Test";
 import Categories from "@pages/Categories/Categories";
 import Category from "@pages/Category/Category";
 import "react-toastify/dist/ReactToastify.css";
+import AddSubCategory from "./components/subcategory/AddSubCategory/AddSubCategory";
+import EditSubCategory from "./components/subcategory/EditSubCategory/EditSubCategory";
 
 function App() {
   return (
@@ -37,6 +39,11 @@ function App() {
           <Route path="/categories" element={<Categories />} />
           <Route path="/category/:id" element={<Category />} />
           <Route path="/sub-categories" element={<SubCategory />} />
+          <Route path="/sub-categories/add" element={<AddSubCategory />} />
+          <Route
+            path="/sub-categories/edit/:id"
+            element={<EditSubCategory />}
+          />
           <Route path="/orders" element={<Orders />} />
           <Route path="/customers" element={<Customers />} />
           <Route path="/suppliers" element={<Suppliers />} />

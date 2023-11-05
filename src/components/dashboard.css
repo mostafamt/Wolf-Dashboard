@@ -786,10 +786,6 @@ table td .check-active {
   background: #f9f9fc;
 }
 
-.add-cat > div input {
-  text-align: right;
-}
-
 .add-sub .media {
   width: 20%;
   padding: 24px;
