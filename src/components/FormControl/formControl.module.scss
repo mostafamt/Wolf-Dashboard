@@ -17,8 +17,43 @@
     width: 100%;
   }
 
+  & textarea {
+    border: 1px solid #e0e2e7;
+    border-radius: 0.75rem;
+    outline: 0;
+    padding: 1rem 0.5rem;
+    color: #858d9d;
+  }
+
   & span {
     font-size: 0.75rem;
     color: red;
+  }
+
+  & .file-box {
+    height: 16rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px dashed #e0e2e7;
+    padding: 1rem;
+
+    & .media {
+      display: flex;
+      gap: 1rem;
+      position: relative;
+
+      & img {
+        border-radius: 0.5rem;
+        height: 10rem;
+        width: auto;
+        object-fit: contain;
+      }
+    }
+
+    & input {
+      width: 50%;
+    }
   }
 }

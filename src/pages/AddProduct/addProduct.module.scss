@@ -1,0 +1,15 @@
+.add-product {
+  padding: 1rem;
+
+  & .boxes {
+    display: flex;
+    justify-content: space-between;
+
+    & > div:first-child {
+      flex: 0 1 74%;
+    }
+    & > div:last-child {
+      flex: 0 1 25%;
+    }
+  }
+}

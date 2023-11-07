@@ -11,37 +11,26 @@ const MainLayout = () => {
   const { isLoggedIn } = useAuth();
   const [showContent, setShowContent] = React.useState(false);
 
-  // React.useEffect(() => {
-  //   setShowContent(isLoggedIn);
-  //   if (!isLoggedIn) {
-  //     navigate("/login");
-  //   }
-  // }, [isLoggedIn, navigate]);
+  React.useEffect(() => {
+    setShowContent(isLoggedIn);
+    if (!isLoggedIn) {
+      navigate("/login");
+    }
+  }, [isLoggedIn, navigate]);
 
   return (
-    <div className={styles["main-layout"]}>
-      <Sidebar />
-      <div className={styles["main-wrapper"]}>
-        <Header />
-        <div>
-          <Outlet />
+    showContent && (
+      <div className={styles["main-layout"]}>
+        <Sidebar />
+        <div className={styles["main-wrapper"]}>
+          <Header />
+          <div>
+            <Outlet />
+          </div>
         </div>
       </div>
-    </div>
+    )
   );
-  // return (
-  //   showContent && (
-  //     <div className={styles["main-layout"]}>
-  //       <Sidebar />
-  //       <div className={styles["main-wrapper"]}>
-  //         <Header />
-  //         <div>
-  //           <Outlet />
-  //         </div>
-  //       </div>
-  //     </div>
-  //   )
-  // );
 };
 
 export default MainLayout;

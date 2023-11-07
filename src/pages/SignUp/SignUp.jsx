@@ -44,22 +44,22 @@ const SignUp = () => {
 
   const onSubmit = async (values) => {
     console.log(values);
-    const res = await axios.post("/user/sign_up", {
+    const res = await axios.post("/admin/new", {
       username: values.username,
       email: values.email,
       telephone: values.phone,
       password: values.password,
       gender: "Male",
-      first_name: values.firstName,
-      last_name: values.lastName,
+      firstName: values.firstName,
+      lastName: values.lastName,
+      role: "admin",
     });
-    if (res.data?.success) {
+    if (res.status === 200) {
       navigate("/login");
     } else {
       setShowError(true);
       setMessageError(res.data?.message);
     }
-    console.log("data= ", res.data);
   };
 
   return (

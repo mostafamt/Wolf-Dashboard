@@ -147,7 +147,13 @@ function SubCategoryTable() {
                   </td>
                   <td>
                     <div className="d-flex sub-category-desc">
-                      <img src={subCategory.Image} />
+                      <img
+                        src={subCategory.Image}
+                        alt={subCategory.Image}
+                        style={{
+                          objectFit: "cover",
+                        }}
+                      />
                       <div>
                         <p>{subCategory.name}</p>
                         <span>{subCategory.description}</span>

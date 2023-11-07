@@ -49,6 +49,7 @@ function AddSubCategory() {
 
   const { handleSubmit, register } = useForm();
 
+  console.log("categories= ", categories);
   return (
     <>
       <ToastContainer />
@@ -116,11 +117,12 @@ function AddSubCategory() {
             <div>
               <p>Category</p>
               <select name="category" {...register("category")}>
-                {categories.map((category) => (
-                  <option key={category._id} value={category._id}>
-                    {category.name}
-                  </option>
-                ))}
+                {categories &&
+                  categories?.map((category) => (
+                    <option key={category._id} value={category._id}>
+                      {category.name}
+                    </option>
+                  ))}
               </select>
             </div>
             <div>

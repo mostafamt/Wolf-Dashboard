@@ -41,7 +41,7 @@ const Product = (props) => {
       </td>
       <td>
         <div className="d-flex product-desc">
-          <img src={`${product.images?.[0]?.secure_url}`} alt={product.name} />
+          <img src={`${product.images?.[0]}`} alt={product.name} />
           <div>
             <p>{product.name}</p>
             <span>{product.ColorNum}</span>

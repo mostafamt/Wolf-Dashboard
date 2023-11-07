@@ -1,6 +1,8 @@
+import { useAuth } from "../../hooks/use-auth";
 import styles from "./header.module.scss";
 
 const Header = () => {
+  const { getName } = useAuth();
   return (
     <header className={styles.header}>
       <button>
@@ -8,7 +10,7 @@ const Header = () => {
         <span></span>
       </button>
       <div className={styles.info}>
-        <h4>Ahmed Taha</h4>
+        <h4>{getName()}</h4>
         <h5>Manager</h5>
       </div>
     </header>

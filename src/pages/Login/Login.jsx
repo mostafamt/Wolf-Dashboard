@@ -29,10 +29,9 @@ const Login = () => {
   const { onLogin } = useAuth();
 
   const onSubmit = async (values) => {
-    console.log(values);
-    const res = await axios.post("/user/login", values);
-    if (res.data?.success) {
-      onLogin();
+    const res = await axios.post("/admin", values);
+    if (res.status === 200) {
+      onLogin(res.data?.token, res.data?.firstName, res.data?.lastName);
       navigate("/");
     } else {
       setShowError(true);
