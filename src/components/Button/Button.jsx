@@ -12,7 +12,7 @@ const Button = (props) => {
   };
 
   return (
-    <button {...props} className={getClassName()}>
+    <button className={getClassName()} {...props}>
       {props.children}
     </button>
   );

@@ -1,5 +1,4 @@
 import { BsEye, BsPencil, BsTrash, BsCheckLg } from "react-icons/bs";
-import { BACKEND_URL } from "../../../config";
 
 const Product = (props) => {
   const { product, handleCheckOut } = props;
@@ -25,6 +24,10 @@ const Product = (props) => {
       date = new Date(product.createdAt).toDateString();
     }
     return date;
+  };
+
+  const onDeleteProduct = async () => {
+    props.handleShow(product._id);
   };
 
   return (
@@ -63,7 +66,7 @@ const Product = (props) => {
         <button>
           <BsPencil />
         </button>
-        <button>
+        <button onClick={onDeleteProduct}>
           <BsTrash />
         </button>
       </td>

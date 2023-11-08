@@ -27,7 +27,7 @@ const AddProduct = () => {
 
   const getCategories = async () => {
     const res = await axios.get("/main_category");
-    setCategories(res.data);
+    setCategories(res.data.response);
   };
 
   const getSubCategories = useCallback(async () => {
@@ -35,8 +35,9 @@ const AddProduct = () => {
       const res = await axios.get(
         `/subcategory/main_category/${selectedCategoryId}`
       );
-      setSubCategories(res.data);
+      setSubCategories(res.data.response);
       if (res.data.length === 1) {
+        console.log("here");
         setSelectedSubCategoryId(res.data[0]._id);
       }
     }

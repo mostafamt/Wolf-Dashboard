@@ -10,14 +10,14 @@ import { useAuth } from "@hooks/use-auth";
 
 import styles from "./style.module.scss";
 
-const BACKEND = "LOCAL";
+// const BACKEND = "LOCAL";
 
 const urls = {
-  LOCAL: "http://localhost:8088",
-  SERVER: "",
+  LOCAL: "http://localhost:5000",
+  SERVER: "https://wolf-back.onrender.com/",
 };
 
-const BACKEND_URL = urls[BACKEND];
+const BACKEND_URL = urls["LOCAL"];
 
 export const useConfig = () => {
   const { onLogout } = useAuth();

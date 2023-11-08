@@ -24,10 +24,12 @@ import "react-toastify/dist/ReactToastify.css";
 import AddSubCategory from "@components/subcategory/AddSubCategory/AddSubCategory";
 import EditSubCategory from "@components/subcategory/EditSubCategory/EditSubCategory";
 import AddProduct from "@pages/AddProduct/AddProduct";
+import Modal from "./components/Modal/Modal";
 
 function App() {
   return (
     <BrowserRouter>
+      {/* <Modal /> */}
       <Routes>
         <Route element={<AuthLayout />}>
           <Route path="/login" element={<Login />} />

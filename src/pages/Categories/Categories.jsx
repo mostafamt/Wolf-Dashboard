@@ -11,7 +11,7 @@ const Categories = () => {
 
   const getData = async () => {
     const res = await axios.get("/main_category");
-    setCategories(res.data);
+    setCategories(res.data.response);
   };
 
   React.useEffect(() => {

@@ -12,6 +12,15 @@ import _ from "lodash";
 import axios from "../../axios";
 import Product from "@components/productlist/Product/Product";
 import { useNavigate } from "react-router-dom";
+import Modal from "@components/Modal/Modal";
+import CircleDeleteIcon from "@icons/CircleDeleteIcon";
+import DeleteIcon from "@icons/DeleteIcon";
+import CloseIcon from "@icons/CloseIcon";
+import Button from "@components/Button/Button";
+
+import styles from "./products.module.scss";
+import { ToastContainer } from "react-bootstrap";
+import { toast } from "react-toastify";
 
 const Products = () => {
   const [searchByProduct, setSearchByProduct] = useState();
@@ -50,8 +59,46 @@ const Products = () => {
     navigate("/products/add");
   };
 
+  const [show, setShow] = useState(false);
+  const [activeId, setActiveId] = useState();
+
+  const handleClose = () => setShow(false);
+  const handleShow = (id) => {
+    setActiveId(id);
+    setShow(true);
+  };
+
+  const onDeleteProduct = async () => {
+    const data = axios.delete(`/product/${activeId}`);
+    handleClose();
+    toast.success("Product deleted Successfully!");
+  };
+
   return (
     <>
+      <ToastContainer />
+      <Modal show={show} handleClose={handleClose}>
+        <div className={styles["modal-content"]}>
+          <CircleDeleteIcon />
+          <h4>Delete Product</h4>
+          <p>Are you sure to delete this product?</p>
+
+          <div>
+            <Button type="secondary" onClick={handleClose}>
+              <CloseIcon />
+              <span>cancel</span>
+            </Button>
+            <Button
+              type="primary"
+              className={styles.primary}
+              onClick={onDeleteProduct}
+            >
+              <DeleteIcon />
+              <span>delete product</span>
+            </Button>
+          </div>
+        </div>
+      </Modal>
       <div className="title d-flex justify-content-between align-items-center">
         <div>
           <h2>Product</h2>
@@ -202,6 +249,7 @@ const Products = () => {
                       key={product._id}
                       product={product}
                       handleCheckOut={handleCheckOut}
+                      handleShow={handleShow}
                     />
                   );
                 }
