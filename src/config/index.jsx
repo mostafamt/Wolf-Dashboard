@@ -13,11 +13,11 @@ import styles from "./style.module.scss";
 // const BACKEND = "LOCAL";
 
 const urls = {
-  LOCAL: "http://localhost:5000",
-  SERVER: "https://wolf-back.onrender.com/",
+  LOCAL: "http://localhost:8088",
+  SERVER: "",
 };
 
-const BACKEND_URL = urls["LOCAL"];
+const BACKEND_URL = import.meta.env.VITE_URL || urls["LOCAL"];
 
 export const useConfig = () => {
   const { onLogout } = useAuth();
