@@ -13,7 +13,9 @@ const Product = (props) => {
     let sum = 0;
     if (product.quantity) {
       const values = Object.values(product.quantity);
-      sum = values.reduce((acc, cur) => acc + cur, 0);
+      sum = values.reduce((acc, cur) => {
+        return acc + cur, 0;
+      });
     }
     return sum;
   };
@@ -44,7 +46,7 @@ const Product = (props) => {
       </td>
       <td>
         <div className="d-flex product-desc">
-          <img src={`${product.images?.[0]}`} alt={product.name} />
+          <img src={`${product.images?.[0]?.secure_url}`} alt={product.name} />
           <div>
             <p>{product.name}</p>
             <span>{product.ColorNum}</span>

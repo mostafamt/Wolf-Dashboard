@@ -33,8 +33,14 @@ const FormControl = (props) => {
       <div className={styles["file-box"]}>
         {props.media?.length ? (
           <div className={styles.media}>
-            {props.media.map((url, idx) => (
-              <img key={idx} src={url} alt={url} width="100" height="100" />
+            {props.media.map((item, idx) => (
+              <img
+                key={idx}
+                src={item.secure_url}
+                alt={item.public_id}
+                width="100"
+                height="100"
+              />
             ))}
           </div>
         ) : (

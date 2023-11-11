@@ -19,8 +19,7 @@ import CloseIcon from "@icons/CloseIcon";
 import Button from "@components/Button/Button";
 
 import styles from "./products.module.scss";
-import { ToastContainer } from "react-bootstrap";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 
 const Products = () => {
   const [searchByProduct, setSearchByProduct] = useState();
@@ -35,7 +34,6 @@ const Products = () => {
   const fetchData = async () => {
     const res = await axios.get("/product");
     setProducts(res.data);
-    console.log("products= ", products);
   };
 
   React.useEffect(() => {
@@ -69,9 +67,17 @@ const Products = () => {
   };
 
   const onDeleteProduct = async () => {
-    const data = axios.delete(`/product/${activeId}`);
-    handleClose();
-    toast.success("Product deleted Successfully!");
+    try {
+      axios.delete(`/product/${activeId}`);
+      handleClose();
+      toast.success("Product deleted Successfully!");
+      const newProducts = products.filter(
+        (product) => product._id !== activeId
+      );
+      setProducts(newProducts);
+    } catch (error) {
+      toast.error(error);
+    }
   };
 
   return (
@@ -84,12 +90,12 @@ const Products = () => {
           <p>Are you sure to delete this product?</p>
 
           <div>
-            <Button type="secondary" onClick={handleClose}>
+            <Button variant="secondary" onClick={handleClose}>
               <CloseIcon />
               <span>cancel</span>
             </Button>
             <Button
-              type="primary"
+              variant="primary"
               className={styles.primary}
               onClick={onDeleteProduct}
             >
@@ -249,7 +255,7 @@ const Products = () => {
                       key={product._id}
                       product={product}
                       handleCheckOut={handleCheckOut}
-                      handleShow={handleShow}
+                      handleShow={() => handleShow(product._id)}
                     />
                   );
                 }

@@ -3,7 +3,7 @@ import { BsChevronLeft, BsChevronRight, BsPencil } from "react-icons/bs";
 import _ from "lodash";
 import { useNavigate } from "react-router-dom";
 
-function MainTable(props) {
+const Table = (props) => {
   const [startItem, setStartItem] = useState(0);
   const [endItem, setEndItem] = useState(8);
   const num = 8;
@@ -14,14 +14,11 @@ function MainTable(props) {
     setStartItem((value - 1) * 8);
     setEndItem(value * 8);
   };
-  const handleEdit = (event, category) => {
-    event.stopPropagation();
-    console.log("edit");
-    // navigate(`/category/${category._id}`, { state: { category } });
+  const handleEdit = (category) => {
+    navigate(`/category/${category._id}`, { state: { category } });
   };
 
-  const onClickTableRow = (event, category) => {
-    event.stopPropagation();
+  const onClickTableRow = (category) => {
     navigate(`/categories/${category._id}/sub-categories`);
   };
 
@@ -45,7 +42,7 @@ function MainTable(props) {
               return (
                 <tr
                   key={category._id}
-                  onClick={(e) => onClickTableRow(event, category)}
+                  onClick={() => onClickTableRow(category)}
                 >
                   <td>
                     <div className="d-flex product-desc">
@@ -59,7 +56,7 @@ function MainTable(props) {
                   <td>{Math.ceil(Math.random() * 1000)}</td>
                   <td>{new Date(category.updatedAt).toDateString()}</td>
                   <td className="actions">
-                    <button onClick={(event) => handleEdit(event, category)}>
+                    <button onClick={() => handleEdit(category)}>
                       <BsPencil />
                     </button>
                   </td>
@@ -122,5 +119,6 @@ function MainTable(props) {
       </div>
     </div>
   );
-}
-export default MainTable;
+};
+
+export default Table;

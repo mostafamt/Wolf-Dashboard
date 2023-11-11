@@ -7,7 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import styles from "./signUp.module.scss";
 import { useForm } from "react-hook-form";
 import axios from "../../axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/use-auth";
 
 const SignUp = () => {
@@ -25,8 +25,10 @@ const SignUp = () => {
       message: "Passwords don't match",
       path: ["repeatPassword"], // path of error
     });
-  const [showError, setShowError] = React.useState(false);
-  const [messageError, setMessageError] = React.useState("");
+  const [messageType, setMessageType] = React.useState("");
+  const [message, setMessage] = React.useState("");
+  // const [showError, setShowError] = React.useState(false);
+  // const [messageError, setMessageError] = React.useState("");
   const navigate = useNavigate();
   const { isLoggedIn } = useAuth();
 
@@ -43,7 +45,7 @@ const SignUp = () => {
   });
 
   const onSubmit = async (values) => {
-    console.log(values);
+    setMessageType("");
     const res = await axios.post("/admin/new", {
       username: values.username,
       email: values.email,
@@ -54,19 +56,29 @@ const SignUp = () => {
       lastName: values.lastName,
       role: "admin",
     });
-    if (res.status === 200) {
-      navigate("/login");
+    if (res.data?.message === "Sign up is successfully") {
+      setMessageType("success");
+      setMessage(
+        <>
+          Signed up successfully. Now you can <Link to="/login">Login </Link>
+        </>
+      );
     } else {
-      setShowError(true);
-      setMessageError(res.data?.message);
+      setMessageType("error");
+      setMessage(res.data?.message);
     }
   };
 
   return (
     <>
-      {showError && (
+      {messageType === "error" && (
         <div className="alert alert-danger" role="alert">
-          {messageError}
+          {message}
+        </div>
+      )}
+      {messageType === "success" && (
+        <div className="alert alert-success" role="alert">
+          {message}
         </div>
       )}
       <form className={styles["sign-up"]} onSubmit={handleSubmit(onSubmit)}>

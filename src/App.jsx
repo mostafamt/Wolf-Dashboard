@@ -2,7 +2,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./components/dashboard.css";
-import SubCategory from "@components/SubCategory";
 
 import Home from "@pages/Home/Home";
 import Products from "@pages/Products/Products";
@@ -24,7 +23,8 @@ import "react-toastify/dist/ReactToastify.css";
 import AddSubCategory from "@components/subcategory/AddSubCategory/AddSubCategory";
 import EditSubCategory from "@components/subcategory/EditSubCategory/EditSubCategory";
 import AddProduct from "@pages/AddProduct/AddProduct";
-import Modal from "./components/Modal/Modal";
+import SubCategoriesOfCategory from "./pages/SubCategoriesOfCategory/SubCategoriesOfCategory";
+import SubCategories from "@pages/SubCategories/SubCategories";
 
 function App() {
   return (
@@ -41,8 +41,12 @@ function App() {
           <Route path="/products" element={<Products />} />
           <Route path="/products/add" element={<AddProduct />} />
           <Route path="/categories" element={<Categories />} />
+          <Route
+            path="/categories/:category/sub-categories"
+            element={<SubCategoriesOfCategory />}
+          />
           <Route path="/category/:id" element={<Category />} />
-          <Route path="/sub-categories" element={<SubCategory />} />
+          <Route path="/sub-categories" element={<SubCategories />} />
           <Route path="/sub-categories/add" element={<AddSubCategory />} />
           <Route
             path="/sub-categories/edit/:id"

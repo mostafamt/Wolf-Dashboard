@@ -3,36 +3,31 @@ import { BsChevronLeft, BsChevronRight, BsPencil } from "react-icons/bs";
 import _ from "lodash";
 import { useNavigate } from "react-router-dom";
 
-function MainTable(props) {
+const SubCategoriesOfCategoryTable = ({ list }) => {
   const [startItem, setStartItem] = useState(0);
   const [endItem, setEndItem] = useState(8);
   const num = 8;
-  const paginations = _.range(0, Math.ceil(props.categories.length / 8));
+  const paginations = _.range(0, Math.ceil(list.length / 8));
   const navigate = useNavigate();
 
   const editCulc = (value) => {
     setStartItem((value - 1) * 8);
     setEndItem(value * 8);
   };
-  const handleEdit = (event, category) => {
-    event.stopPropagation();
-    console.log("edit");
-    // navigate(`/category/${category._id}`, { state: { category } });
+  const handleEdit = (category) => {
+    navigate(`/category/${category._id}`, { state: { category } });
   };
 
-  const onClickTableRow = (event, category) => {
-    event.stopPropagation();
+  const onClickTableRow = (category) => {
     navigate(`/categories/${category._id}/sub-categories`);
   };
-
-  const { categories } = props;
 
   return (
     <div className="table">
       <table className="main">
         <thead>
           <tr className="">
-            <td>Category</td>
+            <td>Sub Category</td>
             <td>Suppliers</td>
             <td>Stock</td>
             <td>Added</td>
@@ -40,12 +35,12 @@ function MainTable(props) {
           </tr>
         </thead>
         <tbody>
-          {categories.map((category, index) => {
+          {list.map((category, index) => {
             if (index >= startItem && index < endItem) {
               return (
                 <tr
                   key={category._id}
-                  onClick={(e) => onClickTableRow(event, category)}
+                  onClick={() => onClickTableRow(category)}
                 >
                   <td>
                     <div className="d-flex product-desc">
@@ -59,7 +54,7 @@ function MainTable(props) {
                   <td>{Math.ceil(Math.random() * 1000)}</td>
                   <td>{new Date(category.updatedAt).toDateString()}</td>
                   <td className="actions">
-                    <button onClick={(event) => handleEdit(event, category)}>
+                    <button onClick={() => handleEdit(category)}>
                       <BsPencil />
                     </button>
                   </td>
@@ -71,16 +66,15 @@ function MainTable(props) {
       </table>
       <div className="tfooter">
         <div className="showing">
-          {endItem < categories.length ? (
+          {endItem < list.length ? (
             <span>
               {" "}
-              Showing {startItem + 1}-{endItem} from {categories.length}{" "}
+              Showing {startItem + 1}-{endItem} from {list.length}{" "}
             </span>
           ) : (
             <span>
               {" "}
-              Showing {startItem + 1}-{categories.length} from{" "}
-              {categories.length}{" "}
+              Showing {startItem + 1}-{list.length} from {list.length}{" "}
             </span>
           )}
         </div>
@@ -96,7 +90,7 @@ function MainTable(props) {
             <BsChevronLeft />
           </li>
           {paginations.map((value, idx) => {
-            if (categories.length / 8 > value) {
+            if (list.length / 8 > value) {
               return (
                 <li
                   key={idx}
@@ -110,7 +104,7 @@ function MainTable(props) {
           })}
           <li
             onClick={() => {
-              if (startItem <= 8 * (Math.ceil(categories.length / 8) - 2)) {
+              if (startItem <= 8 * (Math.ceil(list.length / 8) - 2)) {
                 setStartItem(startItem + 8);
                 setEndItem(endItem + 8);
               }
@@ -122,5 +116,6 @@ function MainTable(props) {
       </div>
     </div>
   );
-}
-export default MainTable;
+};
+
+export default SubCategoriesOfCategoryTable;

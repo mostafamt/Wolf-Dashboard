@@ -17,7 +17,7 @@ function AddSubCategory() {
 
   const fetchCategories = async () => {
     const res = await axios.get("/main_category");
-    setCategories(res.data);
+    setCategories(res.data.response);
   };
 
   React.useEffect(() => {
@@ -29,7 +29,7 @@ function AddSubCategory() {
     const data = new FormData();
     data.append("file", file);
     const res = await axios.post("upload", data);
-    setImage(res.data.url);
+    setImage(res.data);
   };
 
   const onClickCancel = () => {
@@ -88,7 +88,7 @@ function AddSubCategory() {
             <div className="d-flex flex-column align-items-center">
               {img ? (
                 <div className={styles["img-box"]}>
-                  <img src={img} alt="cover image for subcategory" />
+                  <img src={img.secure_url} alt="cover image for subcategory" />
                 </div>
               ) : (
                 <>

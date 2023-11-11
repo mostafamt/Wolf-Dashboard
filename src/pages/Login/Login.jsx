@@ -22,7 +22,6 @@ const Login = () => {
     handleSubmit,
     register,
     formState: { errors },
-    reset,
   } = useForm({
     resolver: zodResolver(loginSchema),
   });
@@ -30,13 +29,12 @@ const Login = () => {
 
   const onSubmit = async (values) => {
     const res = await axios.post("/admin", values);
-    if (res.status === 200) {
+    if (res.data?.message === "Login Successful!") {
       onLogin(res.data?.token, res.data?.firstName, res.data?.lastName);
       navigate("/");
     } else {
       setShowError(true);
     }
-    reset();
   };
 
   return (

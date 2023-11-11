@@ -13,11 +13,11 @@ const ProductHeader = () => {
         <Breadcrumbs list={["product", "product list", "add product"]} />
       </div>
       <div>
-        <Button type="secondary">
+        <Button variant="secondary">
           <CloseIcon />
           <span>cancel</span>
         </Button>
-        <Button type="primary">
+        <Button variant="primary">
           <PlusIcon />
           <span>add product</span>
         </Button>
