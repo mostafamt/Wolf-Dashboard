@@ -16,11 +16,8 @@ const FormControl = (props) => {
     );
   } else if (type === "select") {
     input = (
-      <select
-        onChange={
-          props?.onChange ? (e) => props?.onChange(e.target.value) : null
-        }
-      >
+      <select {...register(name)}>
+        <option value="">-- Select an option --</option>
         {props.list?.map((item, idx) => (
           <option key={idx} value={item._id}>
             {item.name}

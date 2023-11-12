@@ -1,37 +1,94 @@
 import React from "react";
 import NewTodoForm from "./NewTodoForm/NewTodoForm";
 
-import { useForm } from "react-hook-form";
+import { useFieldArray, useForm, useWatch } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-const SignUpSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(3).max(20),
-});
+const TotalAmount = ({ control }) => {
+  const cartValues = useWatch({
+    control,
+    name: "cart",
+  });
+
+  console.log(cartValues);
+
+  return null;
+};
 
 const Test = () => {
   const {
     register,
-    handleSubmit,
     formState: { errors },
-  } = useForm({ resolver: zodResolver(SignUpSchema) });
+    control,
+    handleSubmit,
+  } = useForm({
+    defaultValues: {
+      cart: [{ name: "", amount: 0 }],
+    },
+  });
 
-  const onSubmit = (data) => console.log(data);
+  const { fields, append, prepend, remove } = useFieldArray({
+    name: "cart",
+    control,
+    rules: {
+      required: "Please append at least 1 item",
+      validate: () => {},
+    },
+  });
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="form">
-      <input className="input" placeholder="email" {...register("email")} />
-      {errors.email && <span>{errors.email.message}</span>}
-
-      <input
-        className="input"
-        placeholder="password"
-        {...register("password")}
-      />
-      {errors.password && <span>{errors.password.message}</span>}
-
-      <button type="submit">submit!</button>
+    <form
+      onSubmit={handleSubmit((values) => {
+        console.log(values);
+      })}
+    >
+      <p>form here</p>
+      {fields.map((field, index) => {
+        return (
+          <section key={field.id}>
+            <label>
+              <span>Name</span>
+              <input {...register(`cart.${index}.name`, { required: true })} />
+            </label>
+            <label>
+              <span>Amount</span>
+              <input
+                type="number"
+                {...register(`cart.${index}.amount`, { valueAsNumber: true })}
+              />
+            </label>
+            <button type="button" onClick={() => remove(index)}>
+              Delete
+            </button>
+          </section>
+        );
+      })}
+      <button
+        type="button"
+        onClick={() => {
+          append({
+            name: "bill",
+            amount: 2,
+          });
+        }}
+      >
+        Append
+      </button>
+      <button
+        type="button"
+        onClick={() => {
+          prepend({
+            name: "mostafa",
+            amount: 0,
+          });
+        }}
+      >
+        Prepend
+      </button>
+      <TotalAmount control={control} />
+      <p>{errors.cart?.root?.message}</p>
+      <button type="submit">submit</button>
     </form>
   );
 };

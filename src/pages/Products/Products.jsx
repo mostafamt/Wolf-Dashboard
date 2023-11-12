@@ -256,6 +256,7 @@ const Products = () => {
                       product={product}
                       handleCheckOut={handleCheckOut}
                       handleShow={() => handleShow(product._id)}
+                      fetchData={fetchData}
                     />
                   );
                 }

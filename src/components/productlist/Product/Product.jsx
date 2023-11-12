@@ -1,7 +1,14 @@
-import { BsEye, BsPencil, BsTrash, BsCheckLg } from "react-icons/bs";
+import {
+  BsEye,
+  BsEyeSlash,
+  BsPencil,
+  BsTrash,
+  BsCheckLg,
+} from "react-icons/bs";
+import axios from "../../../axios";
 
 const Product = (props) => {
-  const { product, handleCheckOut } = props;
+  const { product, handleCheckOut, fetchData } = props;
 
   const getCategory = () => {
     const { category, subCategory } = product;
@@ -30,6 +37,11 @@ const Product = (props) => {
 
   const onDeleteProduct = async () => {
     props.handleShow(product._id);
+  };
+
+  const onClickViewProduct = async () => {
+    await axios.put(`/product/view/${product._id}`);
+    fetchData();
   };
 
   return (
@@ -62,8 +74,8 @@ const Product = (props) => {
       </td>
       <td className="added">{getDate()}</td>
       <td className="actions">
-        <button>
-          <BsEye />
+        <button onClick={onClickViewProduct}>
+          {product?.view ? <BsEye /> : <BsEyeSlash />}
         </button>
         <button>
           <BsPencil />
