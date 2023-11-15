@@ -34,7 +34,7 @@ const Products = () => {
   };
 
   const fetchProductsByName = async (name) => {
-    const res = await axios.get(`/product/${name}`);
+    const res = await axios.get(`/product/search/${name}`);
     setProducts(res.data);
   };
 
