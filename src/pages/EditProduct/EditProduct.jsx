@@ -132,7 +132,9 @@ const EditProduct = () => {
         type: "cotton",
       },
       SKU: values.sku,
+      color_hex: values.color_hex.substring(1),
     };
+
     try {
       await axios.put(`/product/${id}`, data);
       toast.success("Product updated Successfully !");
@@ -208,7 +210,7 @@ const EditProduct = () => {
               />
             </FormBox>
 
-            <FormBox title="Inventory" col={2}>
+            <FormBox title="Inventory" col={3}>
               <FormControl
                 register={register}
                 label="sku"
@@ -218,9 +220,16 @@ const EditProduct = () => {
               />
               <FormControl
                 register={register}
-                label="color"
+                label="color name"
                 name="color"
                 type="text"
+                errors={errors}
+              />
+              <FormControl
+                register={register}
+                label="color hexadecimal"
+                name="color_hex"
+                type="color"
                 errors={errors}
               />
             </FormBox>
