@@ -29,7 +29,7 @@ const AddProduct = () => {
     control,
   } = useForm({
     defaultValues: {
-      sizes: [{ size: "", amount: 0 }],
+      sizes: [{ size: "OS", amount: 0 }],
     },
   });
   const category = watch().category;
@@ -102,6 +102,7 @@ const AddProduct = () => {
         type: "cotton",
       },
       SKU: values.sku,
+      color_hex: values.color_hex.substring(1),
     };
     console.log("data= ", data);
     try {
@@ -180,7 +181,7 @@ const AddProduct = () => {
               />
             </FormBox>
 
-            <FormBox title="Inventory" col={2}>
+            <FormBox title="Inventory" col={3}>
               <FormControl
                 register={register}
                 label="sku"
@@ -190,9 +191,16 @@ const AddProduct = () => {
               />
               <FormControl
                 register={register}
-                label="color"
+                label="color name"
                 name="color"
                 type="text"
+                errors={errors}
+              />
+              <FormControl
+                register={register}
+                label="color hexadecimal"
+                name="color_hex"
+                type="color"
                 errors={errors}
               />
             </FormBox>

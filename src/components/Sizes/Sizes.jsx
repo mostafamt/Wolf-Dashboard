@@ -32,14 +32,15 @@ const Sizes = (props) => {
         <section className={styles.size} key={field.id}>
           <label>
             <span>Size</span>
-            <select {...register(`sizes.${index}.size`)}>
+            <input type="text" {...register(`sizes.${index}.size`)} />
+            {/* <select {...register(`sizes.${index}.size`)}>
               <option value="">-- Select an option --</option>
               {sizeLabels?.map((item, idx) => (
                 <option key={idx} value={item.name}>
                   {item.name}
                 </option>
               ))}
-            </select>
+            </select> */}
           </label>
           <label>
             <span>Quantity</span>
