@@ -43,7 +43,11 @@ const Products = () => {
   }, []);
 
   React.useEffect(() => {
-    fetchProductsByName(searchByProduct);
+    if (searchByProduct) {
+      fetchProductsByName(searchByProduct);
+    } else {
+      fetchData();
+    }
   }, [searchByProduct]);
 
   const editCulc = (value) => {
