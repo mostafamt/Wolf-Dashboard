@@ -1,4 +1,5 @@
-import { useContext, useState } from "react";
+import React from "react";
+import { useState } from "react";
 import {
   BsChevronDown,
   BsSearch,
@@ -10,16 +11,33 @@ import {
 } from "react-icons/bs";
 import ImageProduct from "../../assets/Img.png";
 import _ from "lodash";
-import { CustomerContext } from "../Customer";
+import { useNavigate } from "react-router-dom";
+import axios from "../../axios";
+import { useAuth } from "../../hooks/use-auth";
 
 function ProductListTable() {
-  const { detailsPage, setDetailsPage, customerId, setCustomerId } =
-    useContext(CustomerContext);
   const [searchByProduct, setSearchByProduct] = useState();
   const [headDrop, setheadDrop] = useState("");
   const [startItem, setStartItem] = useState(0);
   const [endItem, setEndItem] = useState(8);
   const [check, setCheck] = useState(false);
+  const navigate = useNavigate();
+  const [customers, setCustomers] = React.useState([]);
+  const { token } = useAuth();
+
+  const fetchCustomers = async () => {
+    const res = await axios.get("/user", {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    });
+    setCustomers(res.data);
+    console.log("res= ", res);
+  };
+
+  React.useEffect(() => {
+    fetchCustomers();
+  }, []);
 
   const editCulc = (value) => {
     setStartItem((value - 1) * 8);
@@ -31,8 +49,7 @@ function ProductListTable() {
     value.classList.toggle("check-active");
   };
   const handleShow = (value) => {
-    setCustomerId(value);
-    setDetailsPage(true);
+    navigate(`/customers/${value}`);
   };
 
   const num = 8;
@@ -105,14 +122,14 @@ function ProductListTable() {
             </tr>
           </thead>
           <tbody>
-            {listProduct.map((item, index) => {
+            {customers.map((customer, index) => {
               if (index >= startItem && index < endItem) {
                 return (
-                  <tr key={item.Id}>
+                  <tr key={customer._id}>
                     <td>
                       <div
                         className="check"
-                        onClick={(e) => handleCheckOut(e.target, item.Id)}
+                        onClick={(e) => handleCheckOut(e.target, customer._id)}
                       >
                         <span>
                           <BsCheckLg />
@@ -121,22 +138,27 @@ function ProductListTable() {
                     </td>
                     <td>
                       <div className="d-flex product-desc">
-                        <img src={item.Image} style={{ borderRadius: "50%" }} />
+                        <img
+                          src={ImageProduct}
+                          style={{ borderRadius: "50%" }}
+                        />
                         <div>
-                          <p>John Bushmill</p>
-                          <span>Johnb@mail.com</span>
+                          <p>{`${customer.first_name} ${customer.last_name}`}</p>
+                          <span>{customer.email}</span>
                         </div>
                       </div>
                     </td>
-                    <td style={{ textAlign: "center" }}>01229549459</td>
+                    <td style={{ textAlign: "center" }}>
+                      {customer.telephone}
+                    </td>
                     <td style={{ textAlign: "center" }}>599</td>
                     <td style={{ textAlign: "center" }}>$599</td>
                     <td style={{ textAlign: "center" }}>$599</td>
                     <td className="added" style={{ textAlign: "center" }}>
-                      {item.Added}
+                      {new Date(Date.now()).toDateString()}
                     </td>
                     <td className="actions">
-                      <button onClick={() => handleShow(item.Id)}>
+                      <button onClick={() => handleShow(customer._id)}>
                         <BsEye />
                       </button>
                     </td>
@@ -148,16 +170,16 @@ function ProductListTable() {
         </table>
         <div className="tfooter">
           <div className="showing">
-            {endItem < listProduct.length ? (
+            {endItem < customers.length ? (
               <span>
                 {" "}
-                Showing {startItem + 1}-{endItem} from {listProduct.length}{" "}
+                Showing {startItem + 1}-{endItem} from {customers.length}{" "}
               </span>
             ) : (
               <span>
                 {" "}
-                Showing {startItem + 1}-{listProduct.length} from{" "}
-                {listProduct.length}{" "}
+                Showing {startItem + 1}-{customers.length} from{" "}
+                {customers.length}{" "}
               </span>
             )}
           </div>
@@ -172,10 +194,11 @@ function ProductListTable() {
             >
               <BsChevronLeft />
             </li>
-            {paginations.map((value) => {
-              if (listProduct.length / 8 > value) {
+            {paginations.map((value, idx) => {
+              if (customers.length / 8 > value) {
                 return (
                   <li
+                    key={idx}
                     className={`${startItem == value * num && "active"}`}
                     onClick={() => editCulc(value + 1)}
                   >
@@ -186,7 +209,7 @@ function ProductListTable() {
             })}
             <li
               onClick={() => {
-                if (startItem <= 8 * (Math.ceil(listProduct.length / 8) - 2)) {
+                if (startItem <= 8 * (Math.ceil(customers.length / 8) - 2)) {
                   setStartItem(startItem + 8);
                   setEndItem(endItem + 8);
                 }

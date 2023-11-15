@@ -1,23 +1,33 @@
+import axios from "../../axios";
 import React from "react";
+import { useForm } from "react-hook-form";
+import { useNavigate, useParams } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 import { BsChevronRight } from "react-icons/bs";
-import ImgIcon from "../../../assets/image.png";
 import SaveIcon from "@icons/SaveIcon";
 import CloseIcon from "@icons/CloseIcon";
-import axios from "../../../axios";
+import ImgIcon from "../../assets/image.png";
 
-import styles from "./addSubCategory.module.scss";
-import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
+import styles from "./editSubCategory.module.scss";
 
-function AddSubCategory() {
+const EditSubCategory = () => {
   const [img, setImage] = React.useState();
+  const [subCategory, setSubCategory] = React.useState();
   const [categories, setCategories] = React.useState([]);
   const navigate = useNavigate();
+  const params = useParams();
 
   const fetchCategories = async () => {
     const res = await axios.get("/main_category");
     setCategories(res.data.response);
+  };
+
+  const fetchSubCategory = async () => {
+    const id = params.id;
+    const res = await axios.get(`subcategory/${id}`);
+    setSubCategory(res.data);
+    setImage(res.data.Image);
+    return res.data;
   };
 
   React.useEffect(() => {
@@ -39,17 +49,32 @@ function AddSubCategory() {
   const onSubmit = async (values) => {
     const data = {
       ...values,
-      image: img,
+      Image: img,
     };
-    await axios.post("/subcategory/create", data);
-    toast.success("Saved Successfully !", {
-      position: toast.POSITION.TOP_RIGHT,
-    });
+    try {
+      await axios.put(`/subcategory/${subCategory._id}`, data);
+      toast.success("Saved Successfully !", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+      setTimeout(() => {
+        navigate("/sub-categories");
+      }, 2000);
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
 
-  const { handleSubmit, register } = useForm();
+  const { handleSubmit, register } = useForm({
+    defaultValues: async () => {
+      const subCategory = await fetchSubCategory();
+      return {
+        name: subCategory.name,
+        description: subCategory.description,
+        category: subCategory.category,
+      };
+    },
+  });
 
-  console.log("categories= ", categories);
   return (
     <>
       <ToastContainer />
@@ -59,7 +84,7 @@ function AddSubCategory() {
       >
         <div className="title d-flex justify-content-between align-items-center">
           <div>
-            <h2>Add Sub Categories</h2>
+            <h2>Edit Sub Categories</h2>
             <div className="path">
               <span>Product</span>
               <span>
@@ -69,7 +94,7 @@ function AddSubCategory() {
               <span>
                 <BsChevronRight />
               </span>
-              <span>Add Sub Categories</span>
+              <span>Edit Sub Categories</span>
             </div>
           </div>
           <div>
@@ -116,13 +141,16 @@ function AddSubCategory() {
             </div>
             <div>
               <p>Category</p>
-              <select name="category" {...register("category")}>
-                {categories &&
-                  categories?.map((category) => (
-                    <option key={category._id} value={category._id}>
-                      {category.name}
-                    </option>
-                  ))}
+              <select
+                // value={location.state.subCategory?.category?._id}
+                name="category"
+                {...register("category")}
+              >
+                {categories.map((category) => (
+                  <option key={category._id} value={category._id}>
+                    {category.name}
+                  </option>
+                ))}
               </select>
             </div>
             <div>
@@ -138,5 +166,6 @@ function AddSubCategory() {
       </form>
     </>
   );
-}
-export default AddSubCategory;
+};
+
+export default EditSubCategory;

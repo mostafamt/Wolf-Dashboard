@@ -4,22 +4,31 @@ import CloseIcon from "@icons/CloseIcon";
 import PlusIcon from "@icons/PlusIcon";
 
 import styles from "./productHeader.module.scss";
+import { useNavigate } from "react-router-dom";
 
-const ProductHeader = () => {
+const ProductHeader = (props) => {
+  const navigate = useNavigate();
+
+  const onClickCancel = () => {
+    navigate("/products");
+  };
+
+  const { header, buttonLabel } = props;
+
   return (
     <div className={styles["product-header"]}>
       <div>
-        <h2>Add Product</h2>
-        <Breadcrumbs list={["product", "product list", "add product"]} />
+        <h2>{header}</h2>
+        <Breadcrumbs list={["product", "product list", header]} />
       </div>
       <div>
-        <Button variant="secondary">
+        <Button variant="secondary" type="button" onClick={onClickCancel}>
           <CloseIcon />
           <span>cancel</span>
         </Button>
         <Button variant="primary">
-          <PlusIcon />
-          <span>add product</span>
+          {buttonLabel === "add product" && <PlusIcon />}
+          <span>{buttonLabel}</span>
         </Button>
       </div>
     </div>

@@ -19,17 +19,21 @@ import AuthLayout from "@components/Layout/AuthLayout/AuthLayout";
 import Test from "@pages/Test/Test";
 import Categories from "@pages/Categories/Categories";
 import Category from "@pages/Category/Category";
-import "react-toastify/dist/ReactToastify.css";
 import AddSubCategory from "@components/subcategory/AddSubCategory/AddSubCategory";
-import EditSubCategory from "@components/subcategory/EditSubCategory/EditSubCategory";
 import AddProduct from "@pages/AddProduct/AddProduct";
 import SubCategoriesOfCategory from "./pages/SubCategoriesOfCategory/SubCategoriesOfCategory";
 import SubCategories from "@pages/SubCategories/SubCategories";
+import EditSubCategory from "@pages/EditSubCategory/EditSubCategory";
+import EditProduct from "@pages/EditProduct/EditProduct";
+import Order from "@pages/Order/Order";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
+import Customer from "@pages/Customer/Customer";
 
 function App() {
   return (
     <BrowserRouter>
-      {/* <Modal /> */}
+      <ToastContainer />
       <Routes>
         <Route element={<AuthLayout />}>
           <Route path="/login" element={<Login />} />
@@ -40,6 +44,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/products" element={<Products />} />
           <Route path="/products/add" element={<AddProduct />} />
+          <Route path="/products/edit/:id" element={<EditProduct />} />
           <Route path="/categories" element={<Categories />} />
           <Route
             path="/categories/:category/sub-categories"
@@ -53,7 +58,9 @@ function App() {
             element={<EditSubCategory />}
           />
           <Route path="/orders" element={<Orders />} />
+          <Route path="/orders/:id" element={<Order />} />
           <Route path="/customers" element={<Customers />} />
+          <Route path="/customers/:id" element={<Customer />} />
           <Route path="/suppliers" element={<Suppliers />} />
           <Route path="/ads" element={<Ads />} />
           <Route path="/stats" element={<Statistics />} />

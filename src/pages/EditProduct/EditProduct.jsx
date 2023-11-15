@@ -10,17 +10,30 @@ import Modal from "@components/Modal/Modal";
 import LinkIcon from "@icons/LinkIcon";
 import ProductModalContent from "@components/Modal/ModalContent/ProductModalContent/ProductModalContent";
 import Sizes from "../../components/Sizes/Sizes";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
+import { useParams } from "react-router-dom";
 
-import styles from "./addProduct.module.scss";
+import styles from "./editProduct.module.scss";
 
-const AddProduct = () => {
+const EditProduct = () => {
+  const params = useParams();
+  const { id } = params;
   const [categories, setCategories] = React.useState([]);
   const [subCategories, setSubCategories] = React.useState([]);
-  const [media, setMedia] = React.useState([]);
   const [showModal, setShowModal] = React.useState(false);
   const [linkedProducts, setLinkedProducts] = React.useState([]);
+  const [media, setMedia] = React.useState([]);
   const navigate = useNavigate();
+
+  const getProduct = async () => {
+    const res = await axios.get(`/product/${id}`);
+    console.log("res= ", res);
+    setLinkedProducts(res.data.linked_products);
+    setMedia(res.data.product.images);
+    console.log("media= ", media);
+    return res.data;
+  };
+
   const {
     handleSubmit,
     register,
@@ -28,8 +41,25 @@ const AddProduct = () => {
     watch,
     control,
   } = useForm({
-    defaultValues: {
-      sizes: [{ size: "", amount: 0 }],
+    defaultValues: async () => {
+      const { product } = await getProduct();
+      console.log("product= ", product);
+      const sizes = Object.keys(product.quantity).map((key) => ({
+        size: key,
+        amount: product.quantity[key],
+      }));
+      return {
+        name: product.name,
+        brand: product.brand,
+        description: product.description,
+        price_before: product.price_before,
+        price_after: product.price_after,
+        sku: product.SKU,
+        color: product.color,
+        category: product.category,
+        subCategory: product.subCategory,
+        sizes: sizes,
+      };
     },
   });
   const category = watch().category;
@@ -103,10 +133,9 @@ const AddProduct = () => {
       },
       SKU: values.sku,
     };
-    console.log("data= ", data);
     try {
-      await axios.post("/product/create", data);
-      toast.success("Product created Successfully !");
+      await axios.put(`/product/${id}`, data);
+      toast.success("Product updated Successfully !");
       setTimeout(() => {
         navigate("/products");
       }, 2000);
@@ -117,7 +146,6 @@ const AddProduct = () => {
 
   return (
     <>
-      <ToastContainer />
       <Modal show={showModal} handleClose={handleClose}>
         <ProductModalContent
           handleClose={handleClose}
@@ -126,7 +154,7 @@ const AddProduct = () => {
         />
       </Modal>
       <form className={styles["add-product"]} onSubmit={handleSubmit(onSubmit)}>
-        <ProductHeader header="add product" buttonLabel="add product" />
+        <ProductHeader header="edit product" buttonLabel="save product" />
         <div className={styles.boxes}>
           <div>
             <FormBox title="general information">
@@ -247,4 +275,4 @@ const AddProduct = () => {
   );
 };
 
-export default AddProduct;
+export default EditProduct;

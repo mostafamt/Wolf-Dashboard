@@ -8,6 +8,7 @@ import {
   BsChevronRight,
   BsChevronLeft,
   BsCheckLg,
+  BsEyeSlash,
 } from "react-icons/bs";
 import ImageProduct from "../../assets/Img.png";
 import _ from "lodash";
@@ -48,6 +49,13 @@ function SubCategoryTable() {
     navigate(`/sub-categories/edit/${subCategory._id}`, {
       state: { subCategory },
     });
+  };
+
+  const onClickViewSubCategory = async (subCategory) => {
+    await axios.put(`subcategory/${subCategory._id}`, {
+      view: !subCategory.view,
+    });
+    fetchSubCategories();
   };
 
   return (
@@ -145,7 +153,11 @@ function SubCategoryTable() {
                       </span>
                     </div>
                   </td>
-                  <td>
+                  <td
+                    style={{
+                      width: "40%",
+                    }}
+                  >
                     <div className="d-flex sub-category-desc">
                       <img
                         src={subCategory.Image?.secure_url}
@@ -168,8 +180,8 @@ function SubCategoryTable() {
                     {new Date(subCategory.updatedAt).toDateString()}
                   </td>
                   <td className="actions">
-                    <button>
-                      <BsEye />
+                    <button onClick={() => onClickViewSubCategory(subCategory)}>
+                      {subCategory?.view ? <BsEye /> : <BsEyeSlash />}
                     </button>
                     <button onClick={() => onEditSubCategory(subCategory)}>
                       <BsPencil />

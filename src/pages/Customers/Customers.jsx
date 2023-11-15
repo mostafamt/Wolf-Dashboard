@@ -1,10 +1,11 @@
-import React from "react";
-import Customer from "../../components/Customer";
+import TitleOne from "@components/customers/TitleOne";
+import ProductListTable from "@components/customers/ProducListTable";
 
 const Customers = () => {
   return (
-    <div>
-      <Customer />
+    <div className="customer">
+      <TitleOne />
+      <ProductListTable />
     </div>
   );
 };

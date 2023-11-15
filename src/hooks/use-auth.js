@@ -2,6 +2,7 @@ import { create } from "zustand";
 
 export const useAuth = create((set) => ({
   data: {},
+  token: localStorage.getItem("token") || "",
   getName: () =>
     `${localStorage.getItem("firstName")} ${localStorage.getItem("lastName")}`,
   isLoggedIn: localStorage.getItem("token") !== null,

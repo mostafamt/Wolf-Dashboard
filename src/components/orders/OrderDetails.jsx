@@ -1,202 +1,76 @@
-import Image from "../../assets/Img.png";
-import { BsCalendar } from "react-icons/bs";
+import CalenderIcon from "@icons/CalenderIcon";
+import CardIcon from "@icons/CardIcon";
+import ShippingIcon from "@icons/ShippingIcon";
+import OrderDetailsBox from "./OrderDetailsBox/OrderDetailsBox";
+import PersonIcon from "@icons/PersonIcon";
+import MailIcon from "@icons/MailIcon";
+import OrderInvoice from "./OrderInvoice/OrderInvoice";
 
 function OrderDetails(props) {
-  return (
+  const formatId = (id) => {
+    return id.length > 12 ? id.substring(id.length - 6) : id;
+  };
+
+  const { order } = props;
+
+  return order ? (
     <div className="order-details p-4">
       <div className="d-flex">
-        <div className="details  flex-grow-1">
-          <h2>
-            Order #302011 <span className="processing">Processing</span>
-          </h2>
-          <div className="">
-            <div className="item d-flex justify-content-between">
-              <div className="d-flex align-items-center">
-                <span className="icon me-2 ">
-                  <BsCalendar />
-                </span>
-                Add
-              </div>
-              <p className="m-0">12 Dec 2022</p>
-            </div>
-            <div className="item d-flex justify-content-between">
-              <div className="d-flex align-items-center">
-                <span className="icon me-2 ">
-                  <BsCalendar />
-                </span>
-                Add
-              </div>
-              <p className="m-0">12 Dec 2022</p>
-            </div>
-            <div className="item d-flex justify-content-between">
-              <div className="d-flex align-items-center">
-                <span className="icon me-2 ">
-                  <BsCalendar />
-                </span>
-                Add
-              </div>
-              <p className="m-0">12 Dec 2022</p>
-            </div>
-          </div>
-        </div>
-        <div className="details flex-grow-1">
-          <h2>
-            Order #302011 <span className="processing">Processing</span>
-          </h2>
-          <div className="">
-            <div className="item d-flex justify-content-between">
-              <div className="d-flex align-items-center">
-                <span className="icon me-2 ">
-                  <BsCalendar />
-                </span>
-                Add
-              </div>
-              <p className="m-0">12 Dec 2022</p>
-            </div>
-            <div className="item d-flex justify-content-between">
-              <div className="d-flex align-items-center">
-                <span className="icon me-2 ">
-                  <BsCalendar />
-                </span>
-                Add
-              </div>
-              <p className="m-0">12 Dec 2022</p>
-            </div>
-            <div className="item d-flex justify-content-between">
-              <div className="d-flex align-items-center">
-                <span className="icon me-2 ">
-                  <BsCalendar />
-                </span>
-                Add
-              </div>
-              <p className="m-0">12 Dec 2022</p>
-            </div>
-          </div>
-        </div>
-        <div className="details flex-grow-1">
-          <h2>
-            Order #302011 <span className="processing">Processing</span>
-          </h2>
-          <div className="">
-            <div className="item d-flex justify-content-between">
-              <div className="d-flex align-items-center">
-                <span className="icon me-2 ">
-                  <BsCalendar />
-                </span>
-                Add
-              </div>
-              <p className="m-0">12 Dec 2022</p>
-            </div>
-            <div className="item d-flex justify-content-between">
-              <div className="d-flex align-items-center">
-                <span className="icon me-2 ">
-                  <BsCalendar />
-                </span>
-                Add
-              </div>
-              <p className="m-0">12 Dec 2022</p>
-            </div>
-            <div className="item d-flex justify-content-between">
-              <div className="d-flex align-items-center">
-                <span className="icon me-2 ">
-                  <BsCalendar />
-                </span>
-                Add
-              </div>
-              <p className="m-0">12 Dec 2022</p>
-            </div>
-          </div>
-        </div>
+        <OrderDetailsBox
+          header={`Order #${formatId(order._id)}`}
+          list={[
+            {
+              icon: <CalenderIcon />,
+              label: "Added",
+              value: new Date(order.createdAt).toDateString(),
+            },
+            {
+              icon: <CardIcon />,
+              label: "Payment Method",
+              value: order.payment,
+            },
+            {
+              icon: <ShippingIcon />,
+              label: "Shipping Method",
+              value: "Flat Shipping",
+            },
+          ]}
+        />
+        <OrderDetailsBox
+          header="Customer"
+          list={[
+            {
+              icon: <PersonIcon />,
+              label: "Customer",
+              value: order.name,
+            },
+            {
+              icon: <MailIcon />,
+              label: "Email",
+              value: order.email,
+            },
+            {
+              icon: <ShippingIcon />,
+              label: "Phone",
+              value: order.phone,
+            },
+          ]}
+        />
+        <OrderDetailsBox
+          header="Address"
+          list={[
+            {
+              icon: <CalenderIcon />,
+              label: "Billing",
+              value: `${order.address}, ${order.city}`,
+            },
+          ]}
+        />
       </div>
-      <div className="order-list">
-        <h2>
-          Order List <span className="pro-num">2 Products</span>
-        </h2>
-        <table>
-          <thead>
-            <tr>
-              <td>Product</td>
-              <td>SKU</td>
-              <td style={{ textAlign: "right" }}>QTY</td>
-              <td style={{ textAlign: "right" }}>Price</td>
-              <td style={{ textAlign: "right" }}>Total</td>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>
-                <div className="d-flex product-desc">
-                  <img src={Image} />
-                  <div>
-                    <p>تيشيرت بولو مطبع</p>
-                    <span>Blue</span>
-                  </div>
-                </div>
-              </td>
-              <td className="sku" style={{ color: "#5C59E8" }}>
-                165999
-              </td>
-              <td style={{ textAlign: "right" }}>1 pcs</td>
-              <td className="price" style={{ textAlign: "right" }}>
-                $599.599
-              </td>
-              <td className="total" style={{ textAlign: "right" }}>
-                $599.599
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div className="d-flex product-desc">
-                  <img src={Image} />
-                  <div>
-                    <p>تيشيرت بولو مطبع</p>
-                    <span>Blue</span>
-                  </div>
-                </div>
-              </td>
-              <td className="sku" style={{ color: "#5C59E8" }}>
-                165999
-              </td>
-              <td style={{ textAlign: "right" }}>1 pcs</td>
-              <td className="price" style={{ textAlign: "right" }}>
-                $599.599
-              </td>
-              <td className="total" style={{ textAlign: "right" }}>
-                $599.599
-              </td>
-            </tr>
-            <tr>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td style={{ textAlign: "right" }}>Subtotal</td>
-              <td style={{ textAlign: "right" }}>$526.479</td>
-            </tr>
-            <tr>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td style={{ textAlign: "right" }}>Subtotal</td>
-              <td style={{ textAlign: "right" }}>$526.479</td>
-            </tr>
-            <tr>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td style={{ textAlign: "right" }}>Subtotal</td>
-              <td style={{ textAlign: "right" }}>$526.479</td>
-            </tr>
-            <tr>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td style={{ textAlign: "right" }}>Subtotal</td>
-              <td style={{ textAlign: "right" }}>$526.479</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      <OrderInvoice order={order} />
     </div>
+  ) : (
+    <p>Loading...</p>
   );
 }
 export default OrderDetails;

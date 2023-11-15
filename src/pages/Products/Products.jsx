@@ -13,16 +13,13 @@ import axios from "../../axios";
 import Product from "@components/productlist/Product/Product";
 import { useNavigate } from "react-router-dom";
 import Modal from "@components/Modal/Modal";
-import CircleDeleteIcon from "@icons/CircleDeleteIcon";
-import DeleteIcon from "@icons/DeleteIcon";
-import CloseIcon from "@icons/CloseIcon";
-import Button from "@components/Button/Button";
 
-import styles from "./products.module.scss";
-import { ToastContainer, toast } from "react-toastify";
+// import styles from "./products.module.scss";
+import { toast } from "react-toastify";
+import DeleteProductModalContent from "../../components/Modal/ModalContent/DeleteProductModalContent/DeleteProductModalContent";
 
 const Products = () => {
-  const [searchByProduct, setSearchByProduct] = useState();
+  const [searchByProduct, setSearchByProduct] = React.useState();
   const [searchBySuppliar, setSearchBySuppliar] = useState();
   const [headDrop, setheadDrop] = useState("");
   const [startItem, setStartItem] = useState(0);
@@ -36,9 +33,18 @@ const Products = () => {
     setProducts(res.data);
   };
 
+  const fetchProductsByName = async (name) => {
+    const res = await axios.get(`/product/${name}`);
+    setProducts(res.data);
+  };
+
   React.useEffect(() => {
     fetchData();
   }, []);
+
+  React.useEffect(() => {
+    fetchProductsByName(searchByProduct);
+  }, [searchByProduct]);
 
   const editCulc = (value) => {
     setStartItem((value - 1) * 8);
@@ -82,28 +88,11 @@ const Products = () => {
 
   return (
     <>
-      <ToastContainer />
       <Modal show={show} handleClose={handleClose}>
-        <div className={styles["modal-content"]}>
-          <CircleDeleteIcon />
-          <h4>Delete Product</h4>
-          <p>Are you sure to delete this product?</p>
-
-          <div>
-            <Button variant="secondary" onClick={handleClose}>
-              <CloseIcon />
-              <span>cancel</span>
-            </Button>
-            <Button
-              variant="primary"
-              className={styles.primary}
-              onClick={onDeleteProduct}
-            >
-              <DeleteIcon />
-              <span>delete product</span>
-            </Button>
-          </div>
-        </div>
+        <DeleteProductModalContent
+          handleClose={handleClose}
+          onDeleteProduct={onDeleteProduct}
+        />
       </Modal>
       <div className="title d-flex justify-content-between align-items-center">
         <div>
@@ -143,18 +132,18 @@ const Products = () => {
             </div>
           </div>
           <div className="d-flex ">
-            <div className="calender">
+            <button className="calender">
               <BsCalendar />
               <span>Added from to</span>
-            </div>
-            <div className="calender">
+            </button>
+            <button className="calender">
               <BsCalendar />
-              <span>Added from to</span>
-            </div>
-            <div className="filter">
+              <span>Modified from to</span>
+            </button>
+            <button className="filter">
               <BsSliders />
-              <span>Added from to</span>
-            </div>
+              <span>Filters</span>
+            </button>
           </div>
         </div>
         <div className="table">
@@ -289,10 +278,11 @@ const Products = () => {
               >
                 <BsChevronLeft />
               </li>
-              {paginations.map((value) => {
+              {paginations.map((value, idx) => {
                 if (products.length / 8 > value) {
                   return (
                     <li
+                      key={idx}
                       className={`${startItem == value * num && "active"}`}
                       onClick={() => editCulc(value + 1)}
                     >

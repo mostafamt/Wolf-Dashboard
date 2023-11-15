@@ -6,9 +6,11 @@ import {
   BsCheckLg,
 } from "react-icons/bs";
 import axios from "../../../axios";
+import { useNavigate } from "react-router-dom";
 
 const Product = (props) => {
   const { product, handleCheckOut, fetchData } = props;
+  const navigate = useNavigate();
 
   const getCategory = () => {
     const { category, subCategory } = product;
@@ -21,8 +23,8 @@ const Product = (props) => {
     if (product.quantity) {
       const values = Object.values(product.quantity);
       sum = values.reduce((acc, cur) => {
-        return acc + cur, 0;
-      });
+        return acc + cur;
+      }, 0);
     }
     return sum;
   };
@@ -42,6 +44,10 @@ const Product = (props) => {
   const onClickViewProduct = async () => {
     await axios.put(`/product/view/${product._id}`);
     fetchData();
+  };
+
+  const onClickEditProduct = (product) => {
+    navigate(`/products/edit/${product._id}`);
   };
 
   return (
@@ -77,7 +83,7 @@ const Product = (props) => {
         <button onClick={onClickViewProduct}>
           {product?.view ? <BsEye /> : <BsEyeSlash />}
         </button>
-        <button>
+        <button onClick={() => onClickEditProduct(product)}>
           <BsPencil />
         </button>
         <button onClick={onDeleteProduct}>

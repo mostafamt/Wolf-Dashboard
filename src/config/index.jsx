@@ -50,11 +50,6 @@ export const useConfig = () => {
       to: "/customers",
     },
     {
-      icon: <SupplierIcon />,
-      label: "supplier",
-      to: "/suppliers",
-    },
-    {
       icon: <AdsIcon />,
       label: "ad & banner",
       to: "/ads",
@@ -62,7 +57,7 @@ export const useConfig = () => {
     },
     {
       icon: <SettingsIcon />,
-      label: "settings",
+      label: "system",
       to: "/settings",
     },
     {

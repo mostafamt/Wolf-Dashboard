@@ -19,12 +19,12 @@ function EditSubCategory() {
 
   const fetchCategories = async () => {
     const res = await axios.get("/main_category");
-    setCategories(res.data);
+    setCategories(res.data.response);
   };
 
   React.useEffect(() => {
     fetchCategories();
-    setImage(location.state.subCategory.Image);
+    setImage(location.state.subCategory.Image.secure_url);
   }, []);
 
   const onChangeFile = async (event) => {
@@ -61,7 +61,6 @@ function EditSubCategory() {
   return (
     <>
       <ToastContainer />
-      <h1>Hello</h1>
       <form
         className={`add-sub-category ${styles["add-sub-category"]}`}
         onSubmit={handleSubmit(onSubmit)}
