@@ -52,7 +52,7 @@ export const useConfig = () => {
     {
       icon: <AdsIcon />,
       label: "ad & banner",
-      to: "/ads",
+      to: "/banners",
       className: styles.ads,
     },
     {

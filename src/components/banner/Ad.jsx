@@ -8,7 +8,7 @@ import {
   BsPencil,
   BsTrash,
 } from "react-icons/bs";
-import { BannerContext } from "../Banner";
+import { BannerContext } from "@pages/Banners/Banners";
 function Ad({ list }) {
   const { edit, setEdit, bannerId, setBannerId } = useContext(BannerContext);
   const [startItem, setStartItem] = useState(0);

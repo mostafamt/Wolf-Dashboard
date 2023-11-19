@@ -8,7 +8,7 @@ import Products from "@pages/Products/Products";
 import Orders from "@pages/Orders/Orders";
 import Customers from "@pages/Customers/Customers";
 import Suppliers from "@pages/Suppliers/Suppliers";
-import Ads from "@pages/Ads/Ads";
+import Banners from "@pages/Banners/Banners";
 import Statistics from "@pages/Statistics/Statistics";
 import Settings from "@pages/settings/Settings";
 import Support from "@pages/support/Support";
@@ -29,6 +29,8 @@ import Order from "@pages/Order/Order";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import Customer from "@pages/Customer/Customer";
+import AddBanner from "@pages/AddBanner/AddBanner";
+import EditBanner from "@pages/EditBanner/EditBanner";
 
 function App() {
   return (
@@ -62,7 +64,9 @@ function App() {
           <Route path="/customers" element={<Customers />} />
           <Route path="/customers/:id" element={<Customer />} />
           <Route path="/suppliers" element={<Suppliers />} />
-          <Route path="/ads" element={<Ads />} />
+          <Route path="/banners" element={<Banners />} />
+          <Route path="/banners/add" element={<AddBanner />} />
+          <Route path="/banners/:id" element={<EditBanner />} />
           <Route path="/stats" element={<Statistics />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="/support" element={<Support />} />
