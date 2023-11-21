@@ -86,7 +86,7 @@ const AddBanner = () => {
             <h2>General Information</h2>
             <div>
               <p>Category</p>
-              <Select name="category" register={register} required={true}>
+              <Select name="category" register={register}>
                 {categories &&
                   categories?.map((category) => (
                     <option key={category._id} value={category._id}>

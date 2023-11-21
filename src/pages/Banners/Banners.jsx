@@ -3,13 +3,15 @@ import TitleOne from "../../components/banner/Titleone";
 import axios from "../../axios";
 import { default as BannerBoxes } from "../../components/Banners/Banners";
 
+const item = { _id: "7483", name: "Top Electronics Brand" };
+
 const Banners = () => {
   const [activeCategory, setActiveCategory] = React.useState();
   const [categories, setCategories] = React.useState([]);
 
   const fetchCategories = async () => {
     const res = await axios.get("/main_category");
-    setCategories(res.data.response);
+    setCategories([...res.data.response, item]);
     setActiveCategory(res.data.response?.[0]);
   };
 

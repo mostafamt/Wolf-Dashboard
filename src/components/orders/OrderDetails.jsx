@@ -18,6 +18,7 @@ function OrderDetails(props) {
       <div className="d-flex">
         <OrderDetailsBox
           header={`Order #${formatId(order._id)}`}
+          order={order}
           list={[
             {
               icon: <CalenderIcon />,

@@ -30,6 +30,29 @@ const status = [
   },
 ];
 
+const returnStatus = [
+  {
+    id: 1,
+    label: "Return (Requested)",
+    value: "requested",
+  },
+  {
+    id: 2,
+    label: "Return (Waiting for pick up)",
+    value: "waiting for pick up",
+  },
+  {
+    id: 3,
+    label: "Return (Picked up)",
+    value: "picked up",
+  },
+  {
+    id: 4,
+    label: "Return (Returned)",
+    value: "returned",
+  },
+];
+
 const Order = () => {
   const params = useParams();
   const { id } = params;
@@ -60,6 +83,16 @@ const Order = () => {
     toast.success("Order status changed successfully!");
   };
 
+  const onChangeReturnOrderStatus = (value) => {
+    console.log(value);
+    // setOrder({ ...order, status: value });
+    axios.put(`/order/${id}`, {
+      returnrequest: value,
+    });
+    fetchOrder(id);
+    toast.success("Order status changed successfully!");
+  };
+
   return order ? (
     <div className={`${styles.order} orders`}>
       <div className="title d-flex justify-content-between align-items-center">
@@ -78,18 +111,33 @@ const Order = () => {
           </div>
         </div>
         <div>
-          <select
-            name="status"
-            id="status"
-            value={order.status}
-            onChange={(e) => onChangeOrderStatus(e.target.value)}
-          >
-            {status.map((state) => (
-              <option key={state.id} value={state.value}>
-                {state.label}
-              </option>
-            ))}
-          </select>
+          {order.returnrequest !== "none" ? (
+            <select
+              name="status"
+              id="status"
+              value={order.returnrequest}
+              onChange={(e) => onChangeReturnOrderStatus(e.target.value)}
+            >
+              {returnStatus.map((state) => (
+                <option key={state.id} value={state.value}>
+                  {state.label}
+                </option>
+              ))}
+            </select>
+          ) : (
+            <select
+              name="status"
+              id="status"
+              value={order.status}
+              onChange={(e) => onChangeOrderStatus(e.target.value)}
+            >
+              {status.map((state) => (
+                <option key={state.id} value={state.value}>
+                  {state.label}
+                </option>
+              ))}
+            </select>
+          )}
         </div>
       </div>
       <OrderDetails order={order} />

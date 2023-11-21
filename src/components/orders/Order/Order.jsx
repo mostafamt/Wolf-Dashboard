@@ -61,16 +61,18 @@ const Order = (props) => {
       <td className="status">
         <p
           className={`${
-            order.status == "Low Stock"
+            order.status == "processing"
               ? "low"
-              : order.status == "Published"
+              : order.status == "delivered"
               ? "pub"
-              : order.status == "Draft"
+              : order.status == "shipped"
               ? "draft"
               : "out"
           }`}
         >
-          {order.status}
+          {order.returnrequest !== "none"
+            ? `Return (${order.returnrequest})`
+            : order.status}
         </p>
       </td>
       <td className="actions">

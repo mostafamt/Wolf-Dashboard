@@ -1,11 +1,15 @@
 const OrderDetailsBox = (props) => {
-  const { header, list } = props;
+  const { header, list, order } = props;
   return (
     <div className="details  flex-grow-1">
       <h2>
         {header}
         {header.includes("Order") && (
-          <span className="processing">Processing</span>
+          <span className="processing">
+            {order.returnrequest !== "none"
+              ? `Return (${order.returnrequest})`
+              : order.status}
+          </span>
         )}
       </h2>
       <div>
