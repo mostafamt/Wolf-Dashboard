@@ -1,8 +1,27 @@
+import React from "react";
+import axios from "../../../axios";
+
 const OrderInvoice = (props) => {
   const { order } = props;
+  const [fees, setFees] = React.useState();
+
+  const getData = async () => {
+    const res = await axios.get("/system");
+    console.log(res.data);
+    setFees(res.data.shipping_fees);
+  };
+
+  React.useEffect(() => {
+    getData();
+  }, []);
 
   const getSubTotal = () => {
-    return order.products.reduce((acc, product) => acc + product.price, 0) || 0;
+    return (
+      order.products.reduce(
+        (acc, product) => acc + product.price * product.quantity,
+        0
+      ) || 0
+    );
   };
 
   return (
@@ -44,7 +63,7 @@ const OrderInvoice = (props) => {
                 ${product.price}
               </td>
               <td className="total" style={{ textAlign: "right" }}>
-                ${product.price}
+                ${product.price * product.quantity}
               </td>
             </tr>
           ))}
@@ -68,14 +87,14 @@ const OrderInvoice = (props) => {
             <td></td>
             <td></td>
             <td style={{ textAlign: "right" }}>Shipping Fees</td>
-            <td style={{ textAlign: "right" }}>$0</td>
+            <td style={{ textAlign: "right" }}>$ {fees}</td>
           </tr>
           <tr>
             <td></td>
             <td></td>
             <td></td>
             <td style={{ textAlign: "right" }}>Grand Total</td>
-            <td style={{ textAlign: "right" }}>${getSubTotal()}</td>
+            <td style={{ textAlign: "right" }}>${order.totalPrice}</td>
           </tr>
         </tbody>
       </table>

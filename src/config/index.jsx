@@ -42,7 +42,7 @@ export const useConfig = () => {
       icon: <OrdersIcon />,
       label: "orders",
       to: "/orders",
-      notifications: 2,
+      // notifications: 2,
     },
     {
       icon: <CustomersIcon />,
