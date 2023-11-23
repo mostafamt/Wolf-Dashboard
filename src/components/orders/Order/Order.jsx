@@ -13,6 +13,17 @@ const Order = (props) => {
     return id.length > 12 ? id.substring(id.length - 6) : id;
   };
 
+  const handleStatus = () => {
+    console.log("status= ", order.replacerequest);
+    if (order.replacerequest && order.replacerequest !== "none") {
+      return `Replace (${order.replacerequest})`;
+    } else if (order.returnrequest && order.returnrequest !== "none") {
+      return `Return (${order.returnrequest})`;
+    } else {
+      return order.status;
+    }
+  };
+
   return (
     <tr key={order._id}>
       <td>
@@ -44,7 +55,7 @@ const Order = (props) => {
         </div>
       </td>
       <td className="category" style={{ textAlign: "left" }}>
-        {new Date(order.createdAt).toDateString()}
+        {new Date(order.updatedAt).toDateString()}
       </td>
       <td className="stock">
         <div className="d-flex justify-content-center product-desc ">
@@ -70,9 +81,7 @@ const Order = (props) => {
               : "out"
           }`}
         >
-          {order.returnrequest !== "none"
-            ? `Return (${order.returnrequest})`
-            : order.status}
+          {handleStatus()}
         </p>
       </td>
       <td className="actions">

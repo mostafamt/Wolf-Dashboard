@@ -16,8 +16,7 @@ function MainTable(props) {
   };
   const handleEdit = (event, category) => {
     event.stopPropagation();
-    console.log("edit");
-    // navigate(`/category/${category._id}`, { state: { category } });
+    navigate(`/category/${category._id}`);
   };
 
   const onClickTableRow = (event, category) => {
@@ -55,8 +54,8 @@ function MainTable(props) {
                       </div>
                     </div>
                   </td>
-                  <td>{Math.ceil(Math.random() * 1000)}</td>
-                  <td>{Math.ceil(Math.random() * 1000)}</td>
+                  <td>{category.suppliers}</td>
+                  <td>{category.stock}</td>
                   <td>{new Date(category.updatedAt).toDateString()}</td>
                   <td className="actions">
                     <button onClick={(event) => handleEdit(event, category)}>

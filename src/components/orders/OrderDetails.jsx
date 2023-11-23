@@ -4,14 +4,16 @@ import ShippingIcon from "@icons/ShippingIcon";
 import OrderDetailsBox from "./OrderDetailsBox/OrderDetailsBox";
 import PersonIcon from "@icons/PersonIcon";
 import MailIcon from "@icons/MailIcon";
+import PhoneIcon from "@icons/PhoneIcon";
+import LocationIcon from "@icons/LocationIcon";
 import OrderInvoice from "./OrderInvoice/OrderInvoice";
 
 function OrderDetails(props) {
+  const { order, user } = props;
+
   const formatId = (id) => {
     return id.length > 12 ? id.substring(id.length - 6) : id;
   };
-
-  const { order } = props;
 
   return order ? (
     <div className="order-details p-4">
@@ -51,7 +53,7 @@ function OrderDetails(props) {
               value: order.email,
             },
             {
-              icon: <ShippingIcon />,
+              icon: <PhoneIcon />,
               label: "Phone",
               value: order.phone,
             },
@@ -61,9 +63,14 @@ function OrderDetails(props) {
           header="Address"
           list={[
             {
-              icon: <CalenderIcon />,
+              icon: <LocationIcon />,
               label: "Billing",
               value: `${order.address}, ${order.city}`,
+            },
+            {
+              icon: <CardIcon />,
+              label: "Wallet",
+              value: `$ ${user?.wallet || 0} `,
             },
           ]}
         />

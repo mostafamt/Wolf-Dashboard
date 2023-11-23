@@ -1,4 +1,4 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { BsChevronRight } from "react-icons/bs";
 import { BiSave } from "react-icons/bi";
 import { useForm } from "react-hook-form";
@@ -6,26 +6,34 @@ import axios from "../../axios";
 import { ToastContainer, toast } from "react-toastify";
 
 const Category = () => {
-  const location = useLocation();
   const navigate = useNavigate();
-  const { category } = location.state;
+  const params = useParams();
+  const { id } = params;
 
   const onClickCancel = () => {
     navigate("/categories");
   };
 
   const onSubmit = async (values) => {
-    await axios.put(`/main_category/update/${category._id}`, values);
+    await axios.put(`/main_category/update/${id}`, values);
     toast.success("Saved Successfully !", {
       position: toast.POSITION.TOP_RIGHT,
     });
+    setTimeout(() => {
+      navigate("/categories");
+    }, 2000);
+  };
+
+  const fetchCategory = async () => {
+    const res = await axios.get(`/main_category/${id}`);
+    return {
+      name: res.data.name,
+      description: res.data.description,
+    };
   };
 
   const { handleSubmit, register } = useForm({
-    defaultValues: {
-      name: category.name,
-      description: category.description,
-    },
+    defaultValues: async () => fetchCategory(),
   });
 
   return (
@@ -34,7 +42,7 @@ const Category = () => {
       <form className="main-category" onSubmit={handleSubmit(onSubmit)}>
         <div className="title d-flex justify-content-between align-items-center">
           <div>
-            <h2>Category Details</h2>
+            <h2>Edit Category</h2>
             <div className="path">
               <span>Product</span>
               <span>
@@ -44,11 +52,7 @@ const Category = () => {
               <span>
                 <BsChevronRight />
               </span>
-              <span>{category.name}</span>
-              <span>
-                <BsChevronRight />
-              </span>
-              <span>Category Details</span>
+              <span>Edit Category</span>
             </div>
           </div>
           <div>

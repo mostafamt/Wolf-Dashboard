@@ -32,7 +32,6 @@ function ProductListTable() {
       },
     });
     setCustomers(res.data);
-    console.log("res= ", res);
   };
 
   React.useEffect(() => {
@@ -100,8 +99,8 @@ function ProductListTable() {
               </td>
               <td>Phone</td>
               <td>Orders</td>
-              <td>Total spend</td>
-              <td>ADV</td>
+              <td>Total spent</td>
+              <td>AVG.</td>
               <td>
                 <div
                   className="d-flex justify-content-between align-items-center flex-grow-1"
@@ -151,9 +150,15 @@ function ProductListTable() {
                     <td style={{ textAlign: "center" }}>
                       {customer.telephone}
                     </td>
-                    <td style={{ textAlign: "center" }}>599</td>
-                    <td style={{ textAlign: "center" }}>$599</td>
-                    <td style={{ textAlign: "center" }}>$599</td>
+                    <td style={{ textAlign: "center" }}>{customer.orders}</td>
+                    <td style={{ textAlign: "center" }}>
+                      {customer.totalSpent} $
+                    </td>
+                    <td style={{ textAlign: "center" }}>
+                      {Number.parseInt(customer.totalSpent / customer.orders) ||
+                        0}{" "}
+                      $
+                    </td>
                     <td className="added" style={{ textAlign: "center" }}>
                       {new Date(Date.now()).toDateString()}
                     </td>

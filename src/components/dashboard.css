@@ -717,10 +717,6 @@ table td .check-active {
   background: #f9f9fc;
 }
 
-.main-category .edit-category > div input {
-  text-align: right;
-}
-
 .sub-category .sub-category-desc img {
   width: 44px;
   height: 44px;

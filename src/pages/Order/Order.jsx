@@ -1,7 +1,7 @@
 import React from "react";
 import { BsChevronRight } from "react-icons/bs";
 import OrderDetails from "@components/orders/OrderDetails";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../../hooks/use-auth";
 import axios from "../../axios";
 import styles from "./order.module.scss";
@@ -53,44 +53,135 @@ const returnStatus = [
   },
 ];
 
+const replaceStatus = [
+  {
+    id: 1,
+    label: "Replace (Requested)",
+    value: "requested",
+  },
+  {
+    id: 2,
+    label: "Replace (Waiting for pick up)",
+    value: "waiting for pick up",
+  },
+  {
+    id: 3,
+    label: "Replace (Picked up)",
+    value: "picked up",
+  },
+  {
+    id: 4,
+    label: "Replace (Replaced)",
+    value: "replaced",
+  },
+];
+
 const Order = () => {
   const params = useParams();
   const { id } = params;
   const { token } = useAuth();
   const [order, setOrder] = React.useState();
+  const [user, setUser] = React.useState();
+  const navigate = useNavigate();
 
-  const fetchOrder = async (id) => {
-    const res = await axios.get(`/order/${id}`, {
+  const fetchData = async (id) => {
+    let res = await axios.get(`/order/${id}`, {
       headers: {
         authorization: `Bearer ${token}`,
       },
     });
     setOrder(res.data);
-    console.log("res= ", res);
+    res = await axios.get(`/user/${res.data.user_id}`);
+    setUser(res.data);
   };
 
   React.useEffect(() => {
-    fetchOrder(id);
+    fetchData(id);
   }, []);
 
-  const onChangeOrderStatus = (value) => {
-    console.log(value);
-    setOrder({ ...order, status: value });
-    axios.put(`/order/${id}`, {
+  const onChangeOrderStatus = async (value) => {
+    await axios.put(`/order/${id}`, {
       status: value,
     });
-    fetchOrder(id);
+    await fetchData(id);
     toast.success("Order status changed successfully!");
+    // setTimeout(() => {
+    //   navigate("/orders");
+    // }, 2000);
   };
 
-  const onChangeReturnOrderStatus = (value) => {
-    console.log(value);
-    // setOrder({ ...order, status: value });
-    axios.put(`/order/${id}`, {
+  const onChangeReturnOrderStatus = async (value) => {
+    await axios.put(`/order/${id}`, {
       returnrequest: value,
     });
-    fetchOrder(id);
+    await fetchData(id);
     toast.success("Order status changed successfully!");
+    // setTimeout(() => {
+    //   navigate("/orders");
+    // }, 2000);
+  };
+
+  const onChangeReplaceOrderStatus = async (value) => {
+    await axios.put(`/order/${id}`, {
+      replacerequest: value,
+    });
+    await fetchData(id);
+    toast.success("Order status changed successfully!");
+    // setTimeout(() => {
+    //   navigate("/orders");
+    // }, 2000);
+  };
+
+  const handleShowDropDown = () => {
+    let dropDown = <></>;
+    console.log("order= ", order);
+    if (order.replacerequest && order.replacerequest !== "none") {
+      dropDown = (
+        <select
+          name="status"
+          id="status"
+          value={order.replacerequest}
+          onChange={(e) => onChangeReplaceOrderStatus(e.target.value)}
+        >
+          {replaceStatus.map((state) => (
+            <option key={state.id} value={state.value}>
+              {state.label}
+            </option>
+          ))}
+        </select>
+      );
+    } else if (order.returnrequest && order.returnrequest !== "none") {
+      dropDown = (
+        <select
+          name="status"
+          id="status"
+          value={order.returnrequest}
+          onChange={(e) => onChangeReturnOrderStatus(e.target.value)}
+        >
+          {returnStatus.map((state) => (
+            <option key={state.id} value={state.value}>
+              {state.label}
+            </option>
+          ))}
+        </select>
+      );
+    } else {
+      dropDown = (
+        <select
+          name="status"
+          id="status"
+          value={order.status}
+          onChange={(e) => onChangeOrderStatus(e.target.value)}
+        >
+          {status.map((state) => (
+            <option key={state.id} value={state.value}>
+              {state.label}
+            </option>
+          ))}
+        </select>
+      );
+    }
+    return dropDown;
   };
 
   return order ? (
@@ -110,37 +201,9 @@ const Order = () => {
             <span>Order Details</span>
           </div>
         </div>
-        <div>
-          {order.returnrequest !== "none" ? (
-            <select
-              name="status"
-              id="status"
-              value={order.returnrequest}
-              onChange={(e) => onChangeReturnOrderStatus(e.target.value)}
-            >
-              {returnStatus.map((state) => (
-                <option key={state.id} value={state.value}>
-                  {state.label}
-                </option>
-              ))}
-            </select>
-          ) : (
-            <select
-              name="status"
-              id="status"
-              value={order.status}
-              onChange={(e) => onChangeOrderStatus(e.target.value)}
-            >
-              {status.map((state) => (
-                <option key={state.id} value={state.value}>
-                  {state.label}
-                </option>
-              ))}
-            </select>
-          )}
-        </div>
+        <div>{handleShowDropDown()}</div>
       </div>
-      <OrderDetails order={order} />
+      <OrderDetails order={order} user={user} />
     </div>
   ) : (
     <p>Loading...</p>

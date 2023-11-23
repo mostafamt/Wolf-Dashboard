@@ -1,9 +1,9 @@
 import React from "react";
 import TitleOne from "@components/subcategory/TitleOne";
 import { BsSearch } from "react-icons/bs";
-import SubCategoriesOfCategoryTable from "@components/Tables/SubCategoriesOfCategoryTable/SubCategoriesOfCategoryTable";
 import { useParams } from "react-router-dom";
 import axios from "../../axios";
+import SubCategoryTable from "../../components/subcategory/SubCategoryTable";
 
 const SubCategoriesOfCategory = () => {
   const [searchSubCategory, setSearchSubCategory] = React.useState();
@@ -12,14 +12,14 @@ const SubCategoriesOfCategory = () => {
 
   console.log("params= ", params);
 
-  const getSubCategories = async (categoryId) => {
+  const fetchSubCategories = async (categoryId) => {
     const res = await axios.get(`subcategory/main_category/${categoryId}`);
     setSubCategories(res.data.response);
   };
 
   React.useEffect(() => {
     const categoryId = params.category;
-    getSubCategories(categoryId);
+    fetchSubCategories(categoryId);
   }, [params.category]);
 
   return (
@@ -35,7 +35,10 @@ const SubCategoriesOfCategory = () => {
           className="flex-grow-1"
         />
       </div>
-      <SubCategoriesOfCategoryTable list={subCategories} />
+      <SubCategoryTable
+        subCategories={subCategories}
+        fetchSubCategories={fetchSubCategories}
+      />
     </div>
   );
 };

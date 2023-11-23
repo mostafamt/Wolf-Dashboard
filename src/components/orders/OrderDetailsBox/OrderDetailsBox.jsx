@@ -1,16 +1,29 @@
 const OrderDetailsBox = (props) => {
   const { header, list, order } = props;
+
+  const handleShowStatus = (order) => {
+    let out = <></>;
+    if (order.replacerequest && order.replacerequest !== "none") {
+      out = (
+        <span className="processing">
+          {`Replace (${order.replacerequest})`}
+        </span>
+      );
+    } else if (order.returnrequest && order.returnrequest !== "none") {
+      out = (
+        <span className="processing">{`Return (${order.returnrequest})`}</span>
+      );
+    } else {
+      out = <span className="processing">{order.status}</span>;
+    }
+    return out;
+  };
+
   return (
     <div className="details  flex-grow-1">
       <h2>
         {header}
-        {header.includes("Order") && (
-          <span className="processing">
-            {order.returnrequest !== "none"
-              ? `Return (${order.returnrequest})`
-              : order.status}
-          </span>
-        )}
+        {header.includes("Order") && handleShowStatus(order)}
       </h2>
       <div>
         {list.map((item, idx) => (

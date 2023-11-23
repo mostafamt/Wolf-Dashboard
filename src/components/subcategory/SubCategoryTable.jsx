@@ -1,4 +1,3 @@
-import React from "react";
 import { useState } from "react";
 import {
   BsChevronDown,
@@ -10,36 +9,21 @@ import {
   BsCheckLg,
   BsEyeSlash,
 } from "react-icons/bs";
-import ImageProduct from "../../assets/Img.png";
 import _ from "lodash";
 import axios from "../../axios";
 import { useNavigate } from "react-router-dom";
 
-function SubCategoryTable() {
+function SubCategoryTable(props) {
   const [headDrop, setheadDrop] = useState("");
   const [startItem, setStartItem] = useState(0);
   const [endItem, setEndItem] = useState(8);
   const [check, setCheck] = useState(false);
-  const [subCategories, setSubCategories] = React.useState([]);
+  const { subCategories, fetchSubCategories } = props;
   const navigate = useNavigate();
-
-  const fetchSubCategories = async () => {
-    const res = await axios.get("/subcategory/main_subcategory");
-    setSubCategories(res.data);
-  };
-
-  React.useEffect(() => {
-    fetchSubCategories();
-  }, []);
 
   const editCulc = (value) => {
     setStartItem((value - 1) * 8);
     setEndItem(value * 8);
-  };
-
-  const handleCheckOut = (value, id) => {
-    setCheck(true);
-    value.classList.toggle("check-active");
   };
 
   const num = 8;
@@ -144,10 +128,7 @@ function SubCategoryTable() {
               return (
                 <tr key={subCategory._id}>
                   <td>
-                    <div
-                      className="check"
-                      onClick={(e) => handleCheckOut(e.target, subCategory._id)}
-                    >
+                    <div className="check">
                       <span>
                         <BsCheckLg />
                       </span>
@@ -172,12 +153,10 @@ function SubCategoryTable() {
                       </div>
                     </div>
                   </td>
-                  <td className="suplliers">
-                    {Math.ceil(Math.random() * 1000)}
-                  </td>
-                  <td className="Stock">{Math.ceil(Math.random() * 1000)}</td>
+                  <td className="suplliers">{subCategory.suppliers}</td>
+                  <td className="Stock">{subCategory.stock}</td>
                   <td className="added">
-                    {new Date(subCategory.updatedAt).toDateString()}
+                    {new Date(subCategory.createdAt).toDateString()}
                   </td>
                   <td className="actions">
                     <button onClick={() => onClickViewSubCategory(subCategory)}>
@@ -222,10 +201,11 @@ function SubCategoryTable() {
           >
             <BsChevronLeft />
           </li>
-          {paginations.map((value) => {
+          {paginations.map((value, idx) => {
             if (subCategories.length / 8 > value) {
               return (
                 <li
+                  key={idx}
                   className={`${startItem == value * num && "active"}`}
                   onClick={() => editCulc(value + 1)}
                 >
