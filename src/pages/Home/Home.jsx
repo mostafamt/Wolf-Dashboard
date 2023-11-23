@@ -1,58 +1,98 @@
 import styles from "./home.module.scss";
-
+import axios from "../../axios";
 import { BarChart, Bar, ResponsiveContainer, XAxis, YAxis } from "recharts";
+import { useEffect, useState } from "react";
 
-const data = [
-  {
-    name: "Jan",
-    uv: 1000,
-  },
-  {
-    name: "Feb",
-    uv: 400,
-  },
-  {
-    name: "Mar",
-    uv: 4000,
-  },
-  {
-    name: "Apr",
-    uv: 3000,
-  },
-  {
-    name: "May",
-    uv: 2000,
-  },
-  {
-    name: "Jun",
-    uv: 2780,
-  },
-  {
-    name: "Jul",
-    uv: 1890,
-  },
-  {
-    name: "Aug",
-    uv: 2390,
-  },
-  {
-    name: "Sep",
-    uv: 3490,
-  },
-  {
-    name: "Oct",
-    uv: 1490,
-  },
-  {
-    name: "Nov",
-    uv: 3990,
-  },
-  {
-    name: "Dec",
-    uv: 3400,
-  },
-];
+// const data = [
+//   {
+//     name: "Jan",
+//     uv: 1000,
+//   },
+//   {
+//     name: "Feb",
+//     uv: 400,
+//   },
+//   {
+//     name: "Mar",
+//     uv: 4000,
+//   },
+//   {
+//     name: "Apr",
+//     uv: 3000,
+//   },
+//   {
+//     name: "May",
+//     uv: 2000,
+//   },
+//   {
+//     name: "Jun",
+//     uv: 2780,
+//   },
+//   {
+//     name: "Jul",
+//     uv: 1890,
+//   },
+//   {
+//     name: "Aug",
+//     uv: 2390,
+//   },
+//   {
+//     name: "Sep",
+//     uv: 3490,
+//   },
+//   {
+//     name: "Oct",
+//     uv: 1490,
+//   },
+//   {
+//     name: "Nov",
+//     uv: 3990,
+//   },
+//   {
+//     name: "Dec",
+//     uv: 3400,
+//   },
+// ];
 const Home = () => {
+  const [apiData, setApiData] = useState({
+    totalPricesWithinDay: 0,
+    numOfOrdersWithinDay: 0,
+    orders: 0,
+    customers: 0,
+    products: 0,
+    chartData: [],
+    revenueChart:0
+  });
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [totalSalesResponse, totalOrdersResponse, ordersResponse, customersResponse, productsResponse, chartDataResponse] = await Promise.all([
+          axios.get("/order/totalPricesWithinDay"),
+          axios.get("/order/numOfOrdersWithinDay"),
+          axios.get("/order/totalNumOfOrders"),
+          axios.get("/user/totalNumOfUsers"),
+          axios.get("/product/totalNumOfProducts"),
+          axios.get("/order/totalPricesByMonthWithinYear"),
+        ]);
+        console.log(totalSalesResponse.data, totalOrdersResponse.data, ordersResponse.data, customersResponse.data, productsResponse.data, chartDataResponse.data)
+
+        setApiData({
+          totalPricesWithinDay: totalSalesResponse.data.total_Prices_Today,
+          numOfOrdersWithinDay: totalOrdersResponse.data.numOfOrders,
+          orders: ordersResponse.data.totalNumOfOrders,
+          customers: customersResponse.data.totalNumOfUsers,
+          products: productsResponse.data.totalNumOfProducts,
+          chartData: chartDataResponse.data.totalPricesByMonth,
+          revenueChart:chartDataResponse.data.totalYearlyPrice
+        });
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <div className={styles.home}>
       <div
@@ -60,6 +100,7 @@ const Home = () => {
         style={{ paddingLeft: "40px" }}
       >
         <div className=" flex-grow-1 pt-5">
+          {console.log(apiData,"apiData")}
           <div className="d-flex flex-grow-1 gap-4">
             <div
               className={`${styles.item} d-flex justify-content-between flex-grow-1 `}
@@ -67,7 +108,7 @@ const Home = () => {
               <div>
                 <p>Sales</p>
                 <p>Total sales today</p>
-                <p>$2,400</p>
+                <p>{apiData.totalPricesWithinDay} KWD</p>
               </div>
             </div>
             <div
@@ -76,7 +117,7 @@ const Home = () => {
               <div>
                 <p>Orders</p>
                 <p>Total orders today</p>
-                <p>400</p>
+                <p>{apiData.numOfOrdersWithinDay} KWD</p>
               </div>
             </div>
           </div>
@@ -84,17 +125,21 @@ const Home = () => {
             style={{ height: "600px", width: "100%" }}
             className="mt-4 bg-white p-5 pb-4 rounded-4"
           >
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart width={150} height={40} data={data}>
+              <p  className="text-center">Total Revenue <span style={{fontWeight:"bold"}}>{apiData.revenueChart}</span></p>
+            <ResponsiveContainer   width="100%" height="100%">
+              <BarChart width={120} height={40} data={apiData.chartData}>
                 <Bar
-                  dataKey="uv"
+                  dataKey="totalPrice"
                   fill="#F6AF05"
                   width={10}
                   maxBarSize={35}
                   radius={[20, 20, 0, 0]}
                 />
-                <XAxis dataKey="name" scale="auto" className=" text-info " />
-                <YAxis dataKey="uv" scale="auto" className=" text-info" />
+                <XAxis dataKey="month" scale="auto" className=" text-info " />
+                <YAxis 
+                width={150}
+                domain={[0, Math.max(...apiData.chartData.map((entry) => parseFloat(entry.totalPrice)))]}                
+                dataKey="totalPrice" scale="auto" className=" text-info" />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -127,7 +172,7 @@ const Home = () => {
               </svg>
             </div>
             <div>
-              <p>300K</p>
+              <p>{apiData.orders}</p>
               <span>Orders</span>
             </div>
           </div>
@@ -163,7 +208,7 @@ const Home = () => {
               </svg>
             </div>
             <div>
-              <p>300K</p>
+              <p>{apiData.customers}</p>
               <span>Customers</span>
             </div>
           </div>
@@ -183,7 +228,7 @@ const Home = () => {
               </svg>
             </div>
             <div>
-              <p>300K</p>
+              <p>{apiData.products}</p>
               <span>Products</span>
             </div>
           </div>
@@ -214,7 +259,7 @@ const Home = () => {
               </svg>
             </div>
             <div>
-              <p>300K</p>
+              <p>{apiData.revenueChart} KWD</p>
               <span>Revenue</span>
             </div>
           </div>
