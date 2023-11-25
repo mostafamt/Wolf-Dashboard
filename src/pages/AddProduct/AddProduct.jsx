@@ -174,6 +174,7 @@ const AddProduct = () => {
                 name="price_before"
                 type="text"
                 errors={errors}
+                required={true}
               />
               <FormControl
                 register={register}

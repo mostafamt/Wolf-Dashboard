@@ -1,7 +1,7 @@
 import styles from "./formControl.module.scss";
 
 const FormControl = (props) => {
-  const { register, name, label, type, errors } = props;
+  const { register, name, label, type, errors, required } = props;
 
   let input = <></>;
   if (type === "textarea") {
@@ -11,12 +11,12 @@ const FormControl = (props) => {
         id={name}
         cols="30"
         rows="5"
-        {...register(name)}
+        {...register(name, { required: required })}
       ></textarea>
     );
   } else if (type === "select") {
     input = (
-      <select {...register(name)}>
+      <select {...register(name, { required: required })}>
         <option value="">-- Select an option --</option>
         {props.list?.map((item, idx) => (
           <option key={idx} value={item._id}>
@@ -44,7 +44,13 @@ const FormControl = (props) => {
       </div>
     );
   } else {
-    input = <input {...register(name)} name={name} type={type} />;
+    input = (
+      <input
+        {...register(name, { required: required })}
+        name={name}
+        type={type}
+      />
+    );
   }
 
   return (
