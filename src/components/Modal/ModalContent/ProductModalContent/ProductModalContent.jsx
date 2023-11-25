@@ -4,11 +4,14 @@ import Button from "@components/Button/Button";
 import LinkIcon from "@icons/LinkIcon";
 
 import styles from "./productModalContent.module.scss";
+import { useParams } from "react-router-dom";
 
 const ProductModalContent = (props) => {
   const { linkedProducts, setLinkedProducts, handleClose } = props;
   const [products, setProducts] = React.useState([]);
   const [checked, setChecked] = React.useState([]);
+  const params = useParams();
+  const { id } = params;
 
   const setCheckedProducts = React.useCallback(() => {
     const newChecked = [...checked];
@@ -24,8 +27,12 @@ const ProductModalContent = (props) => {
 
   const getProducts = async () => {
     const res = await axios.get("/product");
-    setProducts(res.data);
-    setChecked(Array(res.data?.length).fill(false));
+    let products = res.data;
+    if (id) {
+      products = products.filter((product) => product._id !== id);
+    }
+    setProducts(products);
+    setChecked(Array(products?.length).fill(false));
   };
 
   React.useEffect(() => {

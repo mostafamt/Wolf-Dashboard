@@ -103,6 +103,9 @@ const AddProduct = () => {
       },
       SKU: values.sku,
       color_hex: values.color_hex.substring(1),
+      price_after: values.price_after
+        ? values.price_after
+        : values.price_before,
     };
     console.log("data= ", data);
     try {

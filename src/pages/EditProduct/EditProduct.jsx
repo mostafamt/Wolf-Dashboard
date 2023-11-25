@@ -133,6 +133,9 @@ const EditProduct = () => {
       },
       SKU: values.sku,
       color_hex: values.color_hex.substring(1),
+      price_after: values.price_after
+        ? values.price_after
+        : values.price_before,
     };
 
     try {
@@ -240,14 +243,18 @@ const EditProduct = () => {
               <div className={styles["linked-products"]}>
                 {!!linkedProducts?.length && (
                   <ul>
-                    {linkedProducts.map((linkedProduct) => (
-                      <li key={linkedProduct._id}>
-                        <img
-                          src={linkedProduct?.images[0]?.secure_url}
-                          alt={linkedProduct?.images[0]?.public_id}
-                        />
-                      </li>
-                    ))}
+                    {linkedProducts.map((linkedProduct) => {
+                      console.log(linkedProduct);
+                      if (linkedProduct._id === id) return <></>;
+                      return (
+                        <li key={linkedProduct._id}>
+                          <img
+                            src={linkedProduct?.images[0]?.secure_url}
+                            alt={linkedProduct?.images[0]?.public_id}
+                          />
+                        </li>
+                      );
+                    })}
                   </ul>
                 )}
                 <Button
