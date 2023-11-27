@@ -23,6 +23,7 @@ const EditProduct = () => {
   const [showModal, setShowModal] = React.useState(false);
   const [linkedProducts, setLinkedProducts] = React.useState([]);
   const [media, setMedia] = React.useState([]);
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
   const navigate = useNavigate();
 
   const getProduct = async () => {
@@ -74,7 +75,6 @@ const EditProduct = () => {
       const res = await axios.get(
         `/subcategory/main_category/${watch().category}`
       );
-      console.log(res.data.response);
       setSubCategories(res.data.response);
     }
   }, []);
@@ -89,7 +89,6 @@ const EditProduct = () => {
 
   const onChangeFiles = async (event) => {
     const files = event.target.files;
-    console.log(event.target.files);
     const data = new FormData();
     for (let i = 0; i < files.length; i++) {
       data.append("files", files[i]);
@@ -121,6 +120,7 @@ const EditProduct = () => {
 
   const onSubmit = async (values) => {
     console.log(values);
+    setIsSubmitting(true);
     const linked_products = getLinkedProducts();
     const data = {
       ...values,
@@ -146,6 +146,8 @@ const EditProduct = () => {
       }, 2000);
     } catch (error) {
       toast.error(error.message);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -159,7 +161,11 @@ const EditProduct = () => {
         />
       </Modal>
       <form className={styles["add-product"]} onSubmit={handleSubmit(onSubmit)}>
-        <ProductHeader header="edit product" buttonLabel="save product" />
+        <ProductHeader
+          header="edit product"
+          buttonLabel="save product"
+          isSubmitting={isSubmitting}
+        />
         <div className={styles.boxes}>
           <div>
             <FormBox title="general information">
@@ -245,8 +251,6 @@ const EditProduct = () => {
                 {!!linkedProducts?.length && (
                   <ul>
                     {linkedProducts.map((linkedProduct) => {
-                      console.log(linkedProduct);
-                      if (linkedProduct._id === id) return <></>;
                       return (
                         <li key={linkedProduct._id}>
                           <img

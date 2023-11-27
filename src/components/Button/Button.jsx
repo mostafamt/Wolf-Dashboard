@@ -1,3 +1,4 @@
+import Spinner from "@components/Spinner/Spinner";
 import styles from "./button.module.scss";
 
 const Button = (props) => {
@@ -12,10 +13,12 @@ const Button = (props) => {
     }
     return classNames.join(" ");
   };
+  const { isSubmitting, ...rest } = props;
 
   return (
-    <button className={getClassName()} {...props}>
+    <button className={getClassName()} {...rest} disabled={isSubmitting}>
       {props.children}
+      {isSubmitting && <Spinner />}
     </button>
   );
 };

@@ -10,6 +10,7 @@ import CloseIcon from "@icons/CloseIcon";
 import Select from "@components/Select/Select";
 
 import styles from "./editBanner.module.scss";
+import Button from "../../components/Button/Button";
 
 const EditBanner = () => {
   const [img, setImage] = React.useState();
@@ -17,6 +18,7 @@ const EditBanner = () => {
   const navigate = useNavigate();
   const params = useParams();
   const { id } = params;
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
 
   const fetchBanner = async (id) => {
     const res = await axios.get(`/banner/${id}`);
@@ -59,14 +61,21 @@ const EditBanner = () => {
       ...values,
       img,
     };
+    setIsSubmitting(true);
     console.log("data= ", data);
-    await axios.put(`/banner/${id}`, data);
-    toast.success("Saved Successfully !", {
-      position: toast.POSITION.TOP_RIGHT,
-    });
-    setTimeout(() => {
-      navigate("/banners");
-    }, 2000);
+    try {
+      await axios.put(`/banner/${id}`, data);
+      toast.success("Saved Successfully !", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+      setTimeout(() => {
+        navigate("/banners");
+      }, 2000);
+    } catch (error) {
+      toast.success(error.message);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -86,13 +95,13 @@ const EditBanner = () => {
               <span>Add Banner</span>
             </div>
           </div>
-          <div>
+          <div className={styles.actions}>
             <button className="cel me-3" onClick={onClickCancel}>
               <CloseIcon /> cancel
             </button>
-            <button type="submit">
+            <Button type="submit" variant="primary" isSubmitting={isSubmitting}>
               <SaveIcon /> Save Banner
-            </button>
+            </Button>
           </div>
         </div>
         <div className="add-sub d-flex ">

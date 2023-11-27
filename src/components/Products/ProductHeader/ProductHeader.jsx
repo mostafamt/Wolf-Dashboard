@@ -13,7 +13,7 @@ const ProductHeader = (props) => {
     navigate("/products");
   };
 
-  const { header, buttonLabel } = props;
+  const { header, buttonLabel, isSubmitting } = props;
 
   return (
     <div className={styles["product-header"]}>
@@ -26,7 +26,7 @@ const ProductHeader = (props) => {
           <CloseIcon />
           <span>cancel</span>
         </Button>
-        <Button variant="primary">
+        <Button variant="primary" isSubmitting={isSubmitting}>
           {buttonLabel === "add product" && <PlusIcon />}
           <span>{buttonLabel}</span>
         </Button>

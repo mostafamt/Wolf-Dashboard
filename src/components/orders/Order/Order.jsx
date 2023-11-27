@@ -1,4 +1,4 @@
-import { BsEye, BsPencil, BsCheckLg } from "react-icons/bs";
+import { BsPencil, BsCheckLg } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 
 const Order = (props) => {
@@ -14,7 +14,6 @@ const Order = (props) => {
   };
 
   const handleStatus = () => {
-    console.log("status= ", order.replacerequest);
     if (order.replacerequest && order.replacerequest !== "none") {
       return `Replace (${order.replacerequest})`;
     } else if (order.returnrequest && order.returnrequest !== "none") {

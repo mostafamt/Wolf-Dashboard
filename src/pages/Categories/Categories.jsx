@@ -14,9 +14,22 @@ const Categories = () => {
     setCategories(res.data.response);
   };
 
+  const fetchCategoriesByName = async (name) => {
+    const res = await axios.get(`/main_category/search?name=${name}`);
+    setCategories(res.data.response);
+  };
+
   React.useEffect(() => {
     getData();
   }, []);
+
+  React.useEffect(() => {
+    if (searchCategory) {
+      fetchCategoriesByName(searchCategory);
+    } else {
+      getData();
+    }
+  }, [searchCategory]);
 
   return (
     <div className="main-category">
@@ -27,7 +40,7 @@ const Categories = () => {
           type="text"
           value={searchCategory}
           onChange={(e) => setSearchCategory(e.target.value)}
-          placeholder="Search by product name. . ."
+          placeholder="Search by category name..."
           className="flex-grow-1"
         />
       </div>

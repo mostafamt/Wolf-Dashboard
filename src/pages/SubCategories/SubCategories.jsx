@@ -8,6 +8,11 @@ const SubCategories = () => {
   const [searchSubCategory, setSearchSubCategory] = React.useState();
   const [subCategories, setSubCategories] = React.useState([]);
 
+  const fetchSubCategoriesByName = async (name) => {
+    const res = await axios.get(`/subcategory/search?name=${name}`);
+    setSubCategories(res.data);
+  };
+
   const fetchSubCategories = async () => {
     const res = await axios.get("/subcategory/main_subcategory");
     setSubCategories(res.data);
@@ -16,6 +21,14 @@ const SubCategories = () => {
   React.useEffect(() => {
     fetchSubCategories();
   }, []);
+
+  React.useEffect(() => {
+    if (searchSubCategory) {
+      fetchSubCategoriesByName(searchSubCategory);
+    } else {
+      fetchSubCategories();
+    }
+  }, [searchSubCategory]);
 
   return (
     <div className="sub-category">
@@ -26,7 +39,7 @@ const SubCategories = () => {
           type="text"
           value={searchSubCategory}
           onChange={(e) => setSearchSubCategory(e.target.value)}
-          placeholder="Search by product name. . ."
+          placeholder="Search by sub category name..."
           className="flex-grow-1"
         />
       </div>

@@ -20,6 +20,7 @@ const AddProduct = () => {
   const [media, setMedia] = React.useState([]);
   const [showModal, setShowModal] = React.useState(false);
   const [linkedProducts, setLinkedProducts] = React.useState([]);
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
   const navigate = useNavigate();
   const {
     handleSubmit,
@@ -108,6 +109,7 @@ const AddProduct = () => {
         : values.price_before,
     };
     console.log("data= ", data);
+    setIsSubmitting(true);
     try {
       await axios.post("/product/create", data);
       toast.success("Product created Successfully !");
@@ -116,6 +118,8 @@ const AddProduct = () => {
       }, 2000);
     } catch (error) {
       toast.error(error.message);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -130,7 +134,11 @@ const AddProduct = () => {
         />
       </Modal>
       <form className={styles["add-product"]} onSubmit={handleSubmit(onSubmit)}>
-        <ProductHeader header="add product" buttonLabel="add product" />
+        <ProductHeader
+          header="add product"
+          buttonLabel="add product"
+          isSubmitting={isSubmitting}
+        />
         <div className={styles.boxes}>
           <div>
             <FormBox title="general information">

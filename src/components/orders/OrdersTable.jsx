@@ -12,13 +12,36 @@ import axios from "../../axios";
 import { useAuth } from "../../hooks/use-auth";
 import Order from "./Order/Order";
 
+const dates = [
+  {
+    label: "All Time",
+  },
+  {
+    label: "12 Months",
+  },
+  {
+    label: "30 Days",
+  },
+  {
+    label: "7 Days",
+  },
+  {
+    label: "24 Hours",
+  },
+];
+
 function OrdersTable() {
   const [orders, setOrders] = React.useState([]);
-  const [active, setActive] = useState("All Time");
+  const [active, setActive] = useState(dates[0].label);
   const [headDrop, setheadDrop] = useState("");
   const [startItem, setStartItem] = useState(0);
   const [endItem, setEndItem] = useState(8);
   const { token } = useAuth();
+
+  const fetchOrdersInDate = async (date) => {
+    const res = await axios.get(`/order/filter?date=${date}`);
+    setOrders(res.data);
+  };
 
   const fetchOrders = async () => {
     const res = await axios.get("/order", {
@@ -41,41 +64,25 @@ function OrdersTable() {
   const num = 8;
   const paginations = _.range(0, Math.ceil(orders.length / 8));
 
+  const onChangeDate = (label) => {
+    setActive(label);
+    fetchOrdersInDate(label);
+  };
+
   return (
     <div className="product-list">
       <div className="inps d-flex justify-content-between">
         <div className="select-time d-flex ">
           <ul>
-            <li
-              className={`${active == "All Time" && "active"}`}
-              onClick={() => setActive("ALL Time")}
-            >
-              All Time
-            </li>
-            <li
-              className={`${active == "12 Months" && "active"}`}
-              onClick={() => setActive("12 Months")}
-            >
-              12 Months
-            </li>
-            <li
-              className={`${active == "30 Days" && "active"}`}
-              onClick={() => setActive("30 Days")}
-            >
-              30 Days
-            </li>
-            <li
-              className={`${active == "7 Days" && "active"}`}
-              onClick={() => setActive("7 Days")}
-            >
-              7 Days
-            </li>
-            <li
-              className={`${active == "24 Hours" && "active"}`}
-              onClick={() => setActive("24 Hours")}
-            >
-              24 Hours
-            </li>
+            {dates.map((date) => (
+              <li
+                key={date.label}
+                className={active === date.label && "active"}
+                onClick={() => onChangeDate(date.label)}
+              >
+                {date.label}
+              </li>
+            ))}
           </ul>
         </div>
         <div className="d-flex ">

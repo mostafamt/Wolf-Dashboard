@@ -16,15 +16,14 @@ import Modal from "@components/Modal/Modal";
 
 // import styles from "./products.module.scss";
 import { toast } from "react-toastify";
-import DeleteProductModalContent from "../../components/Modal/ModalContent/DeleteProductModalContent/DeleteProductModalContent";
+import DeleteProductModalContent from "@components/Modal/ModalContent/DeleteProductModalContent/DeleteProductModalContent";
 
 const Products = () => {
   const [searchByProduct, setSearchByProduct] = React.useState();
-  const [searchBySuppliar, setSearchBySuppliar] = useState();
+  const [searchBySupplier, setSearchBySupplier] = useState();
   const [headDrop, setheadDrop] = useState("");
   const [startItem, setStartItem] = useState(0);
   const [endItem, setEndItem] = useState(8);
-  const [check, setCheck] = useState(false);
   const [products, setProducts] = React.useState([]);
   const navigate = useNavigate();
 
@@ -34,7 +33,12 @@ const Products = () => {
   };
 
   const fetchProductsByName = async (name) => {
-    const res = await axios.get(`/product/search/${name}`);
+    const res = await axios.get(`/product/search?name=${name}`);
+    setProducts(res.data);
+  };
+
+  const fetchProductsBySupplier = async (name) => {
+    const res = await axios.get(`/product/search?supplier=${name}`);
     setProducts(res.data);
   };
 
@@ -43,20 +47,21 @@ const Products = () => {
   }, []);
 
   React.useEffect(() => {
-    if (searchByProduct) {
+    if (searchBySupplier) {
+      fetchProductsBySupplier(searchBySupplier);
+    } else if (searchByProduct) {
       fetchProductsByName(searchByProduct);
     } else {
       fetchData();
     }
-  }, [searchByProduct]);
+  }, [searchByProduct, searchBySupplier]);
 
   const editCulc = (value) => {
     setStartItem((value - 1) * 8);
     setEndItem(value * 8);
   };
 
-  const handleCheckOut = (value, id) => {
-    setCheck(true);
+  const handleCheckOut = (value) => {
     value.classList.toggle("check-active");
   };
 
@@ -128,8 +133,8 @@ const Products = () => {
               <BsSearch />
               <input
                 type="text"
-                value={searchBySuppliar}
-                onChange={(e) => setSearchBySuppliar(e.target.value)}
+                value={searchBySupplier}
+                onChange={(e) => setSearchBySupplier(e.target.value)}
                 placeholder="Search by supplier. . ."
                 className="flex-grow-1"
               />
