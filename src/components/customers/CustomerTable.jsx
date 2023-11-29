@@ -1,40 +1,22 @@
-import { useContext, useState } from "react";
-import {
-  BsCalendar,
-  BsChevronDown,
-  BsSliders,
-  BsEye,
-  BsPencil,
-  BsTrash,
-  BsChevronRight,
-  BsChevronLeft,
-  BsCheckLg,
-} from "react-icons/bs";
-import ImageProduct from "../../assets/Img.png";
+import React from "react";
+import { BsChevronDown, BsChevronRight, BsChevronLeft } from "react-icons/bs";
 import _ from "lodash";
 
-function ProductListTable() {
-  const [active, setActive] = useState("All Time");
-  const [headDrop, setheadDrop] = useState("");
-  const [startItem, setStartItem] = useState(0);
-  const [endItem, setEndItem] = useState(8);
-  const [check, setCheck] = useState(false);
+function ProductListTable(props) {
+  const { orders } = props;
+  const [headDrop, setheadDrop] = React.useState("");
+  const [startItem, setStartItem] = React.useState(0);
+  const [endItem, setEndItem] = React.useState(8);
 
   const editCulc = (value) => {
     setStartItem((value - 1) * 8);
     setEndItem(value * 8);
   };
 
-  const handleCheckOut = (value, id) => {
-    setCheck(true);
-    value.classList.toggle("check-active");
-  };
-
   const num = 8;
-  const paginations = _.range(0, Math.ceil(listProduct.length / 8));
-  const handleShow = (value) => {};
+  const paginations = _.range(0, Math.ceil(orders?.length / 8));
 
-  return (
+  return orders ? (
     <div className="product-list m-0 p-0">
       <div className="table m-0 p-0">
         <table className="m-0">
@@ -93,43 +75,47 @@ function ProductListTable() {
             </tr>
           </thead>
           <tbody>
-            {listProduct.map((item, index) => {
+            {orders?.map((order, index) => {
               if (index >= startItem && index < endItem) {
                 return (
-                  <tr key={item.Id}>
+                  <tr key={order._id}>
                     <td
                       className="sku"
                       style={{ color: "#5C59E8", textAlign: "left" }}
                     >
-                      #{item.Sku}
+                      #{order._id}
                     </td>
                     <td>
                       <div className="d-flex product-desc justify-content-center">
-                        <img src={item.Image} />
+                        <img src={order?.products[0].image[0].secure_url} />
                         <div>
-                          <p>{item.Name}</p>
-                          <span>{item.ColorNum}</span>
+                          <p>{order?.products[0].name}</p>
+                          <span>
+                            {order?.products?.length > 1 && (
+                              <>+{order?.products.length - 1}</>
+                            )}
+                          </span>
                         </div>
                       </div>
                     </td>
                     <td className="category" style={{ textAlign: "left" }}>
-                      189652{" "}
+                      {order.totalPrice}
                     </td>
                     <td className="status">
                       <p
                         className={`${
-                          item.Status == "Shiped"
+                          order.status == "shipped"
                             ? "ship"
-                            : item.Status == "Processing"
+                            : order.status == "processing"
                             ? "process"
                             : ""
                         }`}
                       >
-                        {item.Status}
+                        {order.status}
                       </p>
                     </td>
                     <td className="added" style={{ textAlign: "center" }}>
-                      {item.Added}
+                      {new Date(order.updatedAt).toDateString()}
                     </td>
                   </tr>
                 );
@@ -139,16 +125,15 @@ function ProductListTable() {
         </table>
         <div className="tfooter">
           <div className="showing">
-            {endItem < listProduct.length ? (
+            {endItem < orders?.length ? (
               <span>
                 {" "}
-                Showing {startItem + 1}-{endItem} from {listProduct.length}{" "}
+                Showing {startItem + 1}-{endItem} from {orders.length}{" "}
               </span>
             ) : (
               <span>
                 {" "}
-                Showing {startItem + 1}-{listProduct.length} from{" "}
-                {listProduct.length}{" "}
+                Showing {startItem + 1}-{orders?.length} from {orders.length}{" "}
               </span>
             )}
           </div>
@@ -163,10 +148,11 @@ function ProductListTable() {
             >
               <BsChevronLeft />
             </li>
-            {paginations.map((value) => {
-              if (listProduct.length / 8 > value) {
+            {paginations.map((value, idx) => {
+              if (orders?.length / 8 > value) {
                 return (
                   <li
+                    key={idx}
                     className={`${startItem == value * num && "active"}`}
                     onClick={() => editCulc(value + 1)}
                   >
@@ -177,7 +163,7 @@ function ProductListTable() {
             })}
             <li
               onClick={() => {
-                if (startItem <= 8 * (Math.ceil(listProduct.length / 8) - 2)) {
+                if (startItem <= 8 * (Math.ceil(orders?.length / 8) - 2)) {
                   setStartItem(startItem + 8);
                   setEndItem(endItem + 8);
                 }
@@ -189,489 +175,8 @@ function ProductListTable() {
         </div>
       </div>
     </div>
+  ) : (
+    <p>Loading...</p>
   );
 }
 export default ProductListTable;
-
-export const listProduct = [
-  {
-    Id: 1,
-    Image: ImageProduct,
-    Name: "تيشيرت بولو مطبع",
-    ColorNum: "3 Colors",
-    Sku: "302012",
-    Category: "رجال(ملابس) ",
-    Stock: "10",
-    Price: "$121.00",
-    Status: "Processing",
-    Added: "29 Dec 2022",
-  },
-  {
-    Id: 2,
-    Image: ImageProduct,
-    Name: "تيشيرت بولو مطبع",
-    ColorNum: "3 Colors",
-    Sku: "302012",
-    Category: "رجال(ملابس) ",
-    Stock: "10",
-    Price: "$121.00",
-    Status: "Low Stock",
-    Added: "29 Dec 2022",
-  },
-  {
-    Id: 3,
-    Image: ImageProduct,
-    Name: "تيشيرت بولو مطبع",
-    ColorNum: "3 Colors",
-    Sku: "302012",
-    Category: "رجال(ملابس) ",
-    Stock: "10",
-    Price: "$121.00",
-    Status: "Shiped",
-    Added: "29 Dec 2022",
-  },
-  {
-    Id: 4,
-    Image: ImageProduct,
-    Name: "تيشيرت بولو مطبع",
-    ColorNum: "3 Colors",
-    Sku: "302012",
-    Category: "رجال(ملابس) ",
-    Stock: "10",
-    Price: "$121.00",
-    Status: "Out of Stock",
-    Added: "29 Dec 2022",
-  },
-  {
-    Id: 5,
-    Image: ImageProduct,
-    Name: "تيشيرت بولو مطبع",
-    ColorNum: "3 Colors",
-    Sku: "302012",
-    Category: "رجال(ملابس) ",
-    Stock: "10",
-    Price: "$121.00",
-    Status: "Low Stock",
-    Added: "29 Dec 2022",
-  },
-  {
-    Id: 6,
-    Image: ImageProduct,
-    Name: "تيشيرت بولو مطبع",
-    ColorNum: "3 Colors",
-    Sku: "302012",
-    Category: "رجال(ملابس) ",
-    Stock: "10",
-    Price: "$121.00",
-    Status: "Low Stock",
-    Added: "29 Dec 2022",
-  },
-  {
-    Id: 7,
-    Image: ImageProduct,
-    Name: "تيشيرت بولو مطبع",
-    ColorNum: "3 Colors",
-    Sku: "302012",
-    Category: "رجال(ملابس) ",
-    Stock: "10",
-    Price: "$121.00",
-    Status: "Low Stock",
-    Added: "29 Dec 2022",
-  },
-  {
-    Id: 8,
-    Image: ImageProduct,
-    Name: "تيشيرت بولو مطبع",
-    ColorNum: "3 Colors",
-    Sku: "302012",
-    Category: "رجال(ملابس) ",
-    Stock: "10",
-    Price: "$121.00",
-    Status: "Low Stock",
-    Added: "29 Dec 2022",
-  },
-  {
-    Id: 9,
-    Image: ImageProduct,
-    Name: "تيشيرت بولو مطبع",
-    ColorNum: "3 Colors",
-    Sku: "302012",
-    Category: "رجال(ملابس) ",
-    Stock: "10",
-    Price: "$121.00",
-    Status: "Low Stock",
-    Added: "29 Dec 2022",
-  },
-  {
-    Id: 10,
-    Image: ImageProduct,
-    Name: "تيشيرت بولو مطبع",
-    ColorNum: "3 Colors",
-    Sku: "302012",
-    Category: "رجال(ملابس) ",
-    Stock: "10",
-    Price: "$121.00",
-    Status: "Low Stock",
-    Added: "29 Dec 2022",
-  },
-  {
-    Id: 11,
-    Image: ImageProduct,
-    Name: "تيشيرت بولو مطبع",
-    ColorNum: "3 Colors",
-    Sku: "302012",
-    Category: "رجال(ملابس) ",
-    Stock: "10",
-    Price: "$121.00",
-    Status: "Low Stock",
-    Added: "29 Dec 2022",
-  },
-  {
-    Id: 12,
-    Image: ImageProduct,
-    Name: "تيشيرت بولو مطبع",
-    ColorNum: "3 Colors",
-    Sku: "302012",
-    Category: "رجال(ملابس) ",
-    Stock: "10",
-    Price: "$121.00",
-    Status: "Low Stock",
-    Added: "29 Dec 2022",
-  },
-  {
-    Id: 13,
-    Image: ImageProduct,
-    Name: "تيشيرت بولو مطبع",
-    ColorNum: "3 Colors",
-    Sku: "302012",
-    Category: "رجال(ملابس) ",
-    Stock: "10",
-    Price: "$121.00",
-    Status: "Low Stock",
-    Added: "29 Dec 2022",
-  },
-  {
-    Id: 14,
-    Image: ImageProduct,
-    Name: "تيشيرت بولو مطبع",
-    ColorNum: "3 Colors",
-    Sku: "302012",
-    Category: "رجال(ملابس) ",
-    Stock: "10",
-    Price: "$121.00",
-    Status: "Low Stock",
-    Added: "29 Dec 2022",
-  },
-  {
-    Id: 15,
-    Image: ImageProduct,
-    Name: "تيشيرت بولو مطبع",
-    ColorNum: "3 Colors",
-    Sku: "302012",
-    Category: "رجال(ملابس) ",
-    Stock: "10",
-    Price: "$121.00",
-    Status: "Low Stock",
-    Added: "29 Dec 2022",
-  },
-  {
-    Id: 16,
-    Image: ImageProduct,
-    Name: "تيشيرت بولو مطبع",
-    ColorNum: "3 Colors",
-    Sku: "302012",
-    Category: "رجال(ملابس) ",
-    Stock: "10",
-    Price: "$121.00",
-    Status: "Low Stock",
-    Added: "29 Dec 2022",
-  },
-  {
-    Id: 17,
-    Image: ImageProduct,
-    Name: "تيشيرت بولو مطبع",
-    ColorNum: "3 Colors",
-    Sku: "302012",
-    Category: "رجال(ملابس) ",
-    Stock: "10",
-    Price: "$121.00",
-    Status: "Low Stock",
-    Added: "29 Dec 2022",
-  },
-  {
-    Id: 18,
-    Image: ImageProduct,
-    Name: "تيشيرت بولو مطبع",
-    ColorNum: "3 Colors",
-    Sku: "302012",
-    Category: "رجال(ملابس) ",
-    Stock: "10",
-    Price: "$121.00",
-    Status: "Low Stock",
-    Added: "29 Dec 2022",
-  },
-  {
-    Id: 19,
-    Image: ImageProduct,
-    Name: "تيشيرت بولو مطبع",
-    ColorNum: "3 Colors",
-    Sku: "302012",
-    Category: "رجال(ملابس) ",
-    Stock: "10",
-    Price: "$121.00",
-    Status: "Low Stock",
-    Added: "29 Dec 2022",
-  },
-  {
-    Id: 20,
-    Image: ImageProduct,
-    Name: "تيشيرت بولو مطبع",
-    ColorNum: "3 Colors",
-    Sku: "302012",
-    Category: "رجال(ملابس) ",
-    Stock: "10",
-    Price: "$121.00",
-    Status: "Low Stock",
-    Added: "29 Dec 2022",
-  },
-  {
-    Id: 21,
-    Image: ImageProduct,
-    Name: "تيشيرت بولو مطبع",
-    ColorNum: "3 Colors",
-    Sku: "302012",
-    Category: "رجال(ملابس) ",
-    Stock: "10",
-    Price: "$121.00",
-    Status: "Low Stock",
-    Added: "29 Dec 2022",
-  },
-  {
-    Id: 22,
-    Image: ImageProduct,
-    Name: "تيشيرت بولو مطبع",
-    ColorNum: "3 Colors",
-    Sku: "302012",
-    Category: "رجال(ملابس) ",
-    Stock: "10",
-    Price: "$121.00",
-    Status: "Low Stock",
-    Added: "29 Dec 2022",
-  },
-  {
-    Id: 23,
-    Image: ImageProduct,
-    Name: "تيشيرت بولو مطبع",
-    ColorNum: "3 Colors",
-    Sku: "302012",
-    Category: "رجال(ملابس) ",
-    Stock: "10",
-    Price: "$121.00",
-    Status: "Low Stock",
-    Added: "29 Dec 2022",
-  },
-  {
-    Id: 24,
-    Image: ImageProduct,
-    Name: "تيشيرت بولو مطبع",
-    ColorNum: "3 Colors",
-    Sku: "302012",
-    Category: "رجال(ملابس) ",
-    Stock: "10",
-    Price: "$121.00",
-    Status: "Low Stock",
-    Added: "29 Dec 2022",
-  },
-  {
-    Id: 25,
-    Image: ImageProduct,
-    Name: "تيشيرت بولو مطبع",
-    ColorNum: "3 Colors",
-    Sku: "302012",
-    Category: "رجال(ملابس) ",
-    Stock: "10",
-    Price: "$121.00",
-    Status: "Low Stock",
-    Added: "29 Dec 2022",
-  },
-  {
-    Id: 26,
-    Image: ImageProduct,
-    Name: "تيشيرت بولو مطبع",
-    ColorNum: "3 Colors",
-    Sku: "302012",
-    Category: "رجال(ملابس) ",
-    Stock: "10",
-    Price: "$121.00",
-    Status: "Low Stock",
-    Added: "29 Dec 2022",
-  },
-  {
-    Id: 27,
-    Image: ImageProduct,
-    Name: "تيشيرت بولو مطبع",
-    ColorNum: "3 Colors",
-    Sku: "302012",
-    Category: "رجال(ملابس) ",
-    Stock: "10",
-    Price: "$121.00",
-    Status: "Low Stock",
-    Added: "29 Dec 2022",
-  },
-  {
-    Id: 28,
-    Image: ImageProduct,
-    Name: "تيشيرت بولو مطبع",
-    ColorNum: "3 Colors",
-    Sku: "302012",
-    Category: "رجال(ملابس) ",
-    Stock: "10",
-    Price: "$121.00",
-    Status: "Low Stock",
-    Added: "29 Dec 2022",
-  },
-  {
-    Id: 29,
-    Image: ImageProduct,
-    Name: "تيشيرت بولو مطبع",
-    ColorNum: "3 Colors",
-    Sku: "302012",
-    Category: "رجال(ملابس) ",
-    Stock: "10",
-    Price: "$121.00",
-    Status: "Low Stock",
-    Added: "29 Dec 2022",
-  },
-  {
-    Id: 30,
-    Image: ImageProduct,
-    Name: "تيشيرت بولو مطبع",
-    ColorNum: "3 Colors",
-    Sku: "302012",
-    Category: "رجال(ملابس) ",
-    Stock: "10",
-    Price: "$121.00",
-    Status: "Low Stock",
-    Added: "29 Dec 2022",
-  },
-  {
-    Id: 31,
-    Image: ImageProduct,
-    Name: "تيشيرت بولو مطبع",
-    ColorNum: "3 Colors",
-    Sku: "302012",
-    Category: "رجال(ملابس) ",
-    Stock: "10",
-    Price: "$121.00",
-    Status: "Low Stock",
-    Added: "29 Dec 2022",
-  },
-  {
-    Id: 32,
-    Image: ImageProduct,
-    Name: "تيشيرت بولو مطبع",
-    ColorNum: "3 Colors",
-    Sku: "302012",
-    Category: "رجال(ملابس) ",
-    Stock: "10",
-    Price: "$121.00",
-    Status: "Low Stock",
-    Added: "29 Dec 2022",
-  },
-  {
-    Id: 33,
-    Image: ImageProduct,
-    Name: "تيشيرت بولو مطبع",
-    ColorNum: "3 Colors",
-    Sku: "302012",
-    Category: "رجال(ملابس) ",
-    Stock: "10",
-    Price: "$121.00",
-    Status: "Low Stock",
-    Added: "29 Dec 2022",
-  },
-  {
-    Id: 34,
-    Image: ImageProduct,
-    Name: "تيشيرت بولو مطبع",
-    ColorNum: "3 Colors",
-    Sku: "302012",
-    Category: "رجال(ملابس) ",
-    Stock: "10",
-    Price: "$121.00",
-    Status: "Low Stock",
-    Added: "29 Dec 2022",
-  },
-  {
-    Id: 35,
-    Image: ImageProduct,
-    Name: "تيشيرت بولو مطبع",
-    ColorNum: "3 Colors",
-    Sku: "302012",
-    Category: "رجال(ملابس) ",
-    Stock: "10",
-    Price: "$121.00",
-    Status: "Low Stock",
-    Added: "29 Dec 2022",
-  },
-  {
-    Id: 36,
-    Image: ImageProduct,
-    Name: "تيشيرت بولو مطبع",
-    ColorNum: "3 Colors",
-    Sku: "302012",
-    Category: "رجال(ملابس) ",
-    Stock: "10",
-    Price: "$121.00",
-    Status: "Low Stock",
-    Added: "29 Dec 2022",
-  },
-  {
-    Id: 37,
-    Image: ImageProduct,
-    Name: "تيشيرت بولو مطبع",
-    ColorNum: "3 Colors",
-    Sku: "302012",
-    Category: "رجال(ملابس) ",
-    Stock: "10",
-    Price: "$121.00",
-    Status: "Low Stock",
-    Added: "29 Dec 2022",
-  },
-  {
-    Id: 38,
-    Image: ImageProduct,
-    Name: "تيشيرت بولو مطبع",
-    ColorNum: "3 Colors",
-    Sku: "302012",
-    Category: "رجال(ملابس) ",
-    Stock: "10",
-    Price: "$121.00",
-    Status: "Low Stock",
-    Added: "29 Dec 2022",
-  },
-  {
-    Id: 39,
-    Image: ImageProduct,
-    Name: "تيشيرت بولو مطبع",
-    ColorNum: "3 Colors",
-    Sku: "302012",
-    Category: "رجال(ملابس) ",
-    Stock: "10",
-    Price: "$121.00",
-    Status: "Low Stock",
-    Added: "29 Dec 2022",
-  },
-  {
-    Id: 40,
-    Image: ImageProduct,
-    Name: "تيشيرت بولو مطبع",
-    ColorNum: "3 Colors",
-    Sku: "302012",
-    Category: "رجال(ملابس) ",
-    Stock: "10",
-    Price: "$121.00",
-    Status: "Low Stock",
-    Added: "29 Dec 2022",
-  },
-];

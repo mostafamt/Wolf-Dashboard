@@ -2,7 +2,34 @@ import { BsCart, BsEnvelope, BsLock } from "react-icons/bs";
 import Image from "../../assets/Img.png";
 import { BiPhoneCall } from "react-icons/bi";
 import { CiLocationOn } from "react-icons/ci";
-function LeftBox() {
+import React from "react";
+import axios from "../../axios";
+import { useParams } from "react-router-dom";
+
+const CustomerInfo = (props) => {
+  const { lastOrder } = props;
+  const [customer, setCustomer] = React.useState();
+  const params = useParams();
+  const { id } = params;
+
+  const fetchCustomer = async (id) => {
+    const res = await axios.get(`/user/${id}`);
+    setCustomer(res.data);
+  };
+
+  React.useEffect(() => {
+    fetchCustomer(id);
+  }, []);
+
+  const composeAddress = () => {
+    if (customer?.addresses?.length) {
+      const { city, area, address } = customer.addresses[0];
+      return `${city}, ${area}, ${address}`;
+    } else {
+      return "address";
+    }
+  };
+
   return (
     <div className="user-details d-flex flex-column">
       <div className="back"></div>
@@ -25,7 +52,7 @@ function LeftBox() {
           </div>
           <div className="icon-info d-flex flex-column ">
             <p>User ID</p>
-            <span>ID-011221</span>
+            <span>{customer?._id}</span>
           </div>
         </div>
         <div className="d-flex">
@@ -35,8 +62,8 @@ function LeftBox() {
             </span>
           </div>
           <div className="icon-info d-flex flex-column ">
-            <p>User ID</p>
-            <span>ID-011221</span>
+            <p>Billing Email</p>
+            <span>{customer?.email}</span>
           </div>
         </div>
         <div className="d-flex">
@@ -46,8 +73,8 @@ function LeftBox() {
             </span>
           </div>
           <div className="icon-info d-flex flex-column ">
-            <p>User ID</p>
-            <span>ID-011221</span>
+            <p>Phone Number</p>
+            <span>{customer?.telephone}</span>
           </div>
         </div>
         <div className="d-flex">
@@ -57,8 +84,8 @@ function LeftBox() {
             </span>
           </div>
           <div className="icon-info d-flex flex-column ">
-            <p>User ID</p>
-            <span>ID-011221</span>
+            <p>Delivery Address</p>
+            <span>{composeAddress()}</span>
           </div>
         </div>
         <div className="d-flex">
@@ -68,8 +95,8 @@ function LeftBox() {
             </span>
           </div>
           <div className="icon-info d-flex flex-column ">
-            <p>User ID</p>
-            <span>ID-011221</span>
+            <p>Last Order</p>
+            <span>{new Date(lastOrder).toDateString()}</span>
           </div>
         </div>
         <div className="d-flex">
@@ -79,12 +106,13 @@ function LeftBox() {
             </span>
           </div>
           <div className="icon-info d-flex flex-column ">
-            <p>User ID</p>
-            <span>ID-011221</span>
+            <p>Last Online</p>
+            <span>1 Day Ago</span>
           </div>
         </div>
       </div>
     </div>
   );
-}
-export default LeftBox;
+};
+
+export default CustomerInfo;
