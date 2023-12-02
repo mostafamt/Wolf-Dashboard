@@ -100,36 +100,49 @@ const Order = () => {
   }, []);
 
   const onChangeOrderStatus = async (value) => {
-    await axios.put(`/order/${id}`, {
-      status: value,
-    });
+    try {
+      await axios.put(`/order/${id}`, {
+        status: value,
+      });
+      await fetchData(id);
+      toast.success("Order status changed successfully!");
+      // setTimeout(() => {
+      //   navigate("/orders");
+      // }, 2000);
+    } catch (error) {
+      toast.error(error.response.data);
+    }
     await fetchData(id);
-    toast.success("Order status changed successfully!");
-    // setTimeout(() => {
-    //   navigate("/orders");
-    // }, 2000);
   };
 
   const onChangeReturnOrderStatus = async (value) => {
-    await axios.put(`/order/${id}`, {
-      returnrequest: value,
-    });
+    try {
+      await axios.put(`/order/${id}`, {
+        returnrequest: value,
+      });
+      toast.success("Order status changed successfully!");
+      // setTimeout(() => {
+      //   navigate("/orders");
+      // }, 2000);
+    } catch (error) {
+      toast.error(error.response.data);
+    }
     await fetchData(id);
-    toast.success("Order status changed successfully!");
-    // setTimeout(() => {
-    //   navigate("/orders");
-    // }, 2000);
   };
 
   const onChangeReplaceOrderStatus = async (value) => {
-    await axios.put(`/order/${id}`, {
-      replacerequest: value,
-    });
+    try {
+      await axios.put(`/order/${id}`, {
+        replacerequest: value,
+      });
+      toast.success("Order status changed successfully!");
+      // setTimeout(() => {
+      //   navigate("/orders");
+      // }, 2000);
+    } catch (error) {
+      toast.error(error.response.data);
+    }
     await fetchData(id);
-    toast.success("Order status changed successfully!");
-    // setTimeout(() => {
-    //   navigate("/orders");
-    // }, 2000);
   };
 
   const handleShowDropDown = () => {

@@ -14,9 +14,10 @@ import Product from "@components/productlist/Product/Product";
 import { useNavigate } from "react-router-dom";
 import Modal from "@components/Modal/Modal";
 
-// import styles from "./products.module.scss";
 import { toast } from "react-toastify";
 import DeleteProductModalContent from "@components/Modal/ModalContent/DeleteProductModalContent/DeleteProductModalContent";
+// import styles from "./products.module.scss";
+import DateFromTo from "../../components/Filters/DateFromTo/DateFromTo";
 
 const Products = () => {
   const [searchByProduct, setSearchByProduct] = React.useState();
@@ -25,6 +26,10 @@ const Products = () => {
   const [startItem, setStartItem] = useState(0);
   const [endItem, setEndItem] = useState(8);
   const [products, setProducts] = React.useState([]);
+  const [filter, setFilter] = React.useState({
+    open: false,
+    name: "",
+  });
   const navigate = useNavigate();
 
   const fetchData = async () => {
@@ -95,6 +100,14 @@ const Products = () => {
     }
   };
 
+  const handleShowFilter = (name) => {
+    if (filter.name === name) {
+      setFilter((prevState) => ({ ...prevState, open: !prevState.open }));
+    } else {
+      setFilter((prevState) => ({ ...prevState, name }));
+    }
+  };
+
   return (
     <>
       <Modal show={show} handleClose={handleClose}>
@@ -141,20 +154,35 @@ const Products = () => {
             </div>
           </div>
           <div className="d-flex ">
-            <button className="calender">
+            <button
+              className="calender"
+              onClick={() => handleShowFilter("added")}
+            >
               <BsCalendar />
               <span>Added from to</span>
             </button>
-            <button className="calender">
+            <button
+              className="calender"
+              onClick={() => handleShowFilter("modified")}
+            >
               <BsCalendar />
               <span>Modified from to</span>
             </button>
-            <button className="filter">
+            <button
+              className="filter"
+              onClick={() => handleShowFilter("filter")}
+            >
               <BsSliders />
               <span>Filters</span>
             </button>
           </div>
         </div>
+        {filter.open && filter.name === "added" && (
+          <DateFromTo title="added from to" />
+        )}
+        {filter.open && filter.name === "modified" && (
+          <DateFromTo title="modified from to" />
+        )}
         <div className="table">
           <table className="">
             <thead>

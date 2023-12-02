@@ -11,6 +11,7 @@ import _ from "lodash";
 import axios from "../../axios";
 import { useAuth } from "../../hooks/use-auth";
 import Order from "./Order/Order";
+import DateFromTo from "../Filters/DateFromTo/DateFromTo";
 
 const dates = [
   {
@@ -37,6 +38,10 @@ function OrdersTable() {
   const [startItem, setStartItem] = useState(0);
   const [endItem, setEndItem] = useState(8);
   const { token } = useAuth();
+  const [filter, setFilter] = React.useState({
+    open: false,
+    name: "",
+  });
 
   const fetchOrdersInDate = async (date) => {
     const res = await axios.get(`/order/filter?date=${date}`);
@@ -69,6 +74,14 @@ function OrdersTable() {
     fetchOrdersInDate(label);
   };
 
+  const handleShowFilter = (name) => {
+    if (filter.name === name) {
+      setFilter((prevState) => ({ ...prevState, open: !prevState.open }));
+    } else {
+      setFilter((prevState) => ({ ...prevState, name }));
+    }
+  };
+
   return (
     <div className="product-list">
       <div className="inps d-flex justify-content-between">
@@ -86,16 +99,28 @@ function OrdersTable() {
           </ul>
         </div>
         <div className="d-flex ">
-          <div className="calender">
+          <button
+            className="calender"
+            onClick={() => handleShowFilter("added")}
+          >
             <BsCalendar />
-            <span>Select Dates</span>
-          </div>
-          <div className="filter me-5">
+            <span>Added From To</span>
+          </button>
+          <button
+            className="filter me-5"
+            onClick={() => handleShowFilter("modified")}
+          >
             <BsSliders />
-            <span>Added from to</span>
-          </div>
+            <span>Modified From To</span>
+          </button>
         </div>
       </div>
+      {filter.open && filter.name === "added" && (
+        <DateFromTo title="added from to" />
+      )}
+      {filter.open && filter.name === "modified" && (
+        <DateFromTo title="modified from to" />
+      )}
       <div className="table">
         <table className="">
           <thead>

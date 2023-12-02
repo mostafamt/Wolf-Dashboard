@@ -1,0 +1,53 @@
+.title {
+  margin: 25px 24px 25px 20px;
+}
+
+.title h2 {
+  color: #333843;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 32px;
+  letter-spacing: 0.12px;
+  margin: 0;
+  margin-bottom: px;
+}
+
+.title .path span {
+  color: #5c59e8;
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: 0.07px;
+  margin-right: 8px;
+}
+
+.title .path span:last-child {
+  color: #667085;
+}
+
+.title button {
+  border-radius: 8px;
+  background: #5c59e8;
+  border: none;
+  padding: 10px 14px;
+  height: fit-content;
+  color: #fff;
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  letter-spacing: 0.07px;
+}
+
+.title .cel {
+  background: transparent;
+  color: #858d9d;
+  border: 1px solid #858d9d;
+}
+
+.filters {
+  margin: 10px 20px;
+  background-color: #fff;
+  border-radius: 0.5rem;
+}
