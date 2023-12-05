@@ -21,6 +21,12 @@ const AddProduct = () => {
   const [showModal, setShowModal] = React.useState(false);
   const [linkedProducts, setLinkedProducts] = React.useState([]);
   const [isSubmitting, setIsSubmitting] = React.useState(false);
+  const [virtualRoom, setVirtualRoom] = React.useState("false");
+  const [gender, setgender] = React.useState("");
+  const [selctedCategory, setselctedCategory] = React.useState("");
+  
+
+  
   const navigate = useNavigate();
   const {
     handleSubmit,
@@ -96,7 +102,7 @@ const AddProduct = () => {
     const data = {
       ...values,
       images: media,
-      dressing: false,
+      // dressing: false,
       linked_products: linked_products,
       quantity: formatQuantity(values.sizes),
       desc: {
@@ -107,11 +113,45 @@ const AddProduct = () => {
       price_after: values.price_after
         ? values.price_after
         : values.price_before,
+      dressing:virtualRoom,
+    ...(gender && { gender }),
+  ...(selctedCategory && { vrpos: selctedCategory }),
+  ...(selctedCategory === "bottoms" && { vrpossec: "pants" }),
     };
     console.log("data= ", data);
     setIsSubmitting(true);
     try {
-      await axios.post("/product/create", data);
+      if(virtualRoom==="true"){
+        if (!gender || !selctedCategory) {
+           toast.error("Please choose gender and selected category");
+           return;
+        }
+      }
+      const response=await axios.post("/product/create", data);
+      const productId = response?.data?._id;
+      const firstImage = response.data?.images[0]?.secure_url;
+      // toast.success("Product created Successfully !");
+      // console.log(productId,firstImage)
+      // console.log(response,"responseresponseresponse")
+          // Second POST request
+          const vrRequestData = {
+            vrprop: {
+              vrpos: selctedCategory,
+              vrpossec: selctedCategory === "bottoms" ? "pants" : undefined,
+              gender: gender,
+            },
+            image: firstImage,
+            productId: productId,
+          };
+
+          if(virtualRoom==="true"){
+            await axios.post("product/createRequestVr", vrRequestData);
+          }
+          //   toast.success("Product created Successfully !");
+            // setTimeout(() => {
+            //   navigate("/products");
+            // }, 2000);
+
       toast.success("Product created Successfully !");
       setTimeout(() => {
         navigate("/products");
@@ -134,6 +174,7 @@ const AddProduct = () => {
         />
       </Modal>
       <form className={styles["add-product"]} onSubmit={handleSubmit(onSubmit)}>
+        {/* {console.log(virtualRoom,gender,selctedCategory)} */}
         <ProductHeader
           header="add product"
           buttonLabel="add product"
@@ -164,6 +205,7 @@ const AddProduct = () => {
                 errors={errors}
               />
             </FormBox>
+            
             <FormBox title="media">
               <FormControl
                 label="photos"
@@ -242,6 +284,56 @@ const AddProduct = () => {
                 </Button>
               </div>
             </FormBox>
+            <FormBox title="Dressing">
+              {/* <FormControl
+                register={register}
+                label="virtual room"
+                name="virtualRoom"
+                type="select"
+                list={[{ name: 'Yes', value: true }, { name: 'No', value: false }]}
+                onChange={(e) => setVirtualRoom(e.target.value)}
+              /> */}
+              <div style={{lineHeight:"30px"}}>
+              <label htmlFor="virtual">virtual Room</label>
+                <select   onChange={(e) => {
+                      setVirtualRoom(e.target.value);
+                      if (e.target.value === "false") {
+                        setselctedCategory("");
+                        setgender("");
+                      }
+                    }}
+                  id="virtual" className="form-select " aria-label="Default select example">
+                  <option selected>-- Select an option --</option>
+                  <option value="true">yes</option>
+                  <option value="false">no</option>
+                </select>
+              </div>
+              {virtualRoom==="true" ?
+                <div className="mt-3" >
+                <div   style={{lineHeight:"10px"}}>
+                <label htmlFor="virtual">Selected Category</label>
+
+                <select onChange={(e)=>setselctedCategory(e.target.value)} className="form-select mt-3" aria-label="Default select example ">
+                  <option selected>-- Select an option --</option>
+                  <option value="tops">tops</option>
+                  <option value="bottoms">bottoms</option>
+                </select>
+                </div>
+
+               <div className="mt-3"  style={{lineHeight:"10px"}}>
+               <label  htmlFor="virtual">Gender</label>
+               <select onChange={(e)=>setgender(e.target.value)} className="form-select mt-3 mb-4" aria-label="Default select example">
+                  <option selected>-- Select an option --</option>
+                  <option value="male">male</option>
+                  <option value="female">female</option>
+                </select>
+               </div>
+               
+                </div>:
+                null
+              }
+            
+          </FormBox>
           </div>
           <div>
             <FormBox title="category">
