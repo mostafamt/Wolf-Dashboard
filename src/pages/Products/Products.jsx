@@ -18,6 +18,8 @@ import { toast } from "react-toastify";
 import DeleteProductModalContent from "@components/Modal/ModalContent/DeleteProductModalContent/DeleteProductModalContent";
 // import styles from "./products.module.scss";
 import DateFromTo from "../../components/Filters/DateFromTo/DateFromTo";
+import Panel from "../../components/Filters/Panel/Panel";
+import FilterByCategory from "../../components/Filters/FilterByCategory/FilterByCategory";
 
 const Products = () => {
   const [searchByProduct, setSearchByProduct] = React.useState();
@@ -101,11 +103,18 @@ const Products = () => {
   };
 
   const handleShowFilter = (name) => {
-    if (filter.name === name) {
-      setFilter((prevState) => ({ ...prevState, open: !prevState.open }));
-    } else {
-      setFilter((prevState) => ({ ...prevState, name }));
-    }
+    setFilter((prevState) => {
+      if (prevState.name !== name && prevState.open) {
+        return { ...prevState, name };
+      } else {
+        return { ...prevState, name, open: !prevState.open };
+      }
+    });
+  };
+
+  const onClickCancelFilter = () => {
+    setFilter((prevState) => ({ ...prevState, open: false }));
+    fetchData();
   };
 
   return (
@@ -178,10 +187,34 @@ const Products = () => {
           </div>
         </div>
         {filter.open && filter.name === "added" && (
-          <DateFromTo title="added from to" />
+          <Panel>
+            <DateFromTo
+              title="added from to"
+              field="createdAt"
+              setProducts={setProducts}
+              onClickCancelFilter={onClickCancelFilter}
+            />
+          </Panel>
         )}
         {filter.open && filter.name === "modified" && (
-          <DateFromTo title="modified from to" />
+          <Panel>
+            <DateFromTo
+              title="modified from to"
+              field="updatedAt"
+              setProducts={setProducts}
+              onClickCancelFilter={onClickCancelFilter}
+            />
+          </Panel>
+        )}
+        {filter.open && filter.name === "filter" && (
+          <Panel>
+            <FilterByCategory
+              title="Filter By Category & Sub Category"
+              field="category"
+              setProducts={setProducts}
+              onClickCancelFilter={onClickCancelFilter}
+            />
+          </Panel>
         )}
         <div className="table">
           <table className="">

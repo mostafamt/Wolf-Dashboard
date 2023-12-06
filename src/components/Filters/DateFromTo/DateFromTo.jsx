@@ -9,7 +9,7 @@ import styles from "./dateFromTo.module.scss";
 import axios from "../../../axios";
 
 const DateFromTo = (props) => {
-  const { title } = props;
+  const { title, field, setProducts, onClickCancelFilter } = props;
   const dateFromToSchema = z.object({
     from: z.coerce.date().max(new Date(Date.now()), {
       message: "From must be less than or equal to Today",
@@ -33,8 +33,9 @@ const DateFromTo = (props) => {
     }
     const { from, to } = values;
     const res = await axios.get(
-      `/product/filter/updatedAt?from=${from}&&to=${to}`
+      `/product/filterByDate/${field}?from=${from}&&to=${to}`
     );
+    setProducts(res.data);
     console.log(res.data);
   };
 
@@ -59,6 +60,9 @@ const DateFromTo = (props) => {
         />
       </FormBox>
       <div className={styles.actions}>
+        <Button variant="secondary" type="button" onClick={onClickCancelFilter}>
+          Cancel
+        </Button>
         <Button variant="primary">Submit</Button>
       </div>
     </form>

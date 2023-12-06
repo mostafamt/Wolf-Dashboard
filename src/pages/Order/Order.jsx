@@ -1,7 +1,7 @@
 import React from "react";
 import { BsChevronRight } from "react-icons/bs";
 import OrderDetails from "@components/orders/OrderDetails";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useAuth } from "../../hooks/use-auth";
 import axios from "../../axios";
 import styles from "./order.module.scss";
@@ -82,7 +82,6 @@ const Order = () => {
   const { token } = useAuth();
   const [order, setOrder] = React.useState();
   const [user, setUser] = React.useState();
-  const navigate = useNavigate();
 
   const fetchData = async (id) => {
     let res = await axios.get(`/order/${id}`, {
