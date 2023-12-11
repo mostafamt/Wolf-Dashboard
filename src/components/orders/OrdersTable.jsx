@@ -98,7 +98,7 @@ function OrdersTable() {
             ))}
           </ul>
         </div>
-        <div className="d-flex ">
+        {/* <div className="d-flex ">
           <button
             className="calender"
             onClick={() => handleShowFilter("added")}
@@ -113,7 +113,7 @@ function OrdersTable() {
             <BsSliders />
             <span>Modified From To</span>
           </button>
-        </div>
+        </div> */}
       </div>
       {filter.open && filter.name === "added" && (
         <DateFromTo title="added from to" />
